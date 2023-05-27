@@ -71,7 +71,7 @@ This is why you can see the object logged in the console as a result.
 There are multiple ways to store values in DATEX.
 Normal variables can be used to store a value temporarily until the end of the execution of the current scope.
 
-A variable can be created without specifying a type - DATEX variables are have the type `<Any>` per default.
+A variable can be created without specifying a type - DATEX variables are have the type `any` per default.
 
 There are 3 types of variables: dynamic variables (`var`), reference variables (`ref`), and value variables (`val`).
 

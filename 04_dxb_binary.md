@@ -40,20 +40,20 @@ Other operators always have a shorthand symbol in DATEX Script (e.g. `!`, `==`).
 |`JTR`              | a6 | `[INDEX]: Uint32`      | `<boolean>`  | `<Void>` | `jtr 42 ev1`    | Jumps if the parameter value is true-ish    |
 |`JFA`              | 66 | `[INDEX]: Uint32`      | `<boolean>`  | `<Void>` | `jfa 42 ev1`    | Jumps if the parameter value is false-ish    |
 | | | | | | | |
-|`COUNT`            | ad | standalone     | `<Any>`   | `<integer>` | `count ev1`   | Counts the number of elements of the ev   |
-|`ABOUT`            | ae | standalone     | `<Any>`   | `<Markdown>` | `about ev1`   | Returns a `<Markdown>` value describing the value  |
-|`GET_TYPE`         | f5 | standalone     | `<Any>`   | `<Type>` | `type ev1`   | Returns the `<Type>` of a value |
+|`COUNT`            | ad | standalone     | `any`   | `<integer>` | `count ev1`   | Counts the number of elements of the ev   |
+|`ABOUT`            | ae | standalone     | `any`   | `<Markdown>` | `about ev1`   | Returns a `<Markdown>` value describing the value  |
+|`GET_TYPE`         | f5 | standalone     | `any`   | `<Type>` | `type ev1`   | Returns the `<Type>` of a value |
 |`RESOLVE_URL`      | 52 | standalone     | `<text>` | `<Url>` | `url "https://..."`   | Converts the string to a `<Url>`. The url is resolved to its content |
 |`TEMPLATE`         | 53 | standalone     | `<Type>`  `<Object>`  | `<Void>` | `template <Type> {}`  | Defines the template for a type |
-|`EXTENDS`          | 54 | standalone     | `<Any>` | `<boolean>` | `av extends y` |Returns true if the current active value (av) extends y |
+|`EXTENDS`          | 54 | standalone     | `any` | `<boolean>` | `av extends y` |Returns true if the current active value (av) extends y |
 |`IMPLEMENTS`       | 55 | standalone     | `<Type>` | `<boolean>` | `av implements <Type>`  | Returns true if the current active value (av) extends the template of the type |
 | | | | | | | |
-|`DELETE_POINTER`   | ba | standalone     | `<Any>` (pointer) | `<Void>` | `delete pointer`  | Permanently deletes the pointer on the current endpoint |
-|`SUBSCRIBE`        | bb | standalone     | `<Any>` (pointer) | `<Any>`  | `subscribe pointer`  | Get future updates for this pointer. The current value of the pointer is returned |
-|`UNSUBSCRIBE`      | bc | standalone     | `<Any>` (pointer) | `<Void>` | `unsubscribe pointer`  | Stop getting future updates for this pointer. |
-|`VALUE`            | bd | standalone     | `<Any>` (pointer) | `<Any>`  | `value pointer`  | Get the value of a pointer |
-|`ORIGIN`           | be | standalone     | `<Any>` (pointer) | `<Endpoint>` | `origin pointer`  | Get the origin endpoint of a pointer. |
-|`SUBSCRIBERS`      | bf | standalone     | `<Any>` (pointer) | `<Filter>` | `subscribers pointer`  | Get all current subscribers for a pointer. |
+|`DELETE_POINTER`   | ba | standalone     | `any` (pointer) | `<Void>` | `delete pointer`  | Permanently deletes the pointer on the current endpoint |
+|`SUBSCRIBE`        | bb | standalone     | `any` (pointer) | `any`  | `subscribe pointer`  | Get future updates for this pointer. The current value of the pointer is returned |
+|`UNSUBSCRIBE`      | bc | standalone     | `any` (pointer) | `<Void>` | `unsubscribe pointer`  | Stop getting future updates for this pointer. |
+|`VALUE`            | bd | standalone     | `any` (pointer) | `any`  | `value pointer`  | Get the value of a pointer |
+|`ORIGIN`           | be | standalone     | `any` (pointer) | `<Endpoint>` | `origin pointer`  | Get the origin endpoint of a pointer. |
+|`SUBSCRIBERS`      | bf | standalone     | `any` (pointer) | `<Filter>` | `subscribers pointer`  | Get all current subscribers for a pointer. |
 
 
 ## Operators

@@ -15,7 +15,7 @@ The IMPLEMENTS instruction checks if a type or its *root type* extends or implem
 
 ### Procedure
 1. Validate parameter types
-2. If `[1]` is `<Any>`, set `[[ACTIVE_VALUE]]` to `true`. Finish.
+2. If `[1]` is `any`, set `[[ACTIVE_VALUE]]` to `true`. Finish.
 3. If `[1].[[TYPE]]` is `<Type>` and `[0].[[TYPE]]` is `<Type>`:
    1. If `[0].[[IMPLEMENTED]]` has `[1]`, set `[[ACTIVE_VALUE]]` to `true`. Finish.
    2. If `[0].[[EXTENDED]]` has `[1]`, set `[[ACTIVE_VALUE]]` to `true`. Finish.
