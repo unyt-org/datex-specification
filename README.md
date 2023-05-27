@@ -1,6 +1,6 @@
 # DATEX Specification
 
-## Introdcution
+## Introduction
 
 This is the official specification for the DATEX Protocol Language.
 You can find this document on [github.com](https://github.com/unyt-org/datex-specification) and [datex.unyt.org](https://datex.unyt.org/).
