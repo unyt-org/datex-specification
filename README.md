@@ -14,6 +14,9 @@ The protocol offers encryption, signatures and authentication functionality.
 
 DATEX introduces the concept of endpoints that form a peer-to-peer network, replacing the common server-client architecture.
 
+DATEX incorporates a global shared memory that enables data synchronization between network participants (endpoints).
+In addition, DATEX includes a general-purpose type system which is designed to interface with common programming languages.
+
 This specification describes
  * the *DATEX Binary Format* (**DXB**) - the machine-readable format of DATEX
  * the *DATEX Script Language* (**DATEX Script** or **DX**) - human-readable representation of DATEX that gets compiled to DXB
@@ -21,8 +24,6 @@ This specification describes
 <!--TODO: change/remove?-->
 <!--The DATEX Script Language is a superset of the JSON format.-->
 
-DATEX incorporates a global shared memory that enables data synchronization between network participants (endpoints).
-In addition, DATEX includes a general-purpose type system which is designed to interface with common programming languages.
 
 ## Applications of DATEX
 
@@ -81,7 +82,7 @@ Editors
  * Jonas Strehle
  * Tim Köhler
 
-This document was last updated on April 14, 2023.
+This document was last updated on May 30, 2023.
 
 <b>This is not the final version of the specification. It is still subject to change. Many sections still need to be transferred from the DATEX Documentation.</b>
 
