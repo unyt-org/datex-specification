@@ -1,8 +1,62 @@
 # Terms and Definitions
 
 
-## primitive value
-A value of the type `<void>`, `<null>`, `<boolean>`, `<integer>`, `<decimal>`, `<text>`, `<buffer>` or any variation of those types.
+## Primitive Value
+A value with one of the following types:
+* `void`
+* `null`
+* `boolean`
+* `integer`
+* `decimal`
+* `quantity`
+* `buffer`
+* `time`
+* `color`
+* `endpoint`
+* `symbol`
+* any mime type
+
+
+## Non-instantiatable type
+* `Any`
+* `ValueConsumer`
+* `StreamConsumer`
+
+## Mime Value
+A value with one of the following types:
+* `text`
+* `image`
+* `audio`
+* `video`
+* `model`
+* `font`
+* `application`
+
+
+## Complex Value
+A value with one of the following types:
+* `Record`
+* `Array`
+* `Object`
+* `Map`
+* `Set`
+* `Scope`
+* `Function`
+* `Iterator`
+* `Stream`
+* `Error`
+* `Task`
+* `Type`
+* all logical types
+
+
+
+## Logical Value
+A value with one of the following types:
+* `Disjunction`
+* `Conjunction`
+* `Negation`
+
 
 ## DXB
 Refers to the DATEX Binary Format in general, or to a particular DATEX block.
@@ -21,3 +75,5 @@ The set of variables that exist during the exeuction of a message. A scope exist
 
 ## static scope
 A scope which is always available in a Runtime and can be accessed from any message scope.
+
+## supranet

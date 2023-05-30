@@ -58,6 +58,8 @@ Endpoints:
 Types:
 
 ```datex
+1 matches 1|text;
+
 1 matches 1|2|3; # true
 (1 & 'one') matches text; # true
 (1 & 'one') matches integer; # true
@@ -73,7 +75,7 @@ Per default, values are compared by value and not by reference.
 
 All items of a connective are compared (and potentially collapsed) in pairs from right to left.
 
-### Conjunctions
+### Conjunctions (AND)
 
 Conjunctions evaluate to `false` if both items are primitive values with the same type, but with a different value.
 If both items have the exact same value, they are collapsed into a single item.
@@ -91,7 +93,7 @@ true & true # true
 integer/8 & integer # integer/8 (most specific type)
 ```
 
-### Disjunctions
+### Disjunctions (OR)
 If both items have the exact same value, they are collapsed into a single item.
 Non-primitive items are collapsed according to the specific rules of the types.
 
@@ -100,6 +102,6 @@ If a non-false item is encountered, the non-false item is kept and all other ite
 Examples:
 ```datex
 false | false # false
-true | false # true
+true | false # true | false
 true | true # true 
 ```

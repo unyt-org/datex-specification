@@ -14,7 +14,7 @@ val d = (1,2,3); // inferred type is (integer, integer, integer)
 val d:Array<integer/8> = [1,2,3]; // Explicitly create an array containing only signed 8-bit integers
 val s1 = Set (1,2,3); // creating a new value of type Set<integer> (inferred)
 val s3 = Set<any>(1,2,3); // creating a Set with an explicit type
-val s2: Set<any> = Set(1,2,3); // type checking (TODO when infer?)
+val s2: Set<integer> = xy() // type checking (TODO when infer?)
 
 ```
 

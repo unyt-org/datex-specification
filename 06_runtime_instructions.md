@@ -1,6 +1,9 @@
-# Instructions
+# Instruction Codes
 
-## IMPLEMENTS
+## 00
+
+## 53 IMPLEMENTS
+
 ### Parameters
 * Effective Value Parameter `[0]`: The following types are allowed: `<Type>`, `<Composite(<Type>)>`
 * Effective Value Parameter `[1]`: The following types are allowed: `<Type>`, `<Composite(<Type>)>`
