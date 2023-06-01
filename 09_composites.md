@@ -109,6 +109,7 @@ true | true # true
 
 ## Value Matching
 
+// TODO: OR instead of AND for type inheritance
 
 A DATEX value A can be matched against another value B. The result of the match operation C
 is always a boolean.

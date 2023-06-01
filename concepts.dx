@@ -83,6 +83,8 @@ type x = integer & text & (
 	#this as text = always (#this as integer).toHex();
 );
 
+'123' | 1234
+
 print x() = 1 & '#1'
 print (x as text)
 
@@ -203,7 +205,7 @@ Entity & (...) matches Entity;
 
 // decide match rule for types/values
 
-type Entity = (x:integer,y:integer);
+type Entity = (x:integer, y:integer);
 type MoveableEntity = Entity & (vx,vy);
 type Player = Type('Player', #type:Type) & MoveableEntity & (name: text);
 
@@ -211,6 +213,11 @@ const player = Player (name:'playr');
 
 typeof player =>  & (#type: Player) => Player
 typeof Player =>
+
+
+
+@jonas & @jonas/1
+
 
 player matches Player;
 (name:'playr') & (x:0, y:0) & (#type: Player) matches Player; 
@@ -230,9 +237,11 @@ Player matches player;
 
 const x = void;
 
-
 x == x;
 x = Player();
+
+integer|text matches integer&text
+integer|text matches integer & integer|text matches text
 
 x matches Player();
 @example matches @example 

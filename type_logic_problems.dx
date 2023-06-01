@@ -1,0 +1,37 @@
+// simple: match one of multiple types:
+1 matches integer | text; // true
+'#1' matches integer | text; // true
+
+// we want to match a value that has both an integer and text representation:
+(1|'#1') matches integer | text; // true, but must not be both an integer and text values
+// it could just be a single integer or text value
+
+// naive idea: using &
+(1|'#1') matches integer & text // should be invalid!
+// if we keep composite logic consistent, integer & text = false, because they have no
+// intersection, so this match does not work
+
+// What we actually want is to check for both an integer + text type.
+// We can already do this with two separate 'match' statements, 
+// but not with a single logical composite value
+(1|'#1') matches integer & (1|'#1') matches text; // true
+
+// maybe we really need to introduce a special type matching label
+(1|'#1') matches instance(integer) & instance(text) // true
+// => instance(integer) & instance(text) exists in a special 'mathematical space' and
+// is not collapsed to false (as opposed to 'integer & text'), 
+// because both instance descriptors have a potential overlap
+
+// otherwise we could introduce a new operator for this special purpose (might be more confusing)
+(1|'#1') matches integer && text // true
+// integer && text is not collapsed to false, but creates a new special merged type
+
+
+// Alternative (not preferred):
+// We keep everything as it is and keep the special exception that type values joined with '&' are never collapsed
+(1|'#1') matches integer & text // (integer & text) is not collapsed, match returns true
+// Every other value joined with '&' should be collapsed, e.g.
+1 & '123' => false
+(a: 123) & (a: 123, b: 10) => (a: 123)
+// this would mean that we can no longer use '&' combinations of literal type values, like
+1|'#1') matches 1 & '#1'
