@@ -55,21 +55,32 @@ The `Instantiator` interface extends the `ValueConsumer` interface
 
 ## Primitive Types
 
-## The `boolean` type
+### The `boolean` type
 
 A `boolean` value can either be `true` or `false`.
 
 
-## The `integer` type
-
-## The `text` type
-
-
-## Buffers
-
-
-## Booleans
-
+### The `integer` type
+### The `text` type
+### The `void` type
+TODO: type name same as value ... type==value?
+void as const value+type
+### The `null` type
+const value+type
+### The `integer` type
+### The `decimal` type
+### The `quantity` type
+### The `buffer` type
+### The `time` type
+### The `color` type
+### The `endpoint` type
+### The `symbol` type
+### The `image` type
+### The `audio` type
+### The `video` type
+### The `model` type
+### The `font` type
+### The `application` type
 
 ## Records
 
@@ -99,8 +110,3 @@ Per default, any value can be assigned to a key.
 Arrays are extendable key-value data structures.
 Only integer keys are allowed. New properties can be added and existing properties can be deleted after creation.
 Per default, any value can be assigned to a key.
-
-## Void
-
-Void is a special type with a single value: `void`.
-This value represents the absence of a value.

@@ -88,6 +88,7 @@ false & false # false
 true & false # false
 true & true # true
 1 & 2 # false
+2 & "123" # 2 & "123"
 @example & @test # false
 @example & @example # true
 integer/8 & integer # integer/8 (most specific type)
@@ -104,4 +105,81 @@ Examples:
 false | false # false
 true | false # true | false
 true | true # true 
+```
+
+## Value Matching
+
+
+A DATEX value A can be matched against another value B. The result of the match operation C
+is always a boolean.
+
+
+```typescript
+function logicalMatch(
+	A: any & !Conjunction & !Disjunction & !Negation
+	B: any & !Conjunction & !Disjunction & !Negation
+)
+	if A = B:
+		return true
+
+	// special type matching
+	else if A->TYPE = #std.Type and B->TYPE = #std.Type:
+		return  A->BASE = B
+
+	// special endpoint matching
+	else if A->TYPE = #std.Endpoint and B->TYPE = #std.Endpoint:
+		return  A->BASE = B 
+
+	return false
+
+```
+
+```typescript
+function matchSingle(
+	A: any
+	B: any & !Conjunction & !Disjunction & !Negation
+)
+
+	// special type match
+	if B->TYPE = #std.Type:
+		if A->TYPE != #std.Type and A->TYPE != #std.void:
+			return matchSingle(A->TYPE, B)
+
+	result <- false;
+
+	if A->TYPE = Conjunction:
+		for each item E:any of A:
+			result <- matchSingle(E, B)
+			if result = false: break
+
+	else if A->TYPE = Disjunction:
+		for each item E:any of A:
+			result <- matchSingle(E, B)
+			if result = true: break
+
+	else result <- logicalMatch(A, B)
+
+	return result
+```
+
+```typescript
+function match(
+	A: any
+	B: any
+)
+	result <- false
+
+	if B->TYPE = Conjunction:
+		for each item E:any of B:
+			result <- match(A, E)
+			if result = false: break
+
+	else if B->TYPE = Disjunction:
+		for each item E:any of B:
+			result <- match(A, E)
+			if result = true: break
+
+	else result <- matchSingle(A, B)
+
+	return result
 ```

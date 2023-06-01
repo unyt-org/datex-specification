@@ -1,0 +1,240 @@
+/*
+When defining template/type properties, the override keyword can be used to override previous
+values in a conjunction (per default they are merged).
+(Adds an override flag to the value)
+
+*/
+type Y: integer = (
+
+);
+
+type Vec = (x:number, y:number)
+
+const Callable = template (
+	function call()()
+);
+const Callable2 = Callable & template (
+	override function call()(
+		
+	)
+);
+
+(x: 1, y: 2) & override (x: 2) => (x: 2)
+(x: 1, y: 2) & (x: override 2) => (x: 2, y:2)
+
+const x = (call: function()()) & (call: function()()) & (override call: function()()); & (call: override function()());
+const y = (integer & override text); // => (text)
+const y = (@a & @y)
+
+const myObject = (x: 1) | (x: 2);
+myObject.x = 1|2
+myObject.x += 5;
+myObject.x // => 6|7
+
+x (1);
+x (1,2);
+x 1;
+
+1 * 5;
+1,2 * 5;
+1, * 5;
+1 * 5;
+
+(1,2,3);
+1, * 4
+1 * 4
+
+(1,2,3) * 4; => (4,8,12);
+(void) * 4; => (void, void, void)
+('a', 'b') * 2 => ('aa', 'bb')
+'a' * 2 => 'aa'
+
+(1,2,3) * (1,2,3)
+
+(1) * 5; // => 5
+(1,) * 5 // => 5
+'1' * 5; // => '11111'
+5 * '1'
+
+
+(1|2) * 4 + (4|10|12|2); // => error
+
+(1,2,3) | (4,5,6);
+(1|4, 2|5, 3|6);
+
+(1,2,3) & (4,5,6);
+(1&4, 2&5, 3&6);
+(false, false, false);
+
+const sets = Set (1,4,5) & Set (4,5,6);
+sets // => Set (4)
+
+(1|2) | (1|2) => (1|2|2|4)
+(1|2) + (1|2) => (1|2|2|4)
+
+(x: 2) matches myObject
+const myObject = (x: integer|void) & (x: integer) // => (x: integer)
+
+s = false;
+myObject.x = true|s;
+
+
+type x = integer & text & (
+	#this as text = always (#this as integer).toHex();
+);
+
+print x() = 1 & '#1'
+print (x as text)
+
+
+type Callable2 = Callable & template ();
+
+const x = Callable2();
+
+
+	integer &
+
+	#xx: 23,
+
+	function() (	
+		#xx
+	)
+
+	&
+
+	x: number
+
+& 
+
+constructor (
+	#this.x = 1;
+)
+
+template (
+	toHex: function() (
+
+	)
+)
+
+
+
+type X =  
+
+(
+	export const a:integer = 10;
+)
+& 
+
+& template (
+	x: 0,
+	y: 0,
+	function a () (
+
+	)
+)
+
+
+X.x = integer
+
+const x = X();
+x.x = 0
+
+
+
+
+
+
+
+nan == nan
+
+1 matches (1|2);
+(1,2,3) matches (1,2,3);
+
+
+x = Player(x:0);
+y = Player(x:1);
+
+
+2 matches integer;
+2 matches integer|text;
+
+2 matches 2;
+2 matches 2|10;
+x matches Player;
+(x:1, y:1) matches (x:1, y:1)
+(x:1, y:1) matches (x:integer, y:integer)
+
+1|2 matches 1&2;
+1|2 matches 2;
+
+@example/1 matches @example
+integer/u8 matches integer
+integer matches integer/u8
+
+1 instanceof integer
+@example/2 instanceof @example|@a2
+
+
+1 includes 1
+1&'2' includes 1&'2'
+
+1 matches Type // true
+integer matches Type // false
+
+instance = Player();
+instance matches Entity;
+instance matches Player;
+Player extends Entity
+instance matches value Entity;
+
+
+const integer = Type & ()
+
+1 matches (integer|text)
+integer/2 matches (integer|text)
+
+integer matches Type // integer not of type Type
+Type & () matches Type // but integer includes Type
+type integer matches Type // integer not of type Type
+
+Player matches Entity;
+Entity & (...) matches Entity;
+
+
+// decide match rule for types/values
+
+type Entity = (x:integer,y:integer);
+type MoveableEntity = Entity & (vx,vy);
+type Player = Type('Player', #type:Type) & MoveableEntity & (name: text);
+
+const player = Player (name:'playr');
+
+typeof player =>  & (#type: Player) => Player
+typeof Player =>
+
+player matches Player;
+(name:'playr') & (x:0, y:0) & (#type: Player) matches Player; 
+    => Player realMatches Player;
+    => true
+(name:'playr') & (x:0, y:0) & (#type: MoveableEntity & (name: text)) matches MoveableEntity; 
+    =>  MoveableEntity & (name: text) realMatches MoveableEntity;
+    => true
+
+Entity(vx,vy) & (name: text) & (#type: Type|void) matches Entity
+    => if #type == Type|void => compare directly
+    => Player & (#type: Type) realMatches Entity 
+    => true
+
+
+Player matches player;
+
+const x = void;
+
+
+x == x;
+x = Player();
+
+x matches Player();
+@example matches @example 
+integer matches integer
+

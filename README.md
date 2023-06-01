@@ -18,7 +18,7 @@ DATEX incorporates a global shared memory that enables data synchronization betw
 In addition, DATEX includes a general-purpose type system which is designed to interface with common programming languages.
 
 This specification describes
- * the *DATEX Binary Format* (**DXB**) - the machine-readable format of DATEX
+ * the *DATEX Binary Format* (**DXB**) - the machine-readable bytecode format for DATEX
  * the *DATEX Script Language* (**DATEX Script** or **DX**) - human-readable representation of DATEX that gets compiled to DXB
 
 <!--TODO: change/remove?-->

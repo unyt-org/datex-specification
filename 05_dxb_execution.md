@@ -32,7 +32,7 @@ Some internal slots are directly accessible in the scope as internal variables (
 * `[[RESULT]]`
 * `[[INDEX]]`
 * `[[INSTRUCTION_CODE]]`
-* `[[INSTRUCTIONN]]`
+* `[[INSTRUCTION]]`
 * `[[THIS]]`
 * `[[ROOT]]`
 
