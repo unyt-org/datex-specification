@@ -64,3 +64,6 @@ If no instance is specified, the routing network decides which endpoint instance
 ## Broadcasts
 
 The special `@*` address resolves to `@@FFFFFFFFFFFFFFFFFFFFFFFF` and represents a broadcast address targeting all endpoints.
+
+## Anonymous endpoint ID
+TODO: explain generation of endpoint ID
