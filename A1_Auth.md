@@ -2,47 +2,75 @@
 
 ## Authorization Processes
 
-### Creating endpoint
+### Endpoint Creation
 TODO: introduction
+
+#### Trust Levels
+
+* **Trust Level 3** (Authorities): 
+	Endpoints with Trust Level 3 are directly selected through a democratic election.
+	Only Organisation endpoints (TL2) can become TL3 endpoints.
+	Every TL2 endpoint can vote in favor or against each nominated endpoint.
+	TL3 endpoints are elected for an indefinite period of time.
+	If a TL3 endpoint is no longer trusted by the majority, ... (TODO: discuss election stuff)
+
+	Example: @+unyt
+* **Trust Level 2**: (Personal + Organisation endpoints):
+    Trust Level 2 endpoints are verified by a Trust Level 3 endpoint. They are directly linked to
+	existing people or legal entities.
+
+	Example: @max, @+uniulm
+* **Trust Level 1**: (Application-specific Personal + Organisation endpoints):
+    Trust Level 1 endpoints are created and verified by Trust Level 2 endpoints and serve as proxy endpoints for
+	specific applications (e.g. "user accounts" for specific apps, bots, apps provided by the TL2 endpoint)
+
+	Example: @max.twitter -> @@1234567, @max.myCoolApp -> @@12345678
+* **Trust Level 0**: (Anonymous endpoints)
+	Trust Level 0 endpoints are not verified by another endpoint. They are not linked to an organisation or person.
+
+	Example: @@565787980
+
+(Endpoints can also ignore the public trust chain of the Supranet and create their own trusted networks with root endpoints.
+This can be useful for private DATEX networks.)
 
 **Process flow**:
-1. Local endpoint assigns itself either a *random* generated endpoint identifier (anonymous endpoint) or a custom endpoint identifier (must be validated by [trusted authority](unyt_Auth)) and creates two key pairs. Please refer to [Cryptographic Keys](./09_endpoints.md#cryptographic-keys).
-	- encryption key pair (RSA-OAEP)
-	- sign key pair (ECDSA)
-2. Both public keys along the endpoint identifier are distributed as block to Supranet
-	- Network storage
-	- optional storage option in HELIX blockchain
-3. Endpoint identifier, public keys and private keys shall be locally stored in a common format
-	- Data can be stored in .dx-format (TODO refer)
-	- Private keys can be securely stored analog (print / cold wallet)
+1. A new endpoint is created with a *random* generated endpoint identifier (anonymous endpoint) or a custom endpoint identifier (must be validated by [trusted authority](unyt_Auth)). 
+2. A sign and encryption key pair are created
+([Cryptographic Keys](./09_endpoints.md#cryptographic-keys)).
+3. Both public keys and the endpoint identifier are distributed to the Supranet (HELLO message)
+4. A endpoint public key entry is optionally added to the HELIX blockchain
+5. Persistence:
+    * The endpoint identifier, public and private keys can be stored and exported in a .dx file
+	* Private keys can be securely stored in an analog format or cold wallet
 
-#### Creating trusted endpoint
+#### Trusted Endpoint Creation
 TODO: introduction
+
+A trusted endpoint is part of a chain of endpoints.
+Trusted endpoints can designate other trusted endpoints which are trusted by themselves.
+
 
 **Process flow**:
 The process of creating trusted endpoints can be derived from [Creating anonymous endpoint](#creating-anonymous-endpoint).
 
 1. no change
-2. Block includes additional signature by trusted endpoint and endpoint identifier of signer. A trusted endpoint can be
-	- an auth-authority
-	- any other endpoint
+2. The block includes an additional signature and identifier of a trusted endpoint
 3. no change
 
-### Joining Supranet as existing endpoint
-The existing endpoint can be recreated using stored data *(private / public keys + endpoint identifier)*.
+### Joining the Supranet
+An existing endpoint can be recreated with the stored private keys and endpoint identifier.
 A HELLO-message is distributed to the Supranet (see [Registering an endpoint](./09_endpoints.md#registering-an-endpoint)).
-
 
 ## Applications
 
 ### Identity Data Storage
 TODO: add datex type explanation
 
-A endpoint can hold (more or less persistent) data fields as seen below. 
-All data can be optionally signed by an authority. 
-If data changes (name, nationality) an signed application including verified documents by a state authority coming from the applier shall be validated.
+An endpoint can hold (more or less persistent) data fields as seen below. 
+All data can be optionally signed by an other endpoint (authority endpoint). 
+If data changes (name, nationality), a signed application including verified documents by a state authority coming from the applier shall be validated.
 
-Data may be stored in HELIX blockchain for data availability purposes.
+Data can additionally be stored in the HELIX blockchain for data availability purposes.
 
 #### Personal
 **optionally validated data**:
@@ -53,8 +81,8 @@ Data may be stored in HELIX blockchain for data availability purposes.
 - date of birth: `time`
 - address: `Address`
 - nationality: `text[]`
-- gender?: `m | f | d`
-- image?: `Image`
+- gender?: `"m" | "f" | "d"`
+- image?: `image`
 - fingerprint?: `Buffer`
 - paymentMethods?: `Payment[]`
 
@@ -68,17 +96,17 @@ Data may be stored in HELIX blockchain for data availability purposes.
 - phone?: `text`
 - paymentMethods?: `Payment[]`
 
-### Creating subendpoint
-A local endpoint can create subendpoints that are publicy assigned to itself.
+### Creating sub endpoints
+An endpoint can create sub endpoints that are publicy linked to itself.
+They are still regarded as trusted endpoints, but they only have trust level 3.
 
 **Process flow**:
-* A new trusted anonymous endpoint is created (see [Creating endpoint](./A1_Auth.md#creating-trusted-endpoint)) and the block is signed by local endpoint
-* Local endpoint may store a property that links to subendpoint (Datex type: Endpoint)
-	- Property can be a entry in a map (`TODO`)
-	- Property can be in the public slot (`@example::#public.mySubEndpoint`)
+* A new trusted anonymous endpoint is created (see [Creating endpoint](./A1_Auth.md#creating-trusted-endpoint)) and the block is signed by the local endpoint
+* The local endpoint creates an endpoint property that points to the subendpoint (DATEX type: Endpoint):
+	`@example::#public.mySubEndpoint` or short form `@example.mySubEndpoint`
 
 ### Authentication
-Trust is established trought authentication authorities trusted by the network. The default authority is **unyt.org**.
+Trust is established through authentication authorities trusted by the network. The default authority is **unyt.org**.
 
 #### Authentication via eID
 A trusted personal endpoint can be created using sign application from electronical passports or ids.
@@ -86,18 +114,13 @@ A trusted personal endpoint can be created using sign application from electroni
 Personal data can be retrieved from machine readeable documents (EU passport / eID) and validated and signed by authority.
 
 
-#### Authentication via *Mail*
--
-
-
-
 ## Service: unyt Auth
-All of above applications are merged in our service **unyt Auth**.
+All of the functions described above are provided by the **unyt Auth** service.
 
-### Endpoint identifier
-As a trusted endpoint authority unyt can assign custom endpoint identifier.
+### Endpoint identifiers
+As a trusted endpoint authority, unyt can assign custom endpoint identifiers.
 
-**Personal identifier**
+**Personal identifiers**
 
 Format: `@username`
 
@@ -110,23 +133,25 @@ Restrictions of endpoint identifiers are:
 - must be represented as ASCII characters
 - blacklist of bad words
 
-**Organization identifier**:
+**Organization identifiers**:
 
 Format: `@+organizationName`
 
-unyt is in charge of verifying organizations. To avoid name colissions unyt makes public announcements about recent name reservations of organizations for up to 10 bussiness days to handle complains.
+unyt is in charge of verifying organizations. 
+To avoid naming colissions, unyt makes public announcements about recent name reservations of organizations for up to 10 bussiness days to handle complains.
 
 TODO
 
 ### Interfaces
-All of the above functionality is provided throught those Interfaces descibed below... UI is optionally provided within our service.
+All of the above functionality is provided through the interfaces descibed below... UI is optionally provided within our service.
 
 ### Key Storage
 unyt provides a service to store users encrypted private keys that are not accesible by unyt.
 
-The keys (2x private) for the main endoint can be decrypted via master password. Subendpoints keys are encrypted with the main endpoint public keys and can be decrypted by the main endpoint's private keys.
+The keys (2x private) for the main endpoint can be decrypted via the master password. 
+Sub endpoint keys are encrypted with the main endpoint public keys and can be decrypted with the main endpoint private keys.
 
-If a subendpoint key is lost (e.g. access to Twitter) the user needs to login with the master endpoint and request the keys from unyt.
+If a sub endpoint key is lost, the user needs to log in with the master endpoint and request the keys from unyt.
 
 
 **Storing Process flow (main endpoint)**:
@@ -176,4 +201,5 @@ Private keys are explicitly not exposed to applications. Only unyt Auth (unyt.or
 
 **Process flow**:
 
-Follow the **Restoring Process flow**. Optionally a QR-Code including the endpoint ID can be scanned to login from an external device (mobile).
+This processs follows the **Restoring Process flow**. 
+Optionally, a QR-Code including the endpoint ID can be scanned to log in from an external device (mobile).
