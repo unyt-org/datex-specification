@@ -22,7 +22,8 @@ TODO: introduction
 	Example: @max, @+uniulm
 * **Trust Level 1**: (Application-specific Personal + Organisation endpoints):
     Trust Level 1 endpoints are created and verified by Trust Level 2 endpoints and serve as proxy endpoints for
-	specific applications (e.g. "user accounts" for specific apps, bots, apps provided by the TL2 endpoint)
+	specific applications (e.g. "user accounts" for specific apps, bots, apps provided by the TL2 endpoint).
+	Those entities can be verified and untracably signed as TL1 using ring signatures (Personal endpoint and a selection of random endpoints sign).
 
 	Example: @max.twitter -> @@1234567, @max.myCoolApp -> @@12345678
 * **Trust Level 0**: (Anonymous endpoints)
