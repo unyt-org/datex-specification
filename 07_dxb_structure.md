@@ -23,7 +23,95 @@ The Routing Header is not encrypted or signed, the content always needs to be pa
 |Block Size         | 3          | 5          | 2      | <pre class="language-yaml">SIZE: Uint16&#10;</pre>          | Total block size in bytes           |
 |TTL                | 5          | 6          | 1      | <pre class="language-yaml">TTL: Uint8&#10;</pre>            | Time-to-live for this block, get decremented with each node redirection           |
 |Priority           | 6          | 7          | 1      | <pre class="language-yaml">PRIORITY: Uint8&#10;</pre>       | Routing priority of this block      |
-|Signed / Encrypted | 7          | 8          | 1      | <pre class="language-yaml">SIGN_ENCRYPT: Uint8&#10;</pre>   | 0x00: not signed or encrypted, 0x01: signed, 0x02: signed and encrypted, 0x03: encrypted |
+|Signed / Encrypted | 7          | 8          | 1      | <pre class="language-yaml">SECURITY: Uint8&#10;</pre>   | 0x00: not signed or encrypted, 0x01: signed, 0x02: encrypted, 0x03: signed and encrypted |
+
+```
+Endpoint {
+	TYPE: Uint8
+	ID: Uint8[18]
+}
+
+PointerId {
+	TYPE: Uint8
+	IDENTIFIER: Uint8[18]
+	INSTANCE: Uint16
+	TIMESTAMP: Uint32 # unix ts in seconds, starting from 25. Juli 23
+	COUNTER: Uint8
+}
+
+ReceiverEndpoint {
+	FLAGS: Uint8
+		HAS_KEY: FLAGS & 0b00000001
+	ENDPOINT: Endpoint
+	optional KEY: Uint8[512]
+}
+
+ReceiverEndpoints {
+	COUNT: Uint16
+	ENDPOINTS: ReceiverEndpoint[COUNT]
+}
+
+Receivers {
+	TYPE: Uint8
+	optional POINTER_ID: PointerId
+	optional ENDPOINTS: ReceiverEndpoints
+}
+
+RoutingHeader {
+	MAGIC_NUMBER: Uint16 {0x01, 0x64},
+	VERSION: Uint8,
+	BLOCK_SIZE: Uint16,
+	TTL: Uint8,
+	SECURITY: Uint8
+		HAS_SIGNATURE:           SECURITY & 0b00000001,
+		HAS_ENCRYPTION:          SECURITY & 0b00000010,
+		HAS_ENCRYPTED_SIGNATURE: SECURITY & 0b00000100
+		HAS_CHECKSUM:            SECURITY & 0b00001000
+
+	SENDER_TYPE: Uint8,
+	optional SENDER: Uint8[18] # only exists if SENDER_TYPE != 255, otherwise SENDER is @@any
+	RECEIVER_COUNT: Uint16, # if MAX, flood, no RECEIVERS
+	optional RECEIVERS: Receivers
+
+	SCOPE_ID: Uint32
+	BLOCK_INDEX: Uint16
+	BLOCK_SUB_INDEX: Uint16
+
+	CHECKSUM: Uint16
+}
+
+BlockHeader {
+	
+	FLAGS: Uint21
+		BLOCK_TYPE:    FLAGS & 0b111100000000000000000,
+		ALLOW_EXECUTE: FLAGS & 0b000010000000000000000,
+		END_OF_BLOCK:  FLAGS & 0b000001000000000000000, # if a subdivided block has only a single signature, it is sent with the last block containing the END_OF_BLOCK flag
+		END_OF_SCOPE:  FLAGS & 0b000000100000000000000,
+		HAS_EXPIRATION_TIMESTAMP:   FLAGS & 0b000000010000000000000,
+		HAS_ON_BEHALF_OF:           FLAGS & 0b000000001000000000000,
+		HAS_REPRESENTED_BY:         FLAGS & 0b000000000100000000000,
+		IS_COMPRESSED:              FLAGS & 0b000000000010000000000,
+		_RESERVED_:    FLAGS & 0b000000000001111111111,
+	CREATION_TIMESTAMP: Uint43, # unix ts in ms, starting from 25. Juli 23
+	optional EXPIRATION_TIMESTAMP: Uint32, # unix ts in seconds, starting from CREATION_TIMESTAMP
+	optional REPRESENTED_BY: Endpoint
+	optional IV: Uint8[16]
+}
+
+DXB {
+	ROUTING_HEADER: RoutingHeader,
+	optional SIGNATURE: Uint8[192],
+	optional ENCRYPTED_SIGNATURE: Uint[x]
+	# optional start signed part:
+	optional BLOCK_HEADER: BlockHeader
+	# optional start encrypted part:
+	ENCRYPTED_FLAGS: Uint8
+		DEVICE_TYPE: ENCRYPTED_FLAGS & 0b11110000
+	optional ON_BEHALF_OF: Endpoint,
+	BODY: DXBBody
+}
+```
+
 
 ## The Block Header
 
@@ -39,3 +127,5 @@ If the block is signed, the header cannot be altered, and it can't be read by no
 |Type               | 8          | 9          | 1      | <pre class="language-yaml">TYPE: Uint8&#10;</pre>           | Block type. See *Block Types*         |
 |Flags              | 9          | 10         | 1      | <pre class="language-yaml">FLAGS: Uint8&#10;</pre>          | executable, end of scope, device type     |
 |Timestamp          | 10         | 18         | 8      | <pre class="language-yaml">TIME: Uint64&#10;</pre>          | Time in ms since 2022-01-22 (to be changed)    |
+
+
