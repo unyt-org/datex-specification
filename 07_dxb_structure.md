@@ -26,9 +26,10 @@ The Routing Header is not encrypted or signed, the content always needs to be pa
 |Signed / Encrypted | 7          | 8          | 1      | <pre class="language-yaml">SECURITY: Uint8&#10;</pre>   | 0x00: not signed or encrypted, 0x01: signed, 0x02: encrypted, 0x03: signed and encrypted |
 
 ```
-Endpoint {
+Datex.Endpoint {
 	TYPE: Uint8
 	ID: Uint8[18]
+	INSTANCE: Uint16
 }
 
 PointerId {
@@ -40,19 +41,20 @@ PointerId {
 }
 
 ReceiverEndpoint {
-	FLAGS: Uint8
-		HAS_KEY: FLAGS & 0b00000001
 	ENDPOINT: Endpoint
-	optional KEY: Uint8[512]
+	optional KEY: Uint8[512] # only if Receivers.FLAGS.ENDPOINTS_HAVE_KEYS
 }
 
 ReceiverEndpoints {
-	COUNT: Uint16
+	COUNT: Uint16 # if MAX, flood, no RECEIVERS
 	ENDPOINTS: ReceiverEndpoint[COUNT]
 }
 
 Receivers {
-	TYPE: Uint8
+	FLAGS: Uint8
+		HAS_POINTER_ID:           FLAGS & 0b00000001,
+		HAS_ENDPOINTS:            FLAGS & 0b00000010,
+		ENDPOINTS_HAVE_KEYS:      FLAGS & 0b00000100
 	optional POINTER_ID: PointerId
 	optional ENDPOINTS: ReceiverEndpoints
 }
@@ -60,24 +62,21 @@ Receivers {
 RoutingHeader {
 	MAGIC_NUMBER: Uint16 {0x01, 0x64},
 	VERSION: Uint8,
-	BLOCK_SIZE: Uint16,
 	TTL: Uint8,
-	SECURITY: Uint8
-		HAS_SIGNATURE:           SECURITY & 0b00000001,
-		HAS_ENCRYPTION:          SECURITY & 0b00000010,
-		HAS_ENCRYPTED_SIGNATURE: SECURITY & 0b00000100
-		HAS_CHECKSUM:            SECURITY & 0b00001000
-
-	SENDER_TYPE: Uint8,
-	optional SENDER: Uint8[18] # only exists if SENDER_TYPE != 255, otherwise SENDER is @@any
-	RECEIVER_COUNT: Uint16, # if MAX, flood, no RECEIVERS
-	optional RECEIVERS: Receivers
+	FLAGS: Uint8
+		HAS_UNENCRYPTED_SIGNATURE: FLAGS & 0b00000001,
+		HAS_ENCRYPTION:            FLAGS & 0b00000010,
+		HAS_ENCRYPTED_SIGNATURE:   FLAGS & 0b00000100,
+		IS_LARGE_SIZE:             FLAGS & 0b00001000
+	BLOCK_SIZE: IS_LARGE_SIZE ? Uint32 : Uint16,
 
 	SCOPE_ID: Uint32
 	BLOCK_INDEX: Uint16
 	BLOCK_SUB_INDEX: Uint16
 
-	CHECKSUM: Uint16
+	SENDER_TYPE: Uint8,
+	optional SENDER: Uint8[20] # only exists if SENDER_TYPE != 255, otherwise SENDER is @@any
+	optional RECEIVERS: Receivers
 }
 
 BlockHeader {
@@ -93,15 +92,15 @@ BlockHeader {
 		IS_COMPRESSED:              FLAGS & 0b000000000010000000000,
 		_RESERVED_:    FLAGS & 0b000000000001111111111,
 	CREATION_TIMESTAMP: Uint43, # unix ts in ms, starting from 25. Juli 23
-	optional EXPIRATION_TIMESTAMP: Uint32, # unix ts in seconds, starting from CREATION_TIMESTAMP
+	optional EXPIRATION_OFFSET: Uint32, # unix ts in seconds, starting from CREATION_TIMESTAMP
 	optional REPRESENTED_BY: Endpoint
 	optional IV: Uint8[16]
 }
 
 DXB {
 	ROUTING_HEADER: RoutingHeader,
-	optional SIGNATURE: Uint8[192],
-	optional ENCRYPTED_SIGNATURE: Uint[x]
+	optional UNENCRYPTED_SIGNATURE: Uint8[192],
+	optional ENCRYPTED_SIGNATURE: Uint[x] # used instead SIGNATURE to hide identity of signing endpoint (when using ON_BEHALF_OF)
 	# optional start signed part:
 	optional BLOCK_HEADER: BlockHeader
 	# optional start encrypted part:
