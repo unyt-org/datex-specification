@@ -53,6 +53,11 @@ The `Instantiator` interface extends the `ValueConsumer` interface
 
 ## The `StreamConsumer` interface
 
+
+## Any
+
+Disjunction of all values/types
+
 ## Primitive Types
 
 ### The `boolean` type

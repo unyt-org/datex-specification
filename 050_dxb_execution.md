@@ -23,6 +23,7 @@ Each scope has a number of memory locations to store values that are relevant fo
 Some internal slots are directly accessible in the scope as internal variables (e.g. `#result`, `#this`). Internal variables can be readonly. 
 ### List of internal slots:
 
+<!--todo: which slots are for scopes/sub scopes-->
 * `[[ACTIVE_VALUE]]`
 * `[[LAST_VALUE]]`
 * `[[PROC_RESULT]]`
@@ -45,19 +46,22 @@ Some internal slots are directly accessible in the scope as internal variables (
    * Store the remaining instruction data in `[[INSTRUCTIONN]]` (length depends on the Instruction Code, can also be 0)
 
 2. <b>EXECUTE THE INSTRUCTION</b>
+   * Validate the parameter types depending on the `[[INSTRUCTION_CODE]]`
    * Run the custom instruction procedure depending on `[[INSTRUCTION_CODE]]`
    * Move `[[ACTIVE_VALUE]]` to `[[LAST_VALUE]]`
-   * Add the result of the instruction procedure (`[[PROC_RESULT]]`) to `[[ACTIVE_VALUE]]`
+   * Move the return value of the instruction procedure (`[[PROC_RESULT]]`) to `[[ACTIVE_VALUE]]`
 
 3. <b>APPLY IN CONTEXT</b>
-   * If `[[OPERATOR]]` is set, apply the operator to `[[LAST_VALUE]]` and `[[ACTIVE_VALUE]]` and store the result in `[[ACTIVE_VALUE]]`; clear `[[OPERATOR]]`
+   * If `[[OPERATOR]]` is set, apply the operator to `[[LAST_VALUE]]` and `[[ACTIVE_VALUE]]` and store the result value in `[[ACTIVE_VALUE]]`; clear `[[OPERATOR]]`
    * Else apply `[[ACTIVE_VALUE]]` directly to `[[LAST_VALUE]]` and store the result in `[[ACTIVE_VALUE]]`
 
 4. <b>INSERT THE VALUE</b>
    * If `[[INSERT_LOCATION]]` is set, insert `[[ACTIVE_VALUE]]` at `[[INSERT_LOCATION]]`
-   * Else store the `[[ACTIVE_VALUE]]` in `[[SCOPE_RESULT]]`
-   
+   <!--todo?: remove* Else store the `[[ACTIVE_VALUE]]` in `[[SCOPE_RESULT]]`-->
+
+
 <br>
+
 
 ## Statements
 
@@ -69,15 +73,23 @@ The `[[ACTIVE_VALUE]]` is stored in `[[SCOPE_RESULT]]`.
 
 <br>
 
+## Global Runtime data
+* global: [`Runtime.Global`](./300_data_structures.md#runtimeglobal)
+* scopes: [`Runtime.Scope`](./300_data_structures.md#runtimeglobal)`[]`
+
+## General Runtime procedures
+
+### newSubScope
+```typescript
+function newSubScope()
+   // TODO add new subscope to heap
+   scopes += Runtime.Scope {
+
+   }
+```
+
+
 ## Instruction-specific procedures
-
-### JMP
-1. Set `[[INDEX]]` to `[INDEX]`
-2. Stop instruction processing
-
-### JTR
-1. If `[[ACTIVE_VALUE]]` is `true`, Set `[[INDEX]]` TO `[INDEX]`
-2. Stop instruction processing
 
 ### COUNT
 1. If `[[ACTIVE_VALUE]]` is primitive, set `[[PROC_RESULT]]` to `1`

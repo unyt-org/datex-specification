@@ -1,57 +1,6 @@
 # DATEX Block Handling
 
 
-```
-
-enum BlockType {
-	
-}
-
-enum DeviceType {
-
-}
-
-DXBInstruction {
-	instructionCode: Uint8
-	data: Uint8[]
-}
-
-DXBRouterHeaderData {
-	version: Uint8,
-	ttl: Uint8,
-
-	optional sender: Datex.Endpoint
-	receivers: Datex.Endpoint[] | Datex.Logical<Datex.Endpoint>
-
-	creationTimestamp: Datex.Time
-	expirationTimestamp: Datex.Time
-
-	blockSize: Uint32
-}
-
-DXBValidatedBlock {
-	routingData: DXBRouterHeaderData,
-
-	isSigned: boolean,
-	isEncrypted: boolean,
-
-	scopeId: Uint32,
-	blockIndex: Uint16,
-	blockSubIndex: Uint16,
-
-	blockType: BlockType
-	allowExecute: boolean
-	endOfBlock: boolean
-	endOfScope: boolean
-	optional representedBy: Datex.Endpoint
-	optional onBehalfOf: Datex.Endpoint
-	deviceType: DeviceType,
-
-	body: DXBInstruction[]
-}
-
-```
-
 
 ```typescript
 abstract function dxbOut (dxb: DXB)

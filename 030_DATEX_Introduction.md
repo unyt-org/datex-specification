@@ -18,7 +18,7 @@ To follow the tradition, we will first write a simple "Hello World" script in DA
 #public.std.print 'Hello World';
 ```
 
-The `#public.std.print` function is called with one parameter, a `'Hello World'` string.
+The `print` function is called with one parameter, a `'Hello World'` string.
 Keep in mind that semicolons are required in DATEX script to separate statements, although they can be omitted after the last statement.
 Strings can be created with either single or double quotes - we will come to the differences later.
 
