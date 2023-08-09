@@ -1,5 +1,28 @@
 # Procedures
 
+## ...
+
+
+### 
+
+```typescript
+function getRingBufferIndexRange(a: Uint16, b: Uint16):
+	
+	indiciesInBounds <- []
+
+	function appendArrayIndexRange(a, b):
+		for i in (a..b):
+			indiciesInBounds += i
+
+	if a < b
+		appendArrayIndexRange(a, b)
+	else:
+		appendArrayIndexRange(a, Uint16.MAX)
+		appendArrayIndexRange(0, b)
+
+	return indiciesInBounds
+```
+
 ## Buffer Operations
 
 ### getUint16

@@ -118,7 +118,7 @@ function decryptSignature(signature: Uint8[], sender: Datex.Endpoint, global: Ru
 ```
 
 ```typescript
-function parseDXBValidatedBlock(
+function parseUnresolvedDXBSubBlock(
 	dxb: Protocol.DXB,
 	routingHeaderData: Protocol.DXBRoutingHeaderData,
 	global: Runtime.Global
@@ -130,7 +130,6 @@ function parseDXBValidatedBlock(
 	hasUnencryptedSignature <- routingHeaderFlags & 0b00000001
 	hasEncryption <- routingHeaderFlags & 0b00000010
 	hasEncryptedSignature <- routingHeaderFlags & 0b00000100
-	
 
 	if hasEncryptedSignature:
 		(encryptedSignature, i) <- getSlice(dxb, i, X)
@@ -142,8 +141,7 @@ function parseDXBValidatedBlock(
 	else if hasUnencryptedSignature:
 		(unencryptedSignature, i) <- getSlice(dxb, i, 192)
 
-	if unencryptedSignature:
-		signedData <- dxb[i..len(dxb)]
+	data <- dxb[i..len(dxb)] // optional signed part starting with block header, flags, onbehalfof and body
 
 	(flags, i) <- extractUint64(dxb, i) >> 43
 
@@ -157,74 +155,145 @@ function parseDXBValidatedBlock(
 	isCompressed <- flags & 0b000000000100000000000
 	isSignatureInLastSubblock <- flags & 0b000000000010000000000
 	
-	hasMultiSignature <- isSignatureInLastSubblock and endOfBlock
-
-	
-	if hasMultiSignature:
-		if not unencryptedSignature:
-			return
-		
-		areSubblocksValid <- validatePreviousSubblocks(...) // TODO
-		if not areSubblocksValid:
-			return
-	
-	else if unencryptedSignature:
-		isValid <- validateSignature(unencryptedSignature, signedData)
-		if not isValid:
-			return
-	
 	if hasExpirationOffset:
 		i <- i + 4
 	
 	if hasRepresentedBy:
 		(representedBy, i) <- extractEndpoint(dxb, i)
 	
-	
+	return Runtime.DXBUnresolvedSubBlock {
+		headerData: Runtime.DXBBlockHeaderData {
+			routingData: routingHeaderData,
+			isSigned,
+			isEncrypted,
+			isSignatureInLastSubblock,
 
-	return Runtime.DXBValidatedBlock {
-		isValid,
+			scopeId,
+			blockIndex,
+			blockSubIndex,
 
-		routingData: routingHeaderData,
-		isSigned,
-		isEncrypted,
-
-		scopeId,
-		blockIndex,
-		blockSubIndex,
-
-		blockType,
-		allowExecute,
-		endOfBlock,
-		endOfScope,
-		representedBy,
-		onBehalfOf,
-		deviceType
+			blockType,
+			allowExecute,
+			endOfBlock,
+			endOfScope,
+			representedBy
+		},
+		data
 	}
 ```
 
+```
+
+```
+
 ```typescript
-function executeDXB (
+function getMissingSubBlockIds(
+	block: Runtime.DXBBlock,
+	global: Runtime.Global
+):
+
+	missingSubBlockIds <- []
+	subBlocks <- block.subBlocks
+	indicies <- getRingBufferIndexRange(block.activeBoundA, block.activeBoundB)
+
+	for i in indicies:
+		if not (i in block.subBlocks)
+			missingSubBlockIds += i
+	return missingSubBlockIds
+```
+
+```typescript
+function collectSubBlocks(block: Runtime.DXBBlock, scope: Runtime.Sciope, global: Runtime.Global):
+
+	indicies <- getRingBufferIndexRange(block.activeBoundA, block.activeBoundB)
+
+	executable <- scope.executable
+
+	isSigned <- false
+	// loop over all available subblocks
+	for i in indicies:
+		subBlock <- block.subBlocks[i]
+		if not subBlock:
+			return	
+
+		if	subBlock.headerData.isSignatureInLastSubblock and
+			subBlock.headerData.endOfBlock:
+			signedData <- Uint8[]()
+			for j in indicies:
+				signedData += block.subBlocks[j].data
+
+			// validate signature, subblock(s) must be signed
+			isValid <- validateSignature(unencryptedSignature, signedData)
+
+			// TODO
+			// oben: Extract IV
+			// Unencrypting, get body and flags
+			// if isValid -> add executable to scope
+			if isValid:
+				pass
+			return
+		
+
+		if subBlock.headerData.isSigned:
+
+		else:
+			// if one subblock is not signed whole block is marked as non-signed
+			block.headerData.isSigned = false
+
+	if isSigned:
+
+```
+
+```typescript
+function executeDXB(
 	dxb: Protocol.DXB,
 	routingHeaderData: Protocol.DXBRoutingHeaderData,
 	global: Runtime.Global
 ):
 
-	validatedBlock <- parseDXBValidatedBlock(dxb, routingHeaderData)
+	unresolvedSubBlock <- parseUnresolvedDXBSubBlock(dxb, routingHeaderData, global)
 
 	endpoint <- global.endpoint
 	if not (endpoint in global.scopes):
-		global.scopes[endpoint] = Map<Uint32, Runtime.Scope[]>()
+		global.scopes[endpoint] <- Map<Uint32, Map<Uint32, Runtime.DXBBlock>>()
 
+	headerData <- unresolvedSubBlock.headerData
 
+	scopeId <- headerData.scopeId
+	if not (scopeId in global.scopes[endpoint]):
+		global.scopes[endpoint][scopeId] <- Runtime.Scope()
+	
+	blockId <- headerData.blockId
+	if not (blockId in global.scopes[endpoint][scopeId].blocks):
+		global.scopes[endpoint][scopeId].blocks[blockId] <- Runtime.DXBBlock
+	
+	block <- global.scopes[endpoint][scopeId].blocks[blockId]
+	blockSubIndex <- headerData.blockSubIndex
 
-	scopeId <- routingHeaderData.
-	scopes <- global.scopes[endpoint]
+	if (blockSubIndex > block.activeBoundB or blockSubIndex < block.activeBoundA) and block.lastSubBlockReceived:
+		return
 
-	if not (dxb. in scopes):
-		global.scopes[endpoint] = Map<Uint32, Runtime.Scope[]>()
+	block.subBlocks[blockSubIndex] <- unresolvedSubBlock
 
+	if blockSubIndex > block.activeBoundB
+		block.activeBoundB <- blockSubIndex 
+	else if blockSubIndex < block.activeBoundA
+		block.activeBoundB <- blockSubIndex 
 
-	global.scopes[endpoint]
+	missingSubBlockIds <- getMissingSubBlockIds(block, global)
+
+	if len(missingSubBlockIds) > 0:
+		triggerResend(missingBlockIds, block, global) // TODO
+
+	collectSubBlocks(
+		block,
+		global
+	)
+	// executableBlock.subBlocks <- []
+
+	if executableBlock:
+		block.activeBoundA <- executableBlock.activeBlockA
+
 ```
 
 ```typescript

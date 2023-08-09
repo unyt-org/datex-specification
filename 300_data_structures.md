@@ -20,9 +20,21 @@ Runtime.DXBRoutingHeaderData {
 }
 ```
 
-### Runtime.DXBValidatedBlock
+### Runtime.DXBBlock
 ```rust
-Runtime.DXBValidatedBlock {
+Runtime.DXBBlock {
+	activeBoundA: Uint16, // subblock to be executed next
+	activeBoundB: Uint16, // latest received subblock
+	lastSubBlockReceived: boolean,
+
+	subBlocks: Map<Uint16, Runtime.DXBUnresolvedSubBlock>
+	
+	headerData: DXBBlockHeaderData
+}
+
+### Runtime.DXBBlockHeaderData
+```rust
+Runtime.DXBBlockHeaderData {
 	routingData: DXBRoutingHeaderData
 
 	isSigned: boolean
@@ -37,17 +49,21 @@ Runtime.DXBValidatedBlock {
 	endOfBlock: boolean
 	endOfScope: boolean
 	optional representedBy: Datex.Endpoint
-	optional onBehalfOf: Datex.Endpoint
-	deviceType: DeviceType
+}
+```
 
-	body: Uint8[] // DXBInstruction[]
+### Runtime.DXBUnresolvedSubBlock
+```rust
+Runtime.DXBUnresolvedSubBlock {
+	headerData: Runtime.DXBBlockHeaderData,
+	data: Uint8[]
 }
 ```
 
 ### Runtime.Global: 
 ```rust
 Runtime.Global {
-	scopes: Map<Datex.Endpoint, Map<Uint32, Runtime.Scope[]>>,
+	scopes: Map<Datex.Endpoint, Map<Uint32, Runtime.Scope>>,
 	endpoint: Datex.Endpoint,
 	version: ...
 	... <!-- TODO -->
@@ -57,11 +73,16 @@ Runtime.Global {
 ### Runtime.Scope: 
 ```rust
 Runtime.Scope {
+	activeBoundA: Uint16, // block to be executed next
+	activeBoundB: Uint16, // latest received block
+	lastBlockReceived: boolean,
 	result: any
 	byteIndex: Uint64
 	this: any
 	root: any,
-	subscopes: Runtime.Subscope[]
+	blocks: Map<Uint32, Runtime.DXBBlock>, // <block id, block>
+	subscopes: Runtime.Subscope[],
+	executable: Uint8[]
 }
 ```
 
