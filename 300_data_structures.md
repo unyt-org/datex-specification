@@ -3,9 +3,10 @@
 
 ## Runtime
 
-## Runtime.DXBRouterHeaderData
+
+## Runtime.DXBRoutingHeaderData
 ```rust
-Runtime.DXBRouterHeaderData {
+Runtime.DXBRoutingHeaderData {
 	version: Uint8
 	ttl: Uint8
 
@@ -22,7 +23,7 @@ Runtime.DXBRouterHeaderData {
 ### Runtime.DXBValidatedBlock
 ```rust
 Runtime.DXBValidatedBlock {
-	routingData: DXBRouterHeaderData
+	routingData: DXBRoutingHeaderData
 
 	isSigned: boolean
 	isEncrypted: boolean
@@ -39,30 +40,42 @@ Runtime.DXBValidatedBlock {
 	optional onBehalfOf: Datex.Endpoint
 	deviceType: DeviceType
 
-	body: DXBInstruction[]
+	body: Uint8[] // DXBInstruction[]
 }
 ```
+
 ### Runtime.Global: 
 ```rust
 Runtime.Global {
-	RESULT: any
-	INDEX: Uint64
-	THIS: any
-	ROOT: any
+	scopes: Map<Datex.Endpoint, Map<Uint32, Runtime.Scope[]>>,
+	endpoint: Datex.Endpoint,
+	version: ...
+	... <!-- TODO -->
 }
 ```
 
 ### Runtime.Scope: 
 ```rust
 Runtime.Scope {
-	ACTIVE_VALUE: any
-	LAST_VALUE: any
-	PROC_RESULT: any
-	OPERATOR: InstructionCode
-	INSERT_LOCATION: any
-	SCOPE_RESULT: any
-	INSTRUCTION_CODE: any
-	INSTRUCTION: any
+	result: any
+	byteIndex: Uint64
+	this: any
+	root: any,
+	subscopes: Runtime.Subscope[]
+}
+```
+
+### Runtime.Subscope: 
+```rust
+Runtime.Subscope {
+	activeValue: any
+	lastValue: any
+	procResult: any
+	operator: InstructionCode
+	insertLocation: any
+	scopeResult: any
+	instructionCode: InstructionCode // TODO remove?
+	instruction: Protocol.DXBInstruction
 }
 ```
 
@@ -175,10 +188,10 @@ Protocol.BlockHeader {
 		ALLOW_EXECUTE: FLAGS & 0b000010000000000000000,
 		END_OF_BLOCK:  FLAGS & 0b000001000000000000000, // if a subdivided block has only a single signature, it is sent with the last block containing the END_OF_BLOCK flag
 		END_OF_SCOPE:  FLAGS & 0b000000100000000000000,
-		HAS_EXPIRATION_TIMESTAMP:   FLAGS & 0b000000010000000000000,
-		HAS_ON_BEHALF_OF:           FLAGS & 0b000000001000000000000,
-		HAS_REPRESENTED_BY:         FLAGS & 0b000000000100000000000,
-		IS_COMPRESSED:              FLAGS & 0b000000000010000000000,
+		HAS_EXPIRATION_OFFSET:   FLAGS & 0b000000010000000000000,
+		HAS_REPRESENTED_BY:         FLAGS & 0b000000001000000000000,
+		IS_COMPRESSED:              FLAGS & 0b000000000100000000000,
+		IS_SIGNATURE_IN_LAST_SUBBLOCK:       FLAGS & 0b000000000010000000000 // if this bit is set the signature is present in the last sub block. All previous subblocks combined must be verified against this signature
 		_RESERVED_:    FLAGS & 0b000000000001111111111,
 	CREATION_TIMESTAMP: Uint43, // unix ts in ms, starting from 25. Juli 23
 	optional EXPIRATION_OFFSET: Uint32, // unix ts in seconds, starting from CREATION_TIMESTAMP
@@ -198,6 +211,7 @@ Protocol.DXB {
 	// optional start encrypted part:
 	ENCRYPTED_FLAGS: Uint8
 		DEVICE_TYPE: ENCRYPTED_FLAGS & 0b11110000
+		HAS_ON_BEHALF_OF: ENCRYPTED_FLAGS & 0b00001000,
 	optional ON_BEHALF_OF: Protocol.Endpoint,
 	BODY: Uint8[] // array of instructions, might be split over multiple blocks -> combined to Protocol.Body
 }

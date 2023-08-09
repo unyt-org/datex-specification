@@ -111,10 +111,11 @@ function (data: Instruction.Jump):
 
 The `jump` command can be followed by an ASCII character sequence (label). The global index is set to the position of the corresponding label command.
 
+
 ```datex
-jump xx # global->INDEX = a
+jump xx # scope->byteIndex = a
 # ...
-lbl xx  # global->INDEX = b
+lbl xx  # scope->byteIndex = b
 ```
 This corresponds to a JUMP instruction with the data
 ```rust

@@ -75,15 +75,15 @@ The `[[ACTIVE_VALUE]]` is stored in `[[SCOPE_RESULT]]`.
 
 ## Global Runtime data
 * global: [`Runtime.Global`](./300_data_structures.md#runtimeglobal)
-* scopes: [`Runtime.Scope`](./300_data_structures.md#runtimeglobal)`[]`
+* The `scope` keyword acts as context of the current scope ([`Runtime.Scope`](./300_data_structures.md#runtimeglobal)).
 
 ## General Runtime procedures
 
 ### newSubScope
 ```typescript
-function newSubScope()
+function newSubScope(scope: Runtime.Scope)
    // TODO add new subscope to heap
-   scopes += Runtime.Scope {
+   scope.subscopes += Runtime.Subscope {
 
    }
 ```

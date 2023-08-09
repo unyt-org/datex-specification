@@ -1,44 +1,10 @@
 # DATEX Block Handling
 
-
+```typescript
+abstract function dxbOut (dxb: Protocol.DXB)
+```
 
 ```typescript
-abstract function dxbOut (dxb: DXB)
-
-function getUint16(data: Uint8[], i: Uint8):
-	return dxb[i] + dxb[i+1] * 0xff
-function extractUint16(buffer: Uint8[], i: Uint8):
-	return (getUint16(buffer, i), i+2)
-
-function getUint64(data: Uint8[], i: Uint8):
-	return 
-		dxb[i] + 
-		dxb[i+1] * 0xff +
-		dxb[i+2] * 0xffff +
-		dxb[i+3] * 0xffffff +
-		dxb[i+4] * 0xffffffff +
-		dxb[i+5] * 0xffffffffff +
-		dxb[i+6] * 0xffffffffffff +
-		dxb[i+7] * 0xffffffffffffff
-function extractUint64(buffer: Uint8[], i: Uint8):
-	return (getUint64(buffer, i), i+8)
-
-function getUint32(data: Uint8[], i: Uint8):
-	return 
-		dxb[i] + 
-		dxb[i+1] * 0xff +
-		dxb[i+2] * 0xffff +
-		dxb[i+3] * 0xffffff
-function extractUint32(buffer: Uint8[], i: Uint8):
-	return (getUint32(buffer, i), i+4)
-
-
-function getSlice(data: Uint8[], i: Uint8, length: Uint8):
-	return data[i..i+length]
-function extractSlice(buffer: Uint8[], i: Uint8, length: Uint8):
-	return (getSlice(buffer, i, length), i+length)
-
-
 function extractReceivers(buffer: Uint8[], i: Uint8):
 
 	flags <- buffer[i++]
@@ -49,7 +15,7 @@ function extractReceivers(buffer: Uint8[], i: Uint8):
 	receivers <- Map<Datex.Endpoint, Uint8[]>
 
 	if hasPointerId:
-		(pointerId,i ) <- extractSlice(buffer, i, 26)
+		(pointerId,i) <- extractSlice(buffer, i, 26)
 	if hasEndpoints:
 		(count, i) <- extractUint16(buffer, i)
 		for c in 0..count:
@@ -61,7 +27,9 @@ function extractReceivers(buffer: Uint8[], i: Uint8):
 				receivers.set(receiver, null)
 
 	return (receivers, i)
+```
 
+```typescript
 function parseEndpoint(data: Uint8[]):
 	i <- 0
 	return Datex.Endpoint {
@@ -69,22 +37,26 @@ function parseEndpoint(data: Uint8[]):
 		id: getSlice(buffer, i, 18),
 		instance: getUint16(buffer, i+18)
 	}
+```
 
+```typescript
 function extractEndpoint(buffer: Uint8[], i: Uint8):
-	(slice, i) <- getSlice(buffer, i, 21) 
+	(slice, i) <- getSlice(buffer, i, 21)
 	return (parseEndpoint(slice), i)
+```
 
-function extractDXBRouterHeaderData(dxb: DXB)
+```typescript
+function extractDXBRoutingHeaderData(dxb: Protocol.DXB)
 	i <- 0;
 	if not (dxb[i++] = 0x01 and dxb[i++] = 0x64):
 		return
 
 	version <- dxb[i++]
 	ttl <- dxb[i++]
-	flags <- dxb[i++]
-	isLargeSize: boolean <- flags & 0b00001000
-	hasUnencryptedSignature: boolean <- flags & 0b00000001
-	hasEncryptedSignature: boolean <- flags & 0b00000100
+	routingHeaderFlags <- dxb[i++]
+	isLargeSize: boolean <- routingHeaderFlags & 0b00001000
+	hasUnencryptedSignature: boolean <- routingHeaderFlags & 0b00000001
+	hasEncryptedSignature: boolean <- routingHeaderFlags & 0b00000100
 
 	blockSize: Uint31
 	if isLargeSize:
@@ -108,16 +80,26 @@ function extractDXBRouterHeaderData(dxb: DXB)
 	else if hasUnencryptedSignature:
 		i <- i + x // TODO
 
-	(flagsAndCreationTimestamp, i) <- extractUint64(dxb, i)
-	creationTimestampMs: Uint64 <- flagsAndCreationTimestamp & 0x7ffffffffff
+	(blockHeaderFlagsAndCreationTimestamp, i) <- extractUint64(dxb, i)
+	creationTimestampMs: Uint64 <- blockHeaderFlagsAndCreationTimestamp & 0x7ffffffffff
+
+	blockHeaderFlags <- blockHeaderFlagsAndCreationTimestamp >> 43
 	(expirationOffset, i) <- extractUint32(dxb, i)
 
 	creationTimestamp <- Datex.Time.fromMilliseconds (creationTimestampMs)
-	expirationTimestamp <- Datex.Time.fromMilliseconds (creationTimestampMs + expirationOffset*1000)
 
-	return DXBRouterHeaderData {
+	hasExpirationOffset <- blockHeaderFlags & 0b000000010000000000000
+
+	size <- i - 8
+	if hasExpirationOffset:
+		expirationTimestamp <- Datex.Time.fromMilliseconds (creationTimestampMs + expirationOffset*1000)
+		size <- size - 4
+	
+	return Protocol.DXBRoutingHeaderData {
+		size,
 		version,
 		ttl,
+		flags: routingHeaderFlags,
 
 		sender,
 		receivers: receivers.keys(),
@@ -127,11 +109,143 @@ function extractDXBRouterHeaderData(dxb: DXB)
 
 		blockSize
 	}
+```
 
+```typescript
+function decryptSignature(signature: Uint8[], sender: Datex.Endpoint, global: Runtime.Global):
+	// TODO 
+
+```
+
+```typescript
+function parseDXBValidatedBlock(
+	dxb: Protocol.DXB,
+	routingHeaderData: Protocol.DXBRoutingHeaderData,
+	global: Runtime.Global
+):
+	i <- routingHeaderData.size
+
+	routingHeaderFlags <- routingHeaderData.flags
+
+	hasUnencryptedSignature <- routingHeaderFlags & 0b00000001
+	hasEncryption <- routingHeaderFlags & 0b00000010
+	hasEncryptedSignature <- routingHeaderFlags & 0b00000100
+	
+
+	if hasEncryptedSignature:
+		(encryptedSignature, i) <- getSlice(dxb, i, X)
+		unencryptedSignature = decryptSignature(
+			encryptedSignature,
+			routingHeaderData.sender,
+			global
+		)
+	else if hasUnencryptedSignature:
+		(unencryptedSignature, i) <- getSlice(dxb, i, 192)
+
+	if unencryptedSignature:
+		signedData <- dxb[i..len(dxb)]
+
+	(flags, i) <- extractUint64(dxb, i) >> 43
+
+	blockType <- flags & 0b111100000000000000000
+	allowExecute <- flags & 0b000010000000000000000
+	endOfBlock <- flags & 0b000001000000000000000
+	endOfScope <- flags & 0b000000100000000000000
+
+	hasExpirationOffset <- flags & 0b000000010000000000000
+	hasRepresentedBy <- flags & 0b000000001000000000000
+	isCompressed <- flags & 0b000000000100000000000
+	isSignatureInLastSubblock <- flags & 0b000000000010000000000
+	
+	hasMultiSignature <- isSignatureInLastSubblock and endOfBlock
+
+	
+	if hasMultiSignature:
+		if not unencryptedSignature:
+			return
+		
+		areSubblocksValid <- validatePreviousSubblocks(...) // TODO
+		if not areSubblocksValid:
+			return
+	
+	else if unencryptedSignature:
+		isValid <- validateSignature(unencryptedSignature, signedData)
+		if not isValid:
+			return
+	
+	if hasExpirationOffset:
+		i <- i + 4
+	
+	if hasRepresentedBy:
+		(representedBy, i) <- extractEndpoint(dxb, i)
+	
+	
+
+	return Runtime.DXBValidatedBlock {
+		isValid,
+
+		routingData: routingHeaderData,
+		isSigned,
+		isEncrypted,
+
+		scopeId,
+		blockIndex,
+		blockSubIndex,
+
+		blockType,
+		allowExecute,
+		endOfBlock,
+		endOfScope,
+		representedBy,
+		onBehalfOf,
+		deviceType
+	}
+```
+
+```typescript
+function executeDXB (
+	dxb: Protocol.DXB,
+	routingHeaderData: Protocol.DXBRoutingHeaderData,
+	global: Runtime.Global
+):
+
+	validatedBlock <- parseDXBValidatedBlock(dxb, routingHeaderData)
+
+	endpoint <- global.endpoint
+	if not (endpoint in global.scopes):
+		global.scopes[endpoint] = Map<Uint32, Runtime.Scope[]>()
+
+
+
+	scopeId <- routingHeaderData.
+	scopes <- global.scopes[endpoint]
+
+	if not (dxb. in scopes):
+		global.scopes[endpoint] = Map<Uint32, Runtime.Scope[]>()
+
+
+	global.scopes[endpoint]
+```
+
+```typescript
+function redirectDXB (
+	dxb: Protocol.DXB,
+	routingHeaderData: Protocol.DXBRoutingHeaderData,
+	global: Runtime.Global
+):
+```
+
+```typescript
 function dxbIn (
-	dxb: DXB
-)
-	
-	
+	dxb: Protocol.DXB,
+	global: Runtime.Global
+):
+	routingHeaderData <- extractDXBRoutingHeaderData(dxb)
+	receivers <- routingHeaderData.receivers
 
-``````
+	if global.endpoint in receivers:
+		executeDXB(dxb, routingHeaderData, global)
+
+	if not (len(receivers) = 1 and receivers[0] = global.endpoint):
+		redirectDXB(dxb, routingHeaderData, global)
+```
