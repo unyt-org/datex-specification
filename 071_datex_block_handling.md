@@ -16,6 +16,7 @@ function extractReceivers(buffer: Uint8[], i: Uint8):
 
 	if hasPointerId:
 		(pointerId,i) <- extractSlice(buffer, i, 26)
+
 	if hasEndpoints:
 		(count, i) <- extractUint16(buffer, i)
 		for c in 0..count:
@@ -26,7 +27,7 @@ function extractReceivers(buffer: Uint8[], i: Uint8):
 			else 
 				receivers.set(receiver, null)
 
-	return (receivers, i)
+	return (receivers, pointerId, i)
 ```
 
 ```typescript
@@ -73,7 +74,7 @@ function extractDXBRoutingHeaderData(dxb: Protocol.DXB)
 	else:
 		i <- i + 1
 
-	(receivers, i) <- extractReceivers(dxb, i)
+	(receivers, pointerId, i) <- extractReceivers(dxb, i)
 
 	if hasEncryptedSignature:
 		i <- i + 192
@@ -102,7 +103,8 @@ function extractDXBRoutingHeaderData(dxb: Protocol.DXB)
 		flags: routingHeaderFlags,
 
 		sender,
-		receivers: receivers.keys(),
+		receivers,
+		pointerId,
 
 		creationTimestamp,
 		expirationTimestamp,
@@ -161,6 +163,9 @@ function parseUnresolvedDXBSubBlock(
 	if hasRepresentedBy:
 		(representedBy, i) <- extractEndpoint(dxb, i)
 	
+	if isEncrypted:
+		(iv, i) <- extractSlice(buffer, i, 16)
+
 	return Runtime.DXBUnresolvedSubBlock {
 		headerData: Runtime.DXBBlockHeaderData {
 			routingData: routingHeaderData,
@@ -176,8 +181,10 @@ function parseUnresolvedDXBSubBlock(
 			allowExecute,
 			endOfBlock,
 			endOfScope,
-			representedBy
+			representedBy,
 		},
+		iv,
+		signature,
 		data
 	}
 ```
@@ -203,46 +210,82 @@ function getMissingSubBlockIds(
 ```
 
 ```typescript
-function collectSubBlocks(block: Runtime.DXBBlock, scope: Runtime.Sciope, global: Runtime.Global):
+function decryptRSA(encryptedData: Uint8[], global: Runtime.Global)
+	privateDecryptionKey <- global.endpoint.encryptionPrivateKey
+	return RSADecrypt(encryptedData, privateDecryptionKey)
+```
+
+```typescript
+function decryptBlockData(encryptedData: Uint8[], scope: Runtime.Scope, block: Runtime.DXBBlock, subBlock: Runtime.DXBUnresolvedSubBlock, global: Runtime.Global):
+	iv <- subBlock.iv
+
+	encryptedKey <- 
+		subBlock.headerData.routingData.receivers[global.endpoint] or
+		block.headerData.routingData.receivers[global.endpoint] or
+		scope.headerData.routingData.receivers[global.endpoint]
+
+	decryptedKey <- decryptRSA(encryptedKey, global)
+	return AESDecrypt(encryptedData, decryptedKey)
+```
+
+```typescript
+function collectSubBlocks(block: Runtime.DXBBlock, scope: Runtime.Scope, global: Runtime.Global):
 
 	indicies <- getRingBufferIndexRange(block.activeBoundA, block.activeBoundB)
 
-	executable <- scope.executable
-
-	isSigned <- false
-	// loop over all available subblocks
+	lastAvailableIndex <- 0
+	// loop over all available subblocks, validate signature (combined subBlock or single subBlock)
 	for i in indicies:
 		subBlock <- block.subBlocks[i]
 		if not subBlock:
-			return	
+			if block.headerData.isSignatureInLastSubblock:
+				return
+			else:
+				break
+		lastAvailableIndex <- i;
 
-		if	subBlock.headerData.isSignatureInLastSubblock and
+		if	block.headerData.isSignatureInLastSubblock and
 			subBlock.headerData.endOfBlock:
+			signature <- subBlock.signature
 			signedData <- Uint8[]()
+
 			for j in indicies:
 				signedData += block.subBlocks[j].data
 
 			// validate signature, subblock(s) must be signed
-			isValid <- validateSignature(unencryptedSignature, signedData)
-
-			// TODO
-			// oben: Extract IV
-			// Unencrypting, get body and flags
-			// if isValid -> add executable to scope
-			if isValid:
-				pass
-			return
-		
-
-		if subBlock.headerData.isSigned:
-
+			isValid <- validateSignature(signedData, signature)
+			if not isValid:
+				// invalid data, gargabe collection ...
+				return
+			
+		else if subBlock.headerData.isSigned:
+			signedData <- subBlock.data
+			isValid <- validateSignature(signedData, signature)
+			if not isValid:
+				return
 		else:
 			// if one subblock is not signed whole block is marked as non-signed
 			block.headerData.isSigned = false
 
-	if isSigned:
+	executable <- Uint8[]()
+	availableIndicies <- getRingBufferIndexRange(indicies[0],lastAvailableIndex)
 
+	// optional decryption
+	for i in availableIndicies:
+		subBlock <- block.subBlocks[i]
+		if subBlock.headerData.isEncrypted
+			encryptedData = subBlock.data
+			// keys can be defined in block, subBlock or scope
+			// IV is located in each subblock
+			decryptedData <- decryptBlockData(encryptedData, scope, block, subBlock, global)
+			executable <- executable + decryptedData
+		else:
+			executable <- executable + subBlock.data
+
+	block.activeBoundA <- lastAvailableIndex
+	scope.executable <- scope.executable + executable
 ```
+
 
 ```typescript
 function executeDXB(
@@ -261,11 +304,11 @@ function executeDXB(
 
 	scopeId <- headerData.scopeId
 	if not (scopeId in global.scopes[endpoint]):
-		global.scopes[endpoint][scopeId] <- Runtime.Scope()
-	
+		global.scopes[endpoint][scopeId] <- Runtime.Scope{ headerData }
+
 	blockId <- headerData.blockId
 	if not (blockId in global.scopes[endpoint][scopeId].blocks):
-		global.scopes[endpoint][scopeId].blocks[blockId] <- Runtime.DXBBlock
+		global.scopes[endpoint][scopeId].blocks[blockId] <- Runtime.DXBBlock{ headerData }
 	
 	block <- global.scopes[endpoint][scopeId].blocks[blockId]
 	blockSubIndex <- headerData.blockSubIndex
@@ -289,11 +332,8 @@ function executeDXB(
 		block,
 		global
 	)
-	// executableBlock.subBlocks <- []
 
-	if executableBlock:
-		block.activeBoundA <- executableBlock.activeBlockA
-
+	runtimeExecution(scope, global)
 ```
 
 ```typescript

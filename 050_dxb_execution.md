@@ -43,7 +43,7 @@ Some internal slots are directly accessible in the scope as internal variables (
 
 1. <b>READ THE INSTRUCTION</b>
    * Store the Instruction Code in `[[INSTRUCTION_CODE]]`
-   * Store the remaining instruction data in `[[INSTRUCTIONN]]` (length depends on the Instruction Code, can also be 0)
+   * Store the remaining instruction data in `[[INSTRUCTION]]` (length depends on the Instruction Code, can also be 0)
 
 2. <b>EXECUTE THE INSTRUCTION</b>
    * Validate the parameter types depending on the `[[INSTRUCTION_CODE]]`
@@ -79,6 +79,47 @@ The `[[ACTIVE_VALUE]]` is stored in `[[SCOPE_RESULT]]`.
 
 ## General Runtime procedures
 
+### runtimeExecution
+```typescript
+function runtimeExecution(scope: Runtime.Scope, global: Runtime.Global):
+
+   while scope.byteIndex < len(scope.executable):
+      (instructionCode, scope.byteIndex) <- extractUint32(
+         scope.executable,
+         scope.byteIndex
+      )
+      instrDefinition <- global.instructionDefinitions[instructionCode]
+
+      if len(scope.executable) - scope.byteIndex < 
+         instrDefinition.minimumSize:
+         scope.byteIndex <- scope.byteIndex - 2
+         return
+
+      data <- scope.executable[scope.byteIndex..len(scope.executable)]
+
+      if instrDefinition.validation and
+         not instrDefinition.validation(data)
+            scope.byteIndex <- scope.byteIndex - 2
+            return
+
+      result <- instrDefinition.procedure(data as Instruction.*)
+      
+      scope.lastValue <- scope.activeValue
+      scope.activeValue <- result
+
+      if scope.operator:
+         scope.activeValue <- applyOperator(scope.operator, scope.lastValue, scope.activeValue) // TODO
+         scope.operator <- void
+      else:
+         scope.activeValue <- apply(scope.lastValue, scope.activeValue) // TODO
+
+      if scope.insertLocation:
+         insert(scope.insertLocation, scope.activeValue) // TODO
+         scope.insertLocation <- void
+
+
+
+```
 ### newSubScope
 ```typescript
 function newSubScope(scope: Runtime.Scope)

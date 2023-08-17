@@ -3,6 +3,15 @@
 
 ## Runtime
 
+## Runtime.InstructionDefinition
+```rust
+Runtime.InstructionDefinition {
+	minimumSize: Uint8,
+	optional maximumSize: UintXXX, // TODO
+	optional validation: (data: Uint8[]) -> boolean,
+	procedure: (Instruction.*) -> any
+}
+```
 
 ## Runtime.DXBRoutingHeaderData
 ```rust
@@ -11,7 +20,8 @@ Runtime.DXBRoutingHeaderData {
 	ttl: Uint8
 
 	optional sender: Datex.Endpoint
-	receivers: Datex.Endpoint[] | Datex.Logical<Datex.Endpoint>
+	receivers: Map<Datex.Endpoint[], Uint8[]>
+	optional pointerId: Protocol.PointerId,
 
 	creationTimestamp: Datex.Time
 	expirationTimestamp: Datex.Time
@@ -56,6 +66,8 @@ Runtime.DXBBlockHeaderData {
 ```rust
 Runtime.DXBUnresolvedSubBlock {
 	headerData: Runtime.DXBBlockHeaderData,
+	optional signature: Uint8[],
+	optional iv: Uint8[16],
 	data: Uint8[]
 }
 ```
@@ -63,6 +75,7 @@ Runtime.DXBUnresolvedSubBlock {
 ### Runtime.Global: 
 ```rust
 Runtime.Global {
+	instructionDefinitions: Map<InstructionCode, Runtime.InstructionDefinition>
 	scopes: Map<Datex.Endpoint, Map<Uint32, Runtime.Scope>>,
 	endpoint: Datex.Endpoint,
 	version: ...
@@ -73,6 +86,7 @@ Runtime.Global {
 ### Runtime.Scope: 
 ```rust
 Runtime.Scope {
+	headerData: DXBBlockHeaderData, // first block's header data
 	activeBoundA: Uint16, // block to be executed next
 	activeBoundB: Uint16, // latest received block
 	lastBlockReceived: boolean,
@@ -105,9 +119,13 @@ Runtime.Subscope {
 ### Datex.Endpoint
 ```rust
 Datex.Endpoint {
-	type: Uint8
-	id: Uint8[18]
-	instance: Uint16
+	type: Uint8,
+	id: Uint8[18],
+	instance: Uint16,
+	optional signaturePrivateKey: Uint8[],
+	signaturePublicKey: Uint8[],
+	optional encryptionPrivateKey: Uint8[],
+	encryptionPublicKey: Uint8[]
 }
 ```
 

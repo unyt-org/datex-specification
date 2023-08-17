@@ -12,6 +12,19 @@ Structure: [Instruction.Text](./300_data_structures.md#instructiontext)
 
 LENGTH is the size of the utf-8-encoded string in bytes.
 
+### Minimum size
+`4 bytes`
+
+### Maximum size
+`4 + 2**32 bytes`
+
+### Validation
+```typescript
+function(data: Uint8[]):
+   length <- getUint32(data)
+   return len(data) > length + 4
+```
+
 ### Parameters
 *None*
 ### Return value
@@ -46,6 +59,15 @@ Structure: *Empty*
 In the following, 'type' refers to a value of type `<Type>` or `<Composite(<Type>)>`.
 
 The IMPLEMENTS instruction checks if a type or its *root type* extends or implements another type.
+
+### Minimum size
+`0 bytes`
+
+### Maximum size
+`0 bytes`
+
+### Validation
+*none*
 
 ### Parameters
 * Effective Value Parameter `$0`: The following types are allowed: `Datex.Type`, `Datex.Composite<Datex.Type>`
@@ -90,6 +112,16 @@ Structure: [Instruction.Jump](./300_data_structures.md#instructionjump)
 
 The JUMP instruction moves the instruction index to a given index.
 
+
+### Minimum size
+`4 bytes`
+
+### Maximum size
+`4 bytes`
+
+### Validation
+*none*
+
 ### Parameters
 *None*
 
@@ -131,6 +163,15 @@ Instruction.Jump {
 Structure: [Instruction.Jump](./300_data_structures.md#instructionjump)
 
 The JUMP_TRUE instruction moves the instruction index to a given index, if a truthy value is passed as a parameter.
+
+### Minimum size
+`4 bytes`
+
+### Maximum size
+`4 bytes`
+
+### Validation
+*none*
 
 ### Parameters
 * Effective Value Parameter `$0`: The following types are allowed: `Datex.Any`
@@ -190,6 +231,15 @@ Structure: [Instruction.Jump](./300_data_structures.md#instructionjump)
 
 The JUMP_FALSE instruction moves the instruction index to a given index, if a truthy value is passed as a parameter.
 
+### Minimum size
+`4 bytes`
+
+### Maximum size
+`4 bytes`
+
+### Validation
+*none*
+
 ### Parameters
 * Effective Value Parameter `$0`: The following types are allowed: `Datex.Any`
 
@@ -246,6 +296,11 @@ Structure: [Instruction.xx](./300_data_structures.md#xx)
 
 Description
 
+### Minimum size
+`x bytes`
+### Maximum size
+`x bytes`
+### Validation
 ### Parameters
 ### Return value
 ### Procedure
