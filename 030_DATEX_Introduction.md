@@ -559,7 +559,7 @@ The value comparators check if two values are equal, but not if they are identic
 {a:1,b:[]} == {a:1,b:[]}; # true
 <Set>[1,1,1,2,3] == <Set>[3,2,1]; # true
 
-{a:$$[1,2,3]} == {a:$$[1,2,3]}; # false, a has different pointers
+{a:$$[1,2,3]} == {a:$$[1,2,3]}; # true
 ```
 
 ### Identity comparators
