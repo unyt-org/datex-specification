@@ -40,7 +40,7 @@ A value with one of the following types:
 * `Object`
 * `Map`
 * `Set`
-* `Scope`
+* `Scope` (**TBD**)
 * `Function`
 * `Iterator`
 * `Stream`
@@ -72,8 +72,3 @@ A sequence of DATEX instructions distributed over one ore more blocks.
 
 ## scope
 The set of variables that exist during the exeuction of a message. A scope exists until the message is completely executed.
-
-## static scope
-A scope which is always available in a Runtime and can be accessed from any message scope.
-
-## supranet
