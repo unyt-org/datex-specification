@@ -201,21 +201,21 @@ iterate [-1,2,-3,4,6,0,0,0,-6,-45,0] (
 The internal variable `#it` holds the value of the current iteration value.
 
 ## More types!
-
-The `type` command can be used to determine the type of a value:
+The `typeof` command can be used to determine the type of a value:
 ```datex
 var x = 10;
-#public.std.print 'The type of (x) is (type x)';
+#public.std.print 'The type of (x) is (typeof x)';
 
 var y = [];
-#public.std.print 'The type of (y) is (type y)';
+#public.std.print 'The type of (y) is (typeof y)';
 
 var z = {a:'b'};
-#public.std.print 'The type of (z) is (type z)';
+#public.std.print 'The type of (z) is (typeof z)';
 ```
 
-The type returned by the `type` command is a special DATEX value with the type "type".<br>
-This special "type" value can also be used to cast values (more on this later).
+The type returned by the `typeof` command is a special DATEX value describing the type of the value.<br>
+<!-- TBD
+This special value can also be used to cast values (more on this later).
 It is written with angle brackets (e.g., `<integer>`) and will be used from now on to indicate types.
 
 ### Standard Library types
@@ -260,7 +260,7 @@ Type casts can also be chained to apply multiple casts in a row. The casts are e
 In this case, the `<decimal>` value `1.5` is first cast to an integer, which results in `1`.<br>
 Then the `<integer>` is cast back to a `<decimal>`, which results in the value `1.0`.<br>
 Afterwards, `1.0` is cast to a `<text>`, resulting in `"1.0"`.
-
+-->
 ## To Function or not to Function
 
 DATEX does not use "classical" functions. 
