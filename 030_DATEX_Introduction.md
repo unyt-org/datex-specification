@@ -15,7 +15,7 @@ The only part that will be important for now is writing the REQUEST Script.
 
 To follow the tradition, we will first write a simple "Hello World" script in DATEX, which could look like this:
 ```datex
-#public.std.print 'Hello World';
+print 'Hello World';
 ```
 
 The `print` function is called with one parameter, a `'Hello World'` string.
@@ -25,7 +25,7 @@ Strings can be created with either single or double quotes - we will come to the
 To create a slightly more complex "Hello World" script and understand how DATEX gets executed, we can write the following script:
 
 ```datex
-#public.std.print 'Executed on (#current), sent by (#sender)';
+print 'Executed on (#endpoint), sent by (#origin)';
 ```
 
 The output in the console will now tell you the name of the executing endpoint and the name of the endpoint that sent the REQUEST.
