@@ -1,7 +1,7 @@
 # Introduction to DATEX Script
 
 This section contains a non-normative overview of the DATEX Script language.
-This is only an introduction containing the main aspects of the language. For an in-depth explanation of DATEX and the DATEX Script language, please refer to the [DATEX Documentation](https://docs.unyt.org/datex).
+This is only an introduction containing the main aspects of the language. For an in-depth explanation of DATEX and the DATEX Script language, please refer to the [DATEX Documentation](https://docs.unyt.org/manual/datex).
 
 ## How DATEX works
 
