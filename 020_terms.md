@@ -10,10 +10,10 @@ A value with one of the following types:
 * `decimal`
 * `quantity`
 * ~`buffer`~ *(deprecated)* *(JS: Buffer = `js:Buffer & Array<integer/8>`)*
-* `time`
-* `color`
+* `time` *(time = timestamp / point in time, duration = quantity of seconds)*
 * `endpoint`
-* `symbol`
+* ~`symbol`~ *(deprecated)* *(immutable pointer on `null`)* *(JS: Symbol = `$<js:Symbol & null>`)* **(TDB)**
+* `color` **(TDB)**
 * any mime type
 
 
