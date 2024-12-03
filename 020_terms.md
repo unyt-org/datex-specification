@@ -3,6 +3,7 @@
 
 ## Primitive Value
 A value with one of the following types:
+* ~`void`~ *(deprecated*)
 * `null` *(JS: undefined type = `js:undefined & null`)*
 * `boolean`
 * `integer`
