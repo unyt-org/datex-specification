@@ -57,9 +57,9 @@ In contrast to JSON, quotes around object keys can be omitted if the key does no
 Trailing commas are also not a problem in DATEX script, they are simply ignored.
 
 Besides the standard JSON types, DATEX also supports infinite values (`infinity` and `-infinity`) and `nan` (all written in lower case).<br>
-DATEX distinguishes between integers (`77`) and floats (`-12.34`) - strictly speaking, there are also different types for various integer and float sizes, but we will ignore that for now.
+DATEX distinguishes between integers (`77`) and decimals (`-12.34`) - strictly speaking, there are also different types for various integer and decimal sizes, but we will ignore that for now.
 
-You might have noticed that we didn't add a `#public.std.print` statement or anything else in our last example.
+You might have noticed that we didn't add a `print` statement or anything else in our last example.
 This is also an important feature of DATEX: values that are simply added to the root scope without an assignment or a function call are always assigned to the current *result*. 
 
 This *result* value can be overridden with new values, but the last assigned value is sent back in the RESPONSE and returned.
