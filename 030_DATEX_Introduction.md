@@ -373,7 +373,7 @@ print result; # 1000
 ```
 
 
-### Parallel Remote Execution
+### Parallel Remote Execution **TBD**
 
 A remote execution target can also be a filter that contains multiple endpoints. In this case, the code block is executed simulataneously on all endpoints and the results from all endpoints are returned in a `<Map>`.
 
