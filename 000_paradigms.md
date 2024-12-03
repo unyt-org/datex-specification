@@ -2,7 +2,6 @@
 > **Every design aspect of DATEX should respect the following design paradigms and constraints:**
 
 1. Full JSON compatibility
-  * ...
 2. Support standard primitive types + default types of JS
   * boolean
   * number
