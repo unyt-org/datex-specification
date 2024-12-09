@@ -103,7 +103,7 @@ If a non-false item is encountered, the non-false item is kept and all other ite
 Examples:
 ```datex
 false | false # false
-true | false # true
+true | false # true for values, true | false for types
 true | true # true 
 ```
 
