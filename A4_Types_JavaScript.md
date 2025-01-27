@@ -2,10 +2,10 @@
 
 | JavaScript type | DATEX type | support | bijective | update propagation | limitations |
 |---|---|---|---|---|---|
-| [`string`]() | | | | | | |
-| [`number`]() | | | | | | |
-| [`boolean`]() | | | | | | |
-| [`bigint`]() | | | | | | |
+| [`string`]() | [`text`]() | | | | | |
+| [`number`]() | [`decimal`]() | | | | | |
+| [`boolean`]() | [`boolean`]() | | | | | |
+| [`bigint`]() | [`integer/big`]() | | | | [`integer/64`]() is always mapped to [`bigint`](). [`bigint`]() is always mapped to `bigint` |
 | [`symbol`]() | | | | | | |
 | [`undefined`]() | | | | | | |
 | [`null`]() | | | | | | |
@@ -46,3 +46,4 @@
 | [`AsyncFunction`]() | | | | | | |
 | [`Reflect`]() | | | | | | |
 | [`Proxy`]() | | | | | | |
+| [`Date`]() | | | | | | |
