@@ -6,7 +6,11 @@
 | [`number`]() | [`decimal`]() | full | yes<sup>*</sup> | yes | | |
 | [`boolean`]() | [`boolean`]() | full | yes<sup>*</sup> | yes | | |
 | [`bigint`]() | [`integer/big`]() | full | no | yes<sup>*</sup> | [`integer/64`]() is always mapped to [`bigint`](). [`bigint`]() is always mapped to `bigint` |
-| [`symbol`]() | | | | | | |
+| [`String`]() | [`text & js:String`]() | full | yes<sup>*</sup> | yes | | |
+| [`Number`]() | [`decimal & js:Number`]() | full | yes<sup>*</sup> | yes | | |
+| [`Boolean`]() | [`boolean & js:Boolean`]() | full | yes<sup>*</sup> | yes | | |
+| [`symbol`]() | [`text & js:symbol/named`]() | full | yes | no | | |
+|              | [`text & js:symbol/anonymous`]() | full | yes | no | | |
 | [`undefined`]() | | | | | | |
 | [`null`]() | | | | | | |
 | [`Error`]() | | | | | | |
