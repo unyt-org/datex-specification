@@ -1,7 +1,7 @@
 # Introduction to DATEX Script
 
 This section contains a non-normative overview of the DATEX Script language.
-This is only an introduction containing the main aspects of the language. For an in-depth explanation of DATEX and the DATEX Script language, please refer to the [DATEX Documentation](https://docs.unyt.org/datex).
+This is only an introduction containing the main aspects of the language. For an in-depth explanation of DATEX and the DATEX Script language, please refer to the [DATEX Documentation](https://docs.unyt.org/manual/datex).
 
 ## How DATEX works
 
@@ -15,7 +15,7 @@ The only part that will be important for now is writing the REQUEST Script.
 
 To follow the tradition, we will first write a simple "Hello World" script in DATEX, which could look like this:
 ```datex
-#public.std.print 'Hello World';
+print 'Hello World';
 ```
 
 The `print` function is called with one parameter, a `'Hello World'` string.
@@ -25,7 +25,7 @@ Strings can be created with either single or double quotes - we will come to the
 To create a slightly more complex "Hello World" script and understand how DATEX gets executed, we can write the following script:
 
 ```datex
-#public.std.print 'Executed on (#current), sent by (#sender)';
+print 'Executed on (#endpoint), sent by (#origin)';
 ```
 
 The output in the console will now tell you the name of the executing endpoint and the name of the endpoint that sent the REQUEST.
@@ -57,9 +57,9 @@ In contrast to JSON, quotes around object keys can be omitted if the key does no
 Trailing commas are also not a problem in DATEX script, they are simply ignored.
 
 Besides the standard JSON types, DATEX also supports infinite values (`infinity` and `-infinity`) and `nan` (all written in lower case).<br>
-DATEX distinguishes between integers (`77`) and floats (`-12.34`) - strictly speaking, there are also different types for various integer and float sizes, but we will ignore that for now.
+DATEX distinguishes between integers (`77`) and decimals (`-12.34`) - strictly speaking, there are also different types for various integer and decimal sizes, but we will ignore that for now.
 
-You might have noticed that we didn't add a `#public.std.print` statement or anything else in our last example.
+You might have noticed that we didn't add a `print` statement or anything else in our last example.
 This is also an important feature of DATEX: values that are simply added to the root scope without an assignment or a function call are always assigned to the current *result*. 
 
 This *result* value can be overridden with new values, but the last assigned value is sent back in the RESPONSE and returned.
@@ -201,21 +201,21 @@ iterate [-1,2,-3,4,6,0,0,0,-6,-45,0] (
 The internal variable `#it` holds the value of the current iteration value.
 
 ## More types!
-
-The `type` command can be used to determine the type of a value:
+The `typeof` command can be used to determine the type of a value:
 ```datex
 var x = 10;
-#public.std.print 'The type of (x) is (type x)';
+#public.std.print 'The type of (x) is (typeof x)';
 
 var y = [];
-#public.std.print 'The type of (y) is (type y)';
+#public.std.print 'The type of (y) is (typeof y)';
 
 var z = {a:'b'};
-#public.std.print 'The type of (z) is (type z)';
+#public.std.print 'The type of (z) is (typeof z)';
 ```
 
-The type returned by the `type` command is a special DATEX value with the type "type".<br>
-This special "type" value can also be used to cast values (more on this later).
+The type returned by the `typeof` command is a special DATEX value describing the type of the value.<br>
+<!-- TBD
+This special value can also be used to cast values (more on this later).
 It is written with angle brackets (e.g., `<integer>`) and will be used from now on to indicate types.
 
 ### Standard Library types
@@ -260,7 +260,7 @@ Type casts can also be chained to apply multiple casts in a row. The casts are e
 In this case, the `<decimal>` value `1.5` is first cast to an integer, which results in `1`.<br>
 Then the `<integer>` is cast back to a `<decimal>`, which results in the value `1.0`.<br>
 Afterwards, `1.0` is cast to a `<text>`, resulting in `"1.0"`.
-
+-->
 ## To Function or not to Function
 
 DATEX does not use "classical" functions. 
@@ -373,7 +373,7 @@ print result; # 1000
 ```
 
 
-### Parallel Remote Execution
+### Parallel Remote Execution **TBD**
 
 A remote execution target can also be a filter that contains multiple endpoints. In this case, the code block is executed simulataneously on all endpoints and the results from all endpoints are returned in a `<Map>`.
 
@@ -559,7 +559,7 @@ The value comparators check if two values are equal, but not if they are identic
 {a:1,b:[]} == {a:1,b:[]}; # true
 <Set>[1,1,1,2,3] == <Set>[3,2,1]; # true
 
-{a:$$[1,2,3]} == {a:$$[1,2,3]}; # false, a has different pointers
+{a:$$[1,2,3]} == {a:$$[1,2,3]}; # true
 ```
 
 ### Identity comparators
