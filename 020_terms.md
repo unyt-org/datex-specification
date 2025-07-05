@@ -3,7 +3,6 @@
 
 ## Primitive Value
 A value with one of the following types:
-* `void`
 * `null`
 * `boolean`
 * `integer`

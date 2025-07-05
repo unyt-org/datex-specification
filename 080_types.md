@@ -67,9 +67,6 @@ A `boolean` value can either be `true` or `false`.
 
 ### The `integer` type
 ### The `text` type
-### The `void` type
-TODO: type name same as value ... type==value?
-void as const value+type
 ### The `null` type
 const value+type
 ### The `integer` type
