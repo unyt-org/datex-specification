@@ -43,6 +43,7 @@ jobs:
         run: |
           cd spec-generator
           npm run docs:build
+          ls -la
           echo "Documentation build completed"
 
       - name: Verify build output
