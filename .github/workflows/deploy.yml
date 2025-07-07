@@ -1,0 +1,15 @@
+name: Deploy DATE-X Spec
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and Deploy Spec
+    runs-on: [self-hosted, unyt-main]
+    
+    steps:
+      - name: Check runner
+        run: echo "Test automatic deployment"
