@@ -71,7 +71,7 @@ jobs:
       - name: Deploy to server
         run: |
           sudo rm -rf /home/unyt/networks/main/dockers/SPEC/www/*
-          sudo cp -rf ./build /home/unyt/networks/main/dockers/SPEC/www
+          sudo cp -rf ./build/* /home/unyt/networks/main/dockers/SPEC/www
           echo "Successfully deployed"
 
       - name: Verify deployment
