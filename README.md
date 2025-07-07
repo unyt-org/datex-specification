@@ -7,7 +7,11 @@ You can find this document on [github.com](https://github.com/unyt-org/datex-spe
 
 DATEX is a communication protocol and language that provides realtime data exchange and synchronization for distributed applications.
 
-The DATEX specification is an open standard focused on web-based technology with support for other systems like IoT and mobile devices.
+The DATEX specification is an open standard that is designed to be implemented for various platforms, including
+ * embedded devices
+ * web applications
+ * mobile application
+ * desktop applications
 
 DATEX is a flexible protocol that combines the Application, Session, Transport, and Network layer of the OSI Model.
 The protocol offers encryption, signatures and authentication functionality.
@@ -19,18 +23,15 @@ In addition, DATEX includes a general-purpose type system which is designed to i
 
 This specification describes
  * the *DATEX Binary Format* (**DXB**) - the machine-readable bytecode format for DATEX
- * the *DATEX Script Language* (**DATEX Script** or **DX**) - human-readable representation of DATEX that gets compiled to DXB
-
-<!--TODO: change/remove?-->
-<!--The DATEX Script Language is a superset of the JSON format.-->
-
+ * the *DATEX Script Language* (**DX** or just **DATEX**) - a human-readable representation of DATEX that gets compiled to DXB, designed
+   as a full-featured programming language while still being a superset of JSON.
 
 ## Applications of DATEX
 
 1. DATEX can be used as a protocol for communication between two or more parties
 2. DATEX can be used to store structured signed and/or encrypted data for platform-independent usage
 3. DATEX can be used to write scripts that can be executed locally or on remote endpoints
-4. DATEX can be used as an interface to develop reactive full-stack applications (UIX)
+4. DATEX can be used as an interface to develop reactive full-stack applications
 5. DATEX enables permission handling for resources on a network level
 
 All these applications serve as the backbone for the [unyt.org supranet](./020_terms.md#supranet).
@@ -83,7 +84,5 @@ Editors
  * Jonas Strehle
  * Tim Köhler
 
-This document was last updated on May 30, 2023.
-
-<b>This is not the final version of the specification. It is still subject to change. Many sections still need to be transferred from the DATEX Documentation.</b>
-
+> [NOTE]
+> This is a working draft of the DATEX specification and still subject to change.
