@@ -54,10 +54,18 @@ jobs:
   deploy:
     needs: test-build
     name: Build and Deploy Spec
-    # runs-on: unyt-main
-    runs-on: ubuntu-latest
+    runs-on: unyt-main
     
     steps:
+      - name: Kill hanging processes
+        run: |
+          pkill -f "spec-generator" || true
+          pkill -f "node.*update-specs" || true
+          pkill -f "npm.*docs:build" || true
+          sleep 2
+          echo "Cleaned up any hanging processes"
+        continue-on-error: true
+
       - name: Clone spec-generator repo
         run: |
           git clone https://github.com/unyt-org/spec-generator.git
@@ -92,12 +100,7 @@ jobs:
       - name: Deploy to server
         run: |
           cd spec-generator
-          sudo mkdir -p /home/unyt/networks/main/dockers/SPEC/www
-        
           sudo cp -r docs/.vitepress/dist/* /home/unyt/networks/main/dockers/SPEC/www/
-        
-          sudo chown -R unyt:unyt /home/unyt/networks/main/dockers/SPEC/www
-        
           echo "Successfully deployed"
 
       - name: Verify deployment
