@@ -11,5 +11,19 @@ jobs:
     runs-on: [self-hosted, unyt-main]
     
     steps:
-      - name: Check runner
-        run: echo "Test automatic deployment"
+      - name: Checkout datex-specifiaction
+        uses: actions/checkout@v4
+        with: 
+          path: datex-specification
+					      
+      - name: Checkout spec-generator
+        uses: actions/checkout@v4
+        with:
+          repository: unyt-org/spec-generator
+          path: spec-generator
+		
+      - name: Check structure
+        run: |
+          ls -la
+          ls -la spec-generator
+          ls -la datex-specification	
