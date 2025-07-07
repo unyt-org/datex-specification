@@ -111,9 +111,8 @@ In DATEX Script you cannot distinguish  them, but it is good to know the differe
  * Runtime instructions are actual binary instruction codes that are executed by the Runtime
  * Compiler-evaluated commands are pseudo-instructions that are converted to multiple Runtime instructions by the Compiler
 
-A command can be a standalone command or it can be followed by one or multiple *effective values*.<p><info>
-An *effective value* is either a value literal (e.g., a variable or `1`, `[1,2,3]`,...), a path chain (`x.y.z.0`), a cast value (`<text>12`), or a subscope (anything between to parentheses).
-</info></p>
+A command can be a standalone command or it can be followed by one or multiple *effective values*.<info>
+An *effective value* is either a value literal (e.g., a variable or `1`, `[1,2,3]`,...), a path chain (`x.y.z.0`), a cast value (`<text>12`), or a subscope (anything between to parentheses).</info>
 
 ### Count
 

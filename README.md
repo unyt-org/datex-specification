@@ -33,20 +33,21 @@ This specification describes
 4. DATEX can be used as an interface to develop reactive full-stack applications (UIX)
 5. DATEX enables permission handling for resources on a network level
 
-All these applications serve as the backbone for the [unyt.org supranet](./02_terms.md#supranet).
+All these applications serve as the backbone for the [unyt.org supranet](./020_terms.md#supranet).
 
 ## Specification
 
-1. [Conformance](./01_conformance.md)
-2. [Terms and Definitions](./02_terms.md)
-3. [Introduction to DATEX Script](./03_DATEX_Introduction.md)
-4. [Binary Instruction Codes](./04_dxb_binary.md)
-4. [DATEX Execution](./05_dxb_execution.md)
-4. [Instructions](./06_runtime_instructions.md)
-4. [Structure of a DATEX Block](./07_dxb_structure.md)
-4. [Types](./08_types.md)
-4. [Endpoints](./09_endpoints.md)
-4. [Bibliography](./10_bibliography.md)
+1. [Conformance](./010_conformance.md)
+2. [Terms and Definitions](./020_terms.md)
+3. [Introduction to DATEX Script](./030_DATEX_Introduction.md)
+4. [Binary Instruction Codes](./040_dxb_binary.md)
+4. [DATEX Execution](./050_dxb_execution.md)
+4. [Instructions](./060_runtime_instructions.md)
+4. [Structure of a DATEX Block](./070_dxb_structure.md)
+4. [Types](./080_types.md)
+4. [Endpoints](./082_endpoints.md)
+4. [Bibliography](./900_bibliography.md)
+
 
 
 ## Copyright and Software License

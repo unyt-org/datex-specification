@@ -35,9 +35,9 @@ TODO: introduction
 This can be useful for private DATEX networks.)
 
 **Process flow**:
-1. A new endpoint is created with a *random* generated endpoint identifier (anonymous endpoint) or a custom endpoint identifier (must be validated by [trusted authority](unyt_Auth)). 
+1. A new endpoint is created with a *random* generated endpoint identifier (anonymous endpoint) or a custom endpoint identifier (must be validated by [trusted authority](https://auth.unyt.org/redeem)). 
 2. A sign and encryption key pair are created
-([Cryptographic Keys](./09_endpoints.md#cryptographic-keys)).
+([Cryptographic Keys](./082_endpoints.md#cryptographic-keys)).
 3. Both public keys and the endpoint identifier are distributed to the Supranet (HELLO message)
 4. A endpoint public key entry is optionally added to the HELIX blockchain
 5. Persistence:
@@ -60,7 +60,7 @@ The process of creating trusted endpoints can be derived from [Creating anonymou
 
 ### Joining the Supranet
 An existing endpoint can be recreated with the stored private keys and endpoint identifier.
-A HELLO-message is distributed to the Supranet (see [Registering an endpoint](./09_endpoints.md#registering-an-endpoint)).
+A HELLO-message is distributed to the Supranet (see [Registering an endpoint](./082_endpoints.md#registering-an-endpoint)).
 
 ## Applications
 

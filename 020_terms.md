@@ -3,16 +3,16 @@
 
 ## Primitive Value
 A value with one of the following types:
-* ~`void`~ *(deprecated)*
+* ~~`void`~~ *(deprecated)*
 * `null` *(JS: undefined = `js:undefined & null`)*
 * `boolean`
 * `integer`
 * `decimal`
 * `quantity`
-* ~`buffer`~ *(deprecated)* *(JS: Buffer = `js:Buffer & Array<integer/8>`)*
+* ~~`buffer`~~ *(deprecated)* *(JS: Buffer = `js:Buffer & Array<integer/8>`)*
 * `time` *(time = timestamp / point in time, duration = quantity of seconds)*
 * `endpoint`
-* ~`symbol`~ *(deprecated)* *(immutable pointer on `null`)* *(JS: Symbol = `$<js:Symbol & null>`)* **(TDB)**
+* ~~`symbol`~~ *(deprecated)* *(immutable pointer on `null`)* *(JS: Symbol = `$<js:Symbol & null>`)* **(TDB)**
 * `color` **(TDB)**
 * any mime type
 

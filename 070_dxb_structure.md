@@ -9,7 +9,7 @@ A DATEX Block consists of 4 main sections:
  * A **Body**, which contains executable DATEX instructions
 
 
-<img src="dx_block.png" style="max-width:700px">
+<img src="./dx_block.png" style="max-width:700px">
 
 
 ## The Routing Header
