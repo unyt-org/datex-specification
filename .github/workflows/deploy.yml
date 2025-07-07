@@ -54,7 +54,8 @@ jobs:
   deploy:
     needs: test-build
     name: Build and Deploy Spec
-    runs-on: unyt-main
+    # runs-on: unyt-main
+    runs-on: ubuntu-latest
     
     steps:
       - name: Clone spec-generator repo
@@ -103,3 +104,9 @@ jobs:
         run: |
             ls -la /home/unyt/networks/main/dockers/SPEC/www
             echo "Deployment completed successfully"
+      - name: Cleanup workspace
+        run: |
+          cd /
+          rm -rf spec-generator
+          echo "Final cleanup completed"
+        if: always() 
