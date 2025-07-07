@@ -57,15 +57,6 @@ jobs:
     runs-on: unyt-main
     
     steps:
-      - name: Kill hanging processes
-        run: |
-          pkill -f "spec-generator" || true
-          pkill -f "node.*update-specs" || true
-          pkill -f "npm.*docs:build" || true
-          sleep 2
-          echo "Cleaned up any hanging processes"
-        continue-on-error: true
-
       - name: Clone spec-generator repo
         run: |
           git clone https://github.com/unyt-org/spec-generator.git
