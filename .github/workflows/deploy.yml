@@ -6,25 +6,47 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: Build and Deploy Spec
-    runs-on: [self-hosted, unyt-main]
-    
+  test-build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout datex-specification
-        uses: actions/checkout@v4
-        with: 
-          path: datex-specification
-					      
-      - name: Checkout spec-generator
-        uses: actions/checkout@v4
-        with:
-          repository: unyt-org/spec-generator
-          path: spec-generator
-          token: ${{ secrets.GITHUB_TOKEN }}
-		
-      - name: Check structure
+      - name: Clean workspace
         run: |
-          ls -la
-          ls -la spec-generator
-          ls -la datex-specification	
+          rm -rf spec-generator
+          echo "Workspace cleaned"
+
+      - name: Clone spec-generator repo
+        run: |
+          git clone --depth 1 https://github.com/unyt-org/spec-generator.git
+          cd spec-generator
+          echo "Cloned spec-generator repo successfully"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: spec-generator/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd spec-generator
+          npm ci
+          echo "Dependencies installed successfully"
+
+      - name: Run spec update script
+        run: |
+          cd spec-generator
+          node update-specs.mjs
+          echo "Spec update completed - datex-specification content is now in docs/spec/"
+
+      - name: Build documentation
+        run: |
+          cd spec-generator
+          npm run docs:build
+          echo "Documentation build completed"
+
+      - name: Verify build output
+        run: |
+          cd spec-generator
+          ls -la dist/
+          echo "Build verification successful"
