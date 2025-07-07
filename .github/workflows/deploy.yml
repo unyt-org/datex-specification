@@ -70,7 +70,7 @@ jobs:
           path: ./build
       - name: Deploy to server
         run: |
-          rm -rf /home/unyt/networks/main/dockers/SPEC/www
+          sudo rm -rf /home/unyt/networks/main/dockers/SPEC/www
           sudo cp -r -f ./build /home/unyt/networks/main/dockers/SPEC/www
           echo "Successfully deployed"
 
