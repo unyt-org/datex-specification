@@ -21,6 +21,7 @@ jobs:
         with:
           repository: unyt-org/spec-generator
           path: spec-generator
+          token: ${{ secrets.GITHUB_TOKEN }}
 		
       - name: Check structure
         run: |
