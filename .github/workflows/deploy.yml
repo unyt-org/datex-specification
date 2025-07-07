@@ -37,7 +37,7 @@ jobs:
         run: |
           cd spec-generator
           node update-specs.mjs
-          echo "Spec update completed - datex-specification content is now in docs/spec/"
+          echo "Spec update completed"
 
       - name: Build documentation
         run: |
@@ -51,3 +51,55 @@ jobs:
           cd spec-generator
           ls -la docs/.vitepress/dist/
           echo "Build verification successful"
+  deploy:
+    needs: test-build
+    name: Build and Deploy Spec
+    runs-on: unyt-main
+    
+    steps:
+      - name: Clone spec-generator repo
+        run: |
+          git clone https://github.com/unyt-org/spec-generator.git
+          cd spec-generator
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: spec-generator/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd spec-generator
+          npm ci
+          echo "Dependencies installed successfully"
+
+      - name: Run spec update script
+        run: |
+          cd spec-generator
+          node update-specs.mjs
+          echo "Spec update completed"
+
+      - name: Build documentation
+        run: |
+          cd spec-generator
+          npm run docs:build
+          ls -la
+          echo "Documentation build completed"
+    
+      - name: Deploy to server
+        run: |
+          cd spec-generator
+          sudo mkdir -p /home/unyt/networks/main/dockers/SPEC/www
+        
+          sudo cp -r docs/.vitepress/dist/* /home/unyt/networks/main/dockers/SPEC/www/
+        
+          sudo chown -R unyt:unyt /home/unyt/networks/main/dockers/SPEC/www
+        
+          echo "Successfully deployed"
+
+      - name: Verify deployment
+        run: |
+            ls -la /home/unyt/networks/main/dockers/SPEC/www
+            echo "Deployment completed successfully"
