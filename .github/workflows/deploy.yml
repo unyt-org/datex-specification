@@ -14,11 +14,12 @@ jobs:
           rm -rf spec-generator
           echo "Workspace cleaned"
 
-      - name: Clone spec-generator repo
-        run: |
-          git clone --depth 1 https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/unyt-org/spec-generator.git
-          cd spec-generator
-          echo "Cloned spec-generator repo successfully"
+      - name: Checkout spec-generator
+        uses: actions/checkout@v4
+        with:
+          repository: unyt-org/spec-generator
+          path: spec-generator
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
