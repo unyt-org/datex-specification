@@ -14,7 +14,7 @@ jobs:
       - name: Checkout datex-specifiaction
         uses: actions/checkout@v4
         with: 
-          path: datex-specification
+         path: datex-specification
 					      
       - name: Checkout spec-generator
         uses: actions/checkout@v4
