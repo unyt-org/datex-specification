@@ -16,7 +16,7 @@ jobs:
 
       - name: Clone spec-generator repo
         run: |
-          git clone --depth 1 https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/unyt-org/spec-generator.git
+          git clone --depth 1 https://github.com/unyt-org/spec-generator.git
           cd spec-generator
           echo "Cloned spec-generator repo successfully"
 
