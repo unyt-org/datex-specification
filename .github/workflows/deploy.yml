@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: docs/.vitepress/dist/
+          path: ./docs/.vitepress/dist/
           retention-days: 5
   deploy:
     needs: test-build
@@ -71,7 +71,7 @@ jobs:
       - name: Deploy to server
         run: |
           cd spec-generator
-          sudo cp -r ./build/* /home/unyt/networks/main/dockers/SPEC/www/
+          sudo cp -r -f ./build /home/unyt/networks/main/dockers/SPEC/www/
           echo "Successfully deployed"
 
       - name: Verify deployment
