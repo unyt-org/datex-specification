@@ -1,4 +1,4 @@
-name: Deploy DATE-X Spec
+name: Deploy DATEX Spec
 
 on:
   push:
