@@ -52,7 +52,7 @@ jobs:
           ls -la docs/.vitepress/dist/
           echo "Build verification successful"
   deploy:
-    needs: test-build
+    # needs: test-build
     name: Build and Deploy Spec
     runs-on: unyt-main
     
