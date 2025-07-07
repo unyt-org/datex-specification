@@ -6,53 +6,53 @@ on:
       - main
 
 jobs:
-  # test-build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Clean workspace
-  #       run: |
-  #         rm -rf spec-generator
-  #         echo "Workspace cleaned"
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean workspace
+        run: |
+          rm -rf spec-generator
+          echo "Workspace cleaned"
 
-  #     - name: Clone spec-generator repo
-  #       run: |
-  #         git clone --depth 1 https://github.com/unyt-org/spec-generator.git
-  #         cd spec-generator
-  #         echo "Cloned spec-generator repo successfully"
+      - name: Clone spec-generator repo
+        run: |
+          git clone --depth 1 https://github.com/unyt-org/spec-generator.git
+          cd spec-generator
+          echo "Cloned spec-generator repo successfully"
 
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '18'
-  #         cache: 'npm'
-  #         cache-dependency-path: spec-generator/package-lock.json
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: spec-generator/package-lock.json
 
-  #     - name: Install dependencies
-  #       run: |
-  #         cd spec-generator
-  #         npm ci
-  #         echo "Dependencies installed successfully"
+      - name: Install dependencies
+        run: |
+          cd spec-generator
+          npm ci
+          echo "Dependencies installed successfully"
 
-  #     - name: Run spec update script
-  #       run: |
-  #         cd spec-generator
-  #         node update-specs.mjs
-  #         echo "Spec update completed"
+      - name: Run spec update script
+        run: |
+          cd spec-generator
+          node update-specs.mjs
+          echo "Spec update completed"
 
-  #     - name: Build documentation
-  #       run: |
-  #         cd spec-generator
-  #         npm run docs:build
-  #         ls -la
-  #         echo "Documentation build completed"
+      - name: Build documentation
+        run: |
+          cd spec-generator
+          npm run docs:build
+          ls -la
+          echo "Documentation build completed"
 
-  #     - name: Verify build output
-  #       run: |
-  #         cd spec-generator
-  #         ls -la docs/.vitepress/dist/
-  #         echo "Build verification successful"
+      - name: Verify build output
+        run: |
+          cd spec-generator
+          ls -la docs/.vitepress/dist/
+          echo "Build verification successful"
   deploy:
-    # needs: test-build
+    needs: test-build
     name: Build and Deploy Spec
     runs-on: unyt-main
     
