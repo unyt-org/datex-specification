@@ -1,4 +1,4 @@
-# Appendix: DATEX Types JavaScript Mapping
+<!-- # Appendix: DATEX Types JavaScript Mapping
 
 | JavaScript type | DATEX type | support | bijective | update propagation | limitations | futher information |
 |---|---|---|---|---|---|---|
@@ -51,4 +51,4 @@
 | [`AsyncFunction`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncFunction) | | | | | | |
 | [`Reflect`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect) | | | | | | |
 | [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) | | | | | | |
-| [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | | | | | | |
+| [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | | | | | | | -->
