@@ -54,7 +54,8 @@ jobs:
   deploy:
     needs: test-build
     name: Build and Deploy Spec
-    runs-on: unyt-main
+    # runs-on: unyt-main
+    runs-on: [self-hosted, unyt-main]
     
     steps:
       - name: Clone spec-generator repo
