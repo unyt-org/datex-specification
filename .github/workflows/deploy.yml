@@ -70,7 +70,6 @@ jobs:
           path: ./build
       - name: Deploy to server
         run: |
-          cd spec-generator
           sudo cp -r -f ./build /home/unyt/networks/main/dockers/SPEC/www/
           echo "Successfully deployed"
 
@@ -80,7 +79,6 @@ jobs:
             echo "Deployment completed successfully"
       - name: Cleanup workspace
         run: |
-          cd /
-          rm -rf spec-generator
+          rm -rf ./build
           echo "Final cleanup completed"
         if: always() 
