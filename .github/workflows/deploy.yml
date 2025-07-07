@@ -48,6 +48,6 @@ jobs:
 
       - name: Verify build output
         run: |
-          cd docs/.vitepress
-          ls -la dist/
+          cd spec-generator
+          ls -la docs/.vitepress/dist/
           echo "Build verification successful"
