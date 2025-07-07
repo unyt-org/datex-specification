@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: ./docs/.vitepress/dist/
+          path: ./spec-generator/docs/.vitepress/dist/
           retention-days: 5
   deploy:
     needs: test-build
