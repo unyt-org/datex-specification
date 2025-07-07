@@ -51,47 +51,27 @@ jobs:
           cd spec-generator
           ls -la docs/.vitepress/dist/
           echo "Build verification successful"
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: docs/.vitepress/dist/
+          retention-days: 5
   deploy:
     needs: test-build
     name: Build and Deploy Spec
     runs-on: self-hosted
     
     steps:
-      - name: Clone spec-generator repo
-        run: |
-          git clone https://github.com/unyt-org/spec-generator.git
-          cd spec-generator
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: spec-generator/package-lock.json
-
-      - name: Install dependencies
-        run: |
-          cd spec-generator
-          npm ci
-          echo "Dependencies installed successfully"
-
-      - name: Run spec update script
-        run: |
-          cd spec-generator
-          node update-specs.mjs
-          echo "Spec update completed"
-
-      - name: Build documentation
-        run: |
-          cd spec-generator
-          npm run docs:build
-          ls -la
-          echo "Documentation build completed"
-    
+          name: build
+          path: ./build
       - name: Deploy to server
         run: |
           cd spec-generator
-          sudo cp -r docs/.vitepress/dist/* /home/unyt/networks/main/dockers/SPEC/www/
+          sudo cp -r ./build/* /home/unyt/networks/main/dockers/SPEC/www/
           echo "Successfully deployed"
 
       - name: Verify deployment
