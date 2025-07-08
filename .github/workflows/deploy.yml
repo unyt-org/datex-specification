@@ -1,4 +1,4 @@
-name: Deploy DATEX Spec
+name: Deploy Specification
 
 on:
   push:
@@ -6,26 +6,29 @@ on:
       - main
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test-build:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clean workspace
-        run: |
-          rm -rf spec-generator
-          echo "Workspace cleaned"
+      - uses: actions/checkout@v4
 
-      - name: Clone spec-generator repo
+      - name: Clone spec‑generator repo
         run: |
           git clone --depth 1 https://github.com/unyt-org/spec-generator.git
-          cd spec-generator
-          echo "Cloned spec-generator repo successfully"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: 18
+          cache: npm
           cache-dependency-path: spec-generator/package-lock.json
 
       - name: Install dependencies
@@ -52,35 +55,22 @@ jobs:
           cd spec-generator
           ls -la docs/.vitepress/dist/
           echo "Build verification successful"
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: ./spec-generator/docs/.vitepress/dist/
-          retention-days: 5
-  deploy:
-    needs: test-build
-    name: Build and Deploy Spec
-    runs-on: self-hosted
-    
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: ./build
-      - name: Deploy to server
-        run: |
-          sudo rm -rf /home/unyt/networks/main/dockers/SPEC/www/*
-          sudo cp -rf ./build/* /home/unyt/networks/main/dockers/SPEC/www
-          echo "Successfully deployed"
 
-      - name: Verify deployment
-        run: |
-            ls -la /home/unyt/networks/main/dockers/SPEC/www
-            echo "Deployment completed successfully"
-      - name: Cleanup workspace
-        run: |
-          rm -rf ./build
-          echo "Final cleanup completed"
-        if: always() 
+      - name: Add CNAME for custom domain
+        run: echo "datex.unyt.org" > spec-generator/docs/.vitepress/dist/CNAME
+
+      - name: Upload build artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: spec-generator/docs/.vitepress/dist/
+          retention-days: 3
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
