@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd spec-generator
-          npm ci
+          npm ci --legacy-peer-deps
           echo "Dependencies installed successfully"
 
       - name: Run spec update script
