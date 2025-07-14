@@ -1,5 +1,14 @@
 {
+  "type": "commonjs",
+  "scripts": {
+    "update:test": "ts-node scripts/update.ts --dry-run",
+    "update": "ts-node scripts/update.ts"
+  },
   "devDependencies": {
     "@types/node": "^24.0.13"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
