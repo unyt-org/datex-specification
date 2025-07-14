@@ -1,6 +1,6 @@
-# 7 Structure of a DATEX Block
+# 8 Structure of a DATEX Block
 
-## 7.1 Overview
+## 8.1 Overview
 
 A DATEX Block consists of 4 main sections: 
  * A **Routing Header**, which mainly contains information about the sender and receivers of the block, and important information about the block (e.g. block size)
@@ -12,7 +12,7 @@ A DATEX Block consists of 4 main sections:
 <img src="./dx_block.png">
 
 
-## 7.2 The Routing Header
+## 8.2 The Routing Header
 
 The Routing Header is not encrypted or signed, the content always needs to be parseable by all nodes.
 
@@ -112,7 +112,7 @@ DXB {
 ```
 
 
-## 7.3 The Block Header
+## 8.3 The Block Header
 
 
 The Block Header is part of the signed and encrypted part.

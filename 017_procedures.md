@@ -1,9 +1,9 @@
-# 16 Procedures
+# 17 Procedures
 
-## 16.1 ...
+## 17.1 ...
 
 
-### 16.1.1 
+### 17.1.1 
 
 ```typescript
 function getRingBufferIndexRange(a: Uint16, b: Uint16):
@@ -23,20 +23,20 @@ function getRingBufferIndexRange(a: Uint16, b: Uint16):
 	return indiciesInBounds
 ```
 
-## 16.2 Buffer Operations
+## 17.2 Buffer Operations
 
-### 16.2.1 getUint16
+### 17.2.1 getUint16
 ```typescript
 function getUint16(data: Uint8[], i: Uint8):
 	return dxb[i] + dxb[i+1] * 0xff
 ```
 
-### 16.2.2 extractUint16
+### 17.2.2 extractUint16
 ```typescript
 function extractUint16(buffer: Uint8[], i: Uint8):
 	return (getUint16(buffer, i), i+2)
 ```
-### 16.2.3 getUint64
+### 17.2.3 getUint64
 ```typescript
 function getUint64(data: Uint8[], i: Uint8):
 	return 
@@ -50,12 +50,12 @@ function getUint64(data: Uint8[], i: Uint8):
 		dxb[i+7] * 0xffffffffffffff
 ```
 
-### 16.2.4 extractUint64
+### 17.2.4 extractUint64
 ```typescript
 function extractUint64(buffer: Uint8[], i: Uint8):
 	return (getUint64(buffer, i), i+8)
 ```
-### 16.2.5 getUint32
+### 17.2.5 getUint32
 ```typescript
 function getUint32(data: Uint8[], i: Uint8):
 	return 
@@ -64,19 +64,19 @@ function getUint32(data: Uint8[], i: Uint8):
 		dxb[i+2] * 0xffff +
 		dxb[i+3] * 0xffffff
 ```
-### 16.2.6 extractUint32
+### 17.2.6 extractUint32
 ```typescript
 function extractUint32(buffer: Uint8[], i: Uint8):
 	return (getUint32(buffer, i), i+4)
 ```
 
-### 16.2.7 getSlice
+### 17.2.7 getSlice
 ```typescript
 function getSlice(data: Uint8[], i: Uint8, length: Uint8):
 	return data[i..i+length]
 ```
 
-### 16.2.8 extractSlice
+### 17.2.8 extractSlice
 ```typescript
 function extractSlice(buffer: Uint8[], i: Uint8, length: Uint8):
 	return (getSlice(buffer, i, length), i+length)

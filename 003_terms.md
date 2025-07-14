@@ -1,7 +1,7 @@
-# 2 Terms and Definitions
+# 3 Terms and Definitions
 
 
-## 2.1 Primitive Value
+## 3.1 Primitive Value
 A value with one of the following types:
 * ~~`void`~~ *(deprecated)*
 * `null` *(JS: undefined = `js:undefined & null`)*
@@ -17,12 +17,12 @@ A value with one of the following types:
 * any mime type
 
 
-## 2.2 Non-instantiatable type
+## 3.2 Non-instantiatable type
 * `Any`
 * `ValueConsumer` **(TDB)**
 * `StreamConsumer` **(TDB)**
 
-## 2.3 Mime Value
+## 3.3 Mime Value
 A value with one of the following types:
 * `text`
 * `image`
@@ -33,7 +33,7 @@ A value with one of the following types:
 * `application`
 
 
-## 2.4 Complex Value
+## 3.4 Complex Value
 A value with one of the following types:
 * `Record`
 * `Array`
@@ -51,24 +51,24 @@ A value with one of the following types:
 
 
 
-## 2.5 Logical Value
+## 3.5 Logical Value
 A value with one of the following types:
 * `Disjunction`
 * `Conjunction`
 * `Negation`
 
 
-## 2.6 DXB
+## 3.6 DXB
 Refers to the DATEX Binary Format in general, or to a particular DATEX block.
 
-## 2.7 script
+## 3.7 script
 A text containing human-readable DATEX Syntax. A script can be compiled to DXB.
 
-## 2.8 block
+## 3.8 block
 A self-contained executable DATEX Binary sent from one endpoint to another endpoint. 
 
-## 2.9 message
+## 3.9 message
 A sequence of DATEX instructions distributed over one ore more blocks.
 
-## 2.10 scope
+## 3.10 scope
 The set of variables that exist during the exeuction of a message. A scope exists until the message is completely executed.

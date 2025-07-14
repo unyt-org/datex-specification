@@ -1,4 +1,4 @@
-# 8 Data Types and Values
+# 9 Data Types and Values
 
 DATEX has a variety of standard data types, including
 primitives, JSON data types, Records, Maps and Sets.
@@ -22,69 +22,69 @@ val s2: Set<integer> = xy() // type checking (TODO when infer?)
 The standard data types are available on every endpoint instance.
 Custom type definitions can be loaded as pointers from other endpoints.
 
-## 8.1 Nominal and Structural Types
+## 9.1 Nominal and Structural Types
 The DATEX type system is fundamentally a nominal type system.
 Values are always associated with a nominal type.
 
 Structural type matching is used for primitive values, JSON values and Records.
 
-### 8.1.1 Type Aliases
+### 9.1.1 Type Aliases
 
 
-## 8.2 Interfaces
+## 9.2 Interfaces
 
 Interfaces are special types that cannot be instantiated.
 They can contain overridable and sealed properties.
 
-## 8.3 The `ValueConsumer` interface
+## 9.3 The `ValueConsumer` interface
 
 The `ValueConsumer<I,O>` interface has a single property called
 `handleValue`. This property has to be assigned to a `Function<I,O>`.
 The function takes a value of type `I` as input and returns a value of type `O`.
 
-## 8.4 The `Function` interface
+## 9.4 The `Function` interface
 The `Function<I,O>` interface implements the `ValueConsumer<I,O>` interface.
 
-## 8.5 The `SyncConsumer` interface
+## 9.5 The `SyncConsumer` interface
 
 
-## 8.6 The `Instantiator` interface
+## 9.6 The `Instantiator` interface
 The `Instantiator` interface extends the `ValueConsumer` interface
 
-## 8.7 The `StreamConsumer` interface
+## 9.7 The `StreamConsumer` interface
 
 
-## 8.8 Any
+## 9.8 Any
 
 Disjunction of all values/types
 
-## 8.9 Primitive Types
+## 9.9 Primitive Types
 
-### 8.9.1 The `boolean` type
+### 9.9.1 The `boolean` type
 
 A `boolean` value can either be `true` or `false`.
 
 
-### 8.9.2 The `integer` type
-### 8.9.3 The `text` type
-### 8.9.4 The `null` type
+### 9.9.2 The `integer` type
+### 9.9.3 The `text` type
+### 9.9.4 The `null` type
 const value+type
-### 8.9.5 The `integer` type
-### 8.9.6 The `decimal` type
-### 8.9.7 The `quantity` type
-### 8.9.8 The `buffer` type
-### 8.9.9 The `time` type
-### 8.9.10 The `color` type
-### 8.9.11 The `endpoint` type
-### 8.9.12 The `symbol` type
-### 8.9.13 The `image` type
-### 8.9.14 The `audio` type
-### 8.9.15 The `video` type
-### 8.9.16 The `model` type
-### 8.9.17 The `font` type
-### 8.9.18 The `application` type
+### 9.9.5 The `integer` type
+### 9.9.6 The `decimal` type
+### 9.9.7 The `quantity` type
+### 9.9.8 The `buffer` type
+### 9.9.9 The `time` type
+### 9.9.10 The `color` type
+### 9.9.11 The `endpoint` type
+### 9.9.12 The `symbol` type
+### 9.9.13 The `image` type
+### 9.9.14 The `audio` type
+### 9.9.15 The `video` type
+### 9.9.16 The `model` type
+### 9.9.17 The `font` type
+### 9.9.18 The `application` type
 
-## 8.10 Records
+## 9.10 Records
 
 Records are non-extendable key-value data structures.
 All properties must be specified on creation. New properties cannot be added.
@@ -102,13 +102,13 @@ Record<(a:text, b:integer)> // allow only a property 'a' with type text and a pr
 ```
 
 
-## 8.11 Objects
+## 9.11 Objects
 
 Objects are extendable key-value data structures.
 Only text keys are allowed. New properties can be added and existing properties can be deleted after creation.
 Per default, any value can be assigned to a key.
 
-## 8.12 Arrays
+## 9.12 Arrays
 Arrays are extendable key-value data structures.
 Only integer keys are allowed. New properties can be added and existing properties can be deleted after creation.
 Per default, any value can be assigned to a key.

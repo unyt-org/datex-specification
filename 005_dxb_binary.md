@@ -1,9 +1,9 @@
-# 4 Binary Instruction Codes
+# 5 Binary Instruction Codes
 
 The following section contains a list of all DXB binary instruction codes.
 
 
-## 4.1 Remarks
+## 5.1 Remarks
 
 Instruction codes have a size of 1 byte. The codes from 0x60 to 0x9f are reserved for later use.
 
@@ -18,7 +18,7 @@ Number types:
 
 DATEX uses the little endian format for all numbers.
 
-## 4.2 Stand-alone codes
+## 5.2 Stand-alone codes
 |Name               | Hex Code | DX equivalent | Description |
 |-------------------|:--:|---------|------------------------------------------------------------------|
 |`CLOSE_AND_STORE`| a0 | `;`     | Close current statement and store result in the `#scope_result` variable. A DATEX Script must always end with CLOSE_AND_STORE. |
@@ -27,7 +27,7 @@ DATEX uses the little endian format for all numbers.
 |`END`              | 00 | `end`    | The scope execution is immediately stopped. The `#scope_result` is returned as normal |
 |`RETURN`           | a4 | `return`    | Returns the current `#scope_result`, scope continues afterwards    |
 
-## 4.3 Runtime Commands
+## 5.3 Runtime Commands
 
 Runtime commands can be standalone commands or commands with parameters.
 A command is normally expected to be followed by a specfic amount of values (parameters).
@@ -56,9 +56,9 @@ Other operators always have a shorthand symbol in DATEX Script (e.g. `!`, `==`).
 |`SUBSCRIBERS`      | bf | standalone     | `any` (pointer) | `<Filter>` | `subscribers pointer`  | Get all current subscribers for a pointer. |
 
 
-## 4.4 Operators
+## 5.4 Operators
 
-### 4.4.1 Comparators
+### 5.4.1 Comparators
 
 A comparator operator compares the current active value with an effective value that follows after the comparator.
 
@@ -72,7 +72,7 @@ A comparator operator compares the current active value with an effective value 
 |`LESS_EQUAL`       | ac | `av <= ev1` | Active value is set to `true` if current active value is less or equal to ev1 |
 
 
-### 4.4.2 Combinators
+### 5.4.2 Combinators
 
 Combination operators combine two values and can be used as mathematical or logical operators, but can also have custom functions for different value types.
 For mathematical operations, Floats and Ints can be combined.
@@ -88,13 +88,13 @@ For mathematical operations, Floats and Ints can be combined.
 |`RANGE`          | fd | `a..b` | Accepts only `<integer>` values, returns `<Tuple>` with ascending integers starting with `a` and excluding `b` |
 
 
-### 4.4.3 Other operators
+### 5.4.3 Other operators
 |Name             | Hex Code |  DX equivalent | Description |
 |-----------------|:--:|-------------------|----------------------------------------------|
 |`STREAM`         | ed | `x << 'streamed data' 'more data' ` | Accepts an arbitrary number of immediately followed `<text>`, `<Buffer>`, and `<Stream>` values. x must be a `<StreamSink>` |
 
 
-## 4.5 Shortcuts for Standard Library types
+## 5.5 Shortcuts for Standard Library types
 
 The `<Type>` values for all standard library types are represented with a single byte:
 
@@ -119,13 +119,13 @@ The `<Type>` values for all standard library types are represented with a single
 |`STD_TYPE_FUNCTION`   | 20 | `<Function>`|
 |`STD_TYPE_STREAM`     | 21 | `<Stream>`|
 
-## 4.6 Values
+## 5.6 Values
 
 
 Values instructions parse a value and then insert it into the scope.
 
 
-### 4.6.1 Standalone values
+### 5.6.1 Standalone values
 
 |Name               | Hex Code | DX equivalent |
 |----------------------|:--:|-------------|
@@ -134,7 +134,7 @@ Values instructions parse a value and then insert it into the scope.
 |`NULL`      | c6 | `null` |
 |`VOID`      | c7 | `void` |
 
-### 4.6.2 Other primitive values
+### 5.6.2 Other primitive values
 
 |Name              | Hex Code | Structure | DX example | Description |
 |------------------|:--:|------|-----------|-----------------------------------------------------------------|
@@ -148,7 +148,7 @@ Values instructions parse a value and then insert it into the scope.
 |`BUFFER`          | ca |<pre class="language-yaml">LENGTH: Uint32&#10;VALUE: Uint8[LENGTH]</pre>| `` `fafe334feaefe3` `` | A raw binary data buffer, maximum size 4.29 GB |
 
 
-### 4.6.3 Array, Objects, Tuples and Records
+### 5.6.3 Array, Objects, Tuples and Records
 
 |Name               | Hex Code | DX equivalent | Description |
 |-------------------|:--:|---------|------------------------------------------------------------------|
@@ -161,7 +161,7 @@ Values instructions parse a value and then insert it into the scope.
 
 Tuple, Record, and Subscope share the same symbol in DATEX Script.
 
-## 4.7 Pointers and Variables
+## 5.7 Pointers and Variables
 
 DATEX distinguishes between normal Variables, Internal Variables for specific purposes, and Pointers/Labels for persistant values.
 

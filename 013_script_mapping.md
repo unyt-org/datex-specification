@@ -1,14 +1,14 @@
-# 12 Mapping from DATEX Script to DXB (High-level abstractions)
+# 13 Mapping from DATEX Script to DXB (High-level abstractions)
 
 All properties of the `#std` record are directly accessible in all scopes (`#std` prefix not necessary: `#std.text -> text`).
 
-## 12.1 If branching
+## 13.1 If branching
 
 ```datex
 if conditionA (
 	A 
 )
-# 12 global->INDEX = 1
+# 13 global->INDEX = 1
 ```
 
 maps to
@@ -18,21 +18,21 @@ jumpFalse 1 conditionA
 A
 ```
 
-## 12.1 If/Else branching
+## 13.1 If/Else branching
 
 ```datex
 if conditionA (
 	A 
 )
-# 12 global->INDEX = 1
+# 13 global->INDEX = 1
 else if conditionB (
 	B
 )
-# 12 global->INDEX = 2
+# 13 global->INDEX = 2
 else (
 	C 
 )
-# 12 global->INDEX = 3
+# 13 global->INDEX = 3
 ```
 
 maps to
@@ -42,25 +42,25 @@ jumpFalse 1 conditionA
 A
 jump 3
 
-# 12 global->INDEX = 1
+# 13 global->INDEX = 1
 jumpFalse 2 conditionB
 B
 jump 3
 
-# 12 global->INDEX = 2
+# 13 global->INDEX = 2
 C
 
-# 12 global->INDEX = 3
+# 13 global->INDEX = 3
 ```
 
-## 12.1 While loops
+## 13.1 While loops
 
 ```datex
-# 12 global->INDEX = 1
+# 13 global->INDEX = 1
 while conditionA (
 	A 
 )
-# 12 global->INDEX = 2
+# 13 global->INDEX = 2
 ```
 
 maps to
@@ -72,7 +72,7 @@ jump 1
 ```
 
 
-## 12.1 Text with single quotes (template strings)
+## 13.1 Text with single quotes (template strings)
 
 Characters between two single quotes are converted to a TEXT instruction, similar to [double quoted text](./006_runtime_instructions.md#datex-script-mapping).
 
