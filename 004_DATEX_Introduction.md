@@ -225,7 +225,7 @@ Besides the primitive types and the JSON types (Array and Object), the DATEX sta
 * `<Time>`: Holds a Unix-time value in milliseconds
 * `<Tuple>`: A fixed-length array with fixed element types, has special use cases in DATEX
 * `<Record>`: A non-extendable object with fixed element types, has special use cases in DATEX
-* `<Datex>`: A compiled DATEX block
+* `<DATEX>`: A compiled DATEX block
 * `<Function>`: A compiled DATEX block that can be executed with parameters
 
 

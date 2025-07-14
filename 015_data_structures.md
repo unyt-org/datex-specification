@@ -19,12 +19,12 @@ Runtime.DXBRoutingHeaderData {
 	version: Uint8
 	ttl: Uint8
 
-	optional sender: Datex.Endpoint
-	receivers: Map<Datex.Endpoint[], Uint8[]>
+	optional sender: DATEX.Endpoint
+	receivers: Map<DATEX.Endpoint[], Uint8[]>
 	optional pointerId: Protocol.PointerId,
 
-	creationTimestamp: Datex.Time
-	expirationTimestamp: Datex.Time
+	creationTimestamp: DATEX.Time
+	expirationTimestamp: DATEX.Time
 
 	blockSize: Uint32
 }
@@ -58,7 +58,7 @@ Runtime.DXBBlockHeaderData {
 	allowExecute: boolean
 	endOfBlock: boolean
 	endOfScope: boolean
-	optional representedBy: Datex.Endpoint
+	optional representedBy: DATEX.Endpoint
 }
 ```
 
@@ -76,8 +76,8 @@ Runtime.DXBUnresolvedSubBlock {
 ```rust
 Runtime.Global {
 	instructionDefinitions: Map<InstructionCode, Runtime.InstructionDefinition>
-	scopes: Map<Datex.Endpoint, Map<Uint32, Runtime.Scope>>,
-	endpoint: Datex.Endpoint,
+	scopes: Map<DATEX.Endpoint, Map<Uint32, Runtime.Scope>>,
+	endpoint: DATEX.Endpoint,
 	version: ...
 	... <!-- TODO -->
 }
@@ -114,11 +114,11 @@ Runtime.Subscope {
 }
 ```
 
-## 15.4 Datex
+## 15.4 DATEX
 
-### 15.4.1 Datex.Endpoint
+### 15.4.1 DATEX.Endpoint
 ```rust
-Datex.Endpoint {
+DATEX.Endpoint {
 	type: Uint8,
 	id: Uint8[18],
 	instance: Uint16,
@@ -129,17 +129,17 @@ Datex.Endpoint {
 }
 ```
 
-### 15.4.2 Datex.Value
+### 15.4.2 DATEX.Value
 ```rust
-Datex.Value {
-	type: Datex.Type
+DATEX.Value {
+	type: DATEX.Type
 	value: any
 }
 ```
 
-### 15.4.3 Datex.Text
+### 15.4.3 DATEX.Text
 ```rust
-Datex.Text {
+DATEX.Text {
 	length: Uint32
 	content: Uint8[length]
 }

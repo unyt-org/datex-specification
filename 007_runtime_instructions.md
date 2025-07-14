@@ -28,17 +28,17 @@ function(data: Uint8[]):
 ### 7.3.4 Parameters
 *None*
 ### 7.3.5 Return value
-The TEXT instruction returns a value of type `Datex.Text`.
+The TEXT instruction returns a value of type `DATEX.Text`.
 
 ### 7.3.6 Procedure
 ```typescript
 function (data: Instruction.Text):
-   return Datex.Text {
+   return DATEX.Text {
       length: data.LENGTH,
       content: data.CONTENT
    }
 ```
-### 7.3.7 Datex Script mapping
+### 7.3.7 DATEX Script mapping
 
 Characters between two double quotes are converted to utf-8 formatted text. Characters can be escaped with a backslash character (`\`).
 
@@ -70,21 +70,21 @@ The IMPLEMENTS instruction checks if a type or its *root type* extends or implem
 *none*
 
 ### 7.4.4 Parameters
-* Effective Value Parameter `$0`: The following types are allowed: `Datex.Type`, `Datex.Composite<Datex.Type>`
-* Effective Value Parameter `$1`: The following types are allowed: `Datex.Type>`, `Datex.Composite<Datex.Type>`
+* Effective Value Parameter `$0`: The following types are allowed: `DATEX.Type`, `DATEX.Composite<DATEX.Type>`
+* Effective Value Parameter `$1`: The following types are allowed: `DATEX.Type>`, `DATEX.Composite<DATEX.Type>`
 
 ### 7.4.5 Return value
-The IMPLEMENTS instruction returns a value of type `Datex.Boolean`.
+The IMPLEMENTS instruction returns a value of type `DATEX.Boolean`.
 
 ### 7.4.6 Procedure
 
 ```typescript
-function (data:void, $0: Datex.Type|Datex.Composite<Datex.Type>, $1: Datex.Type|Datex.Composite<Datex.Type>):
+function (data:void, $0: DATEX.Type|DATEX.Composite<DATEX.Type>, $1: DATEX.Type|DATEX.Composite<DATEX.Type>):
 
-	if $0 = Datex.any:
+	if $0 = DATEX.any:
       return true
 
-   if $0->TYPE = Datex.Type and $1->TYPE = Datex.Type:
+   if $0->TYPE = DATEX.Type and $1->TYPE = DATEX.Type:
       if composite.includes($0->IMPLEMENTED) or
          composite.includes($0->EXTENDED) or
          composite.includes($0->ROOT->IMPLEMENTED) or
@@ -97,7 +97,7 @@ function (data:void, $0: Datex.Type|Datex.Composite<Datex.Type>, $1: Datex.Type|
 
 ```
 
-### 7.4.7 Datex Script mapping
+### 7.4.7 DATEX Script mapping
 
 The `implements` keyword is mapped to the IMPLEMENTS instruction.
 The keyword must be preceeded by one effective value and succeeded by one effective value:
@@ -137,7 +137,7 @@ function (data: Instruction.Jump):
 
 ```
 
-### 7.5.7 Datex Script mapping
+### 7.5.7 DATEX Script mapping
 
 #### Labeled jumps:
 
@@ -174,7 +174,7 @@ The JUMP_TRUE instruction moves the instruction index to a given index, if a tru
 *none*
 
 ### 7.1.4 Parameters
-* Effective Value Parameter `$0`: The following types are allowed: `Datex.Any`
+* Effective Value Parameter `$0`: The following types are allowed: `DATEX.Any`
 
 ### 7.1.5 Return value
 *void*
@@ -182,15 +182,15 @@ The JUMP_TRUE instruction moves the instruction index to a given index, if a tru
 ### 7.1.6 Procedure
 
 ```typescript
-function (data: Instruction.Jump, $0: Datex.Any):
-   if not Datex.Boolean ($0):
+function (data: Instruction.Jump, $0: DATEX.Any):
+   if not DATEX.Boolean ($0):
       return;
    newSubScope()
    (global->INDEX) <- data.INDEX
 
 ```
 
-### 7.1.7 Datex Script mapping
+### 7.1.7 DATEX Script mapping
 
 #### Labeled jumps:
 
@@ -241,7 +241,7 @@ The JUMP_FALSE instruction moves the instruction index to a given index, if a tr
 *none*
 
 ### 7.1.4 Parameters
-* Effective Value Parameter `$0`: The following types are allowed: `Datex.Any`
+* Effective Value Parameter `$0`: The following types are allowed: `DATEX.Any`
 
 ### 7.1.5 Return value
 *void*
@@ -249,15 +249,15 @@ The JUMP_FALSE instruction moves the instruction index to a given index, if a tr
 ### 7.1.6 Procedure
 
 ```typescript
-function (data: Instruction.Jump, $0: Datex.Any):
-   if Datex.Boolean ($0):
+function (data: Instruction.Jump, $0: DATEX.Any):
+   if DATEX.Boolean ($0):
       return;
    newSubScope()
    (global->INDEX) <- data.INDEX
 
 ```
 
-### 7.1.7 Datex Script mapping
+### 7.1.7 DATEX Script mapping
 
 #### Labeled jumps:
 
@@ -304,4 +304,4 @@ Description
 ### 7.1.4 Parameters
 ### 7.1.5 Return value
 ### 7.1.6 Procedure
-### 7.1.7 Datex Script mapping
+### 7.1.7 DATEX Script mapping

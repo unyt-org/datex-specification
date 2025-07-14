@@ -26,7 +26,7 @@ The Routing Header is not encrypted or signed, the content always needs to be pa
 |Signed / Encrypted | 7          | 8          | 1      | <pre class="language-yaml">SECURITY: Uint8&#10;</pre>   | 0x00: not signed or encrypted, 0x01: signed, 0x02: encrypted, 0x03: signed and encrypted |
 
 ```
-Datex.Endpoint {
+DATEX.Endpoint {
 	TYPE: Uint8
 	ID: Uint8[18]
 	INSTANCE: Uint16

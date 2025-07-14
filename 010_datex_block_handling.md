@@ -12,7 +12,7 @@ function extractReceivers(buffer: Uint8[], i: Uint8):
 	hasEndpoints: boolean <- flags & 0b00000010
 	endpointsHaveKeys: boolean <- flags & 0b00000100
 
-	receivers <- Map<Datex.Endpoint, Uint8[]>
+	receivers <- Map<DATEX.Endpoint, Uint8[]>
 
 	if hasPointerId:
 		(pointerId,i) <- extractSlice(buffer, i, 26)
@@ -33,7 +33,7 @@ function extractReceivers(buffer: Uint8[], i: Uint8):
 ```typescript
 function parseEndpoint(data: Uint8[]):
 	i <- 0
-	return Datex.Endpoint {
+	return DATEX.Endpoint {
 		type: data[i++],
 		id: getSlice(buffer, i, 18),
 		instance: getUint16(buffer, i+18)
@@ -87,13 +87,13 @@ function extractDXBRoutingHeaderData(dxb: Protocol.DXB)
 	blockHeaderFlags <- blockHeaderFlagsAndCreationTimestamp >> 43
 	(expirationOffset, i) <- extractUint32(dxb, i)
 
-	creationTimestamp <- Datex.Time.fromMilliseconds (creationTimestampMs)
+	creationTimestamp <- DATEX.Time.fromMilliseconds (creationTimestampMs)
 
 	hasExpirationOffset <- blockHeaderFlags & 0b000000010000000000000
 
 	size <- i - 8
 	if hasExpirationOffset:
-		expirationTimestamp <- Datex.Time.fromMilliseconds (creationTimestampMs + expirationOffset*1000)
+		expirationTimestamp <- DATEX.Time.fromMilliseconds (creationTimestampMs + expirationOffset*1000)
 		size <- size - 4
 	
 	return Protocol.DXBRoutingHeaderData {
@@ -114,7 +114,7 @@ function extractDXBRoutingHeaderData(dxb: Protocol.DXB)
 ```
 
 ```typescript
-function decryptSignature(signature: Uint8[], sender: Datex.Endpoint, global: Runtime.Global):
+function decryptSignature(signature: Uint8[], sender: DATEX.Endpoint, global: Runtime.Global):
 	// TODO 
 
 ```

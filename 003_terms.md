@@ -1,9 +1,9 @@
 # 3 Terms and Definitions
 
+[//]: # (TODO: terms as top level enumeration, no sub-chapters)
 
-## 3.1 Primitive Value
+## 3.1 Primitive Values
 A value with one of the following types:
-* ~~`void`~~ *(deprecated)*
 * `null` *(JS: undefined = `js:undefined & null`)*
 * `boolean`
 * `integer`
@@ -16,13 +16,7 @@ A value with one of the following types:
 * `color` **(TDB)**
 * any mime type
 
-
-## 3.2 Non-instantiatable type
-* `Any`
-* `ValueConsumer` **(TDB)**
-* `StreamConsumer` **(TDB)**
-
-## 3.3 Mime Value
+### 3.1.1 Mime Value
 A value with one of the following types:
 * `text`
 * `image`
@@ -33,9 +27,15 @@ A value with one of the following types:
 * `application`
 
 
-## 3.4 Complex Value
+## 3.2 Non-instantiatable type
+* `Any`
+* `ValueConsumer` **(TDB)**
+* `StreamConsumer` **(TDB)**
+
+
+## 3.4 Complex Values
 A value with one of the following types:
-* `Record`
+* `Tuple`
 * `Array`
 * `Object`
 * `Map`
@@ -44,11 +44,10 @@ A value with one of the following types:
 * `Function`
 * `Iterator`
 * `Stream`
-* `Error`
+* `Error` (TODO: std lib?)
 * `Task`
 * `Type`
 * all logical types
-
 
 
 ## 3.5 Logical Value

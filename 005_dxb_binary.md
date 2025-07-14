@@ -107,7 +107,7 @@ The `<Type>` values for all standard library types are represented with a single
 |`STD_TYPE_NULL`       | 14 | `<Null>`    |
 |`STD_TYPE_VOID`       | 15 | `<Void>`    |
 |`STD_TYPE_BUFFER`     | 16 | `<Buffer>`  |
-|`STD_TYPE_CODE_BLOCK` | 17 | `<Datex>`   |
+|`STD_TYPE_CODE_BLOCK` | 17 | `<DATEX>`   |
 |`STD_TYPE_UNIT`       | 18 | `<Unit>`    |
 |`STD_TYPE_FILTER`     | 19 | `<Filter>`  |
 |`STD_TYPE_ARRAY`      | 1a | `<Array>`   |
