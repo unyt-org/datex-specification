@@ -16,10 +16,24 @@ function updateHeadings(filePath: string) {
 	let content = fs.readFileSync(filePath, "utf-8");
 	const lines = content.split('\n');
 
+	let h2Count = 0;
+    let h3Count = 0;
+
 	const updatedLines = lines.map(line => {
-		if (line.startsWith('# ')) return line.replace(/^# (.*)/, `# ${chapterNumber} $1`);
-		if (line.startsWith('## ')) return line.replace(/^## (.*)/, `## ${chapterNumber}.1 $1`);
-        if (line.startsWith('### ')) return line.replace(/^### (.*)/, `### ${chapterNumber}.1.1 $1`);
+		if (line.startsWith('# ')) {
+			h2Count = 0;
+            h3Count = 0;
+			return line.replace(/^# (.*)/, `# ${chapterNumber} $1`);
+		}
+		if (line.startsWith('## ')) {
+			h2Count++;
+            h3Count = 0;
+			return line.replace(/^## (.*)/, `## ${chapterNumber}.${h2Count} $1`);
+		}
+		if (line.startsWith('### ')) {
+            h3Count++;
+			return line.replace(/^### (.*)/, `### ${chapterNumber}.${h2Count}.${h3Count} $1`);
+		}
         return line;
 	});
 	fs.writeFileSync(filePath, updatedLines.join('\n'));
