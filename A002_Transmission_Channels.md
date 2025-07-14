@@ -1,27 +1,27 @@
-# General Requirements for an underlying transmission channel
+# A2 General Requirements for an underlying transmission channel
  * Data integrity (Complete, accurate and consistent)
  * Uni- or bidirectional
 
-# Specific Protocols
+# A2 Specific Protocols
 
-## UDP
+## A2.1 UDP
 UNIQUE BLOCK ID (2 BYTES) | NUMBER OF UDP PACKETS (2 BYTES) | CURRENT UDP PACKET INDEX (2 BYTES)
 
 
-## WebRTC
+## A2.2 WebRTC
 
-## TCP
+## A2.3 TCP
 
-## WebSockets
+## A2.4 WebSockets
 
-## SPI
+## A2.5 SPI
 
-## HTTP
+## A2.6 HTTP
 
-## QR-Codes
+## A2.7 QR-Codes
 
-## NFC
+## A2.8 NFC
 
-## USB
+## A2.9 USB
 
-## Bluetooth
+## A2.10 Bluetooth

@@ -1,36 +1,36 @@
-# Instruction Codes
+# 6 Instruction Codes
 
-## 00
+## 6.1 00
 
-## 10 STD_TYPE_TEXT
+## 6.2 STD_TYPE_TEXT
 
 * DATEX Script code `#std.text`
 
-## C0 TEXT
+## 6.3 TEXT
 
 Structure: [Instruction.Text](./300_data_structures.md#instructiontext)
 
 LENGTH is the size of the utf-8-encoded string in bytes.
 
-### Minimum size
+### 6.3.1 Minimum size
 `4 bytes`
 
-### Maximum size
+### 6.3.2 Maximum size
 `4 + 2**32 bytes`
 
-### Validation
+### 6.3.3 Validation
 ```typescript
 function(data: Uint8[]):
    length <- getUint32(data)
    return len(data) > length + 4
 ```
 
-### Parameters
+### 6.3.4 Parameters
 *None*
-### Return value
+### 6.3.5 Return value
 The TEXT instruction returns a value of type `Datex.Text`.
 
-### Procedure
+### 6.3.6 Procedure
 ```typescript
 function (data: Instruction.Text):
    return Datex.Text {
@@ -38,7 +38,7 @@ function (data: Instruction.Text):
       content: data.CONTENT
    }
 ```
-### Datex Script mapping
+### 6.3.7 Datex Script mapping
 
 Characters between two double quotes are converted to utf-8 formatted text. Characters can be escaped with a backslash character (`\`).
 
@@ -52,7 +52,7 @@ Examples:
 ```
 
 
-## 53 IMPLEMENTS
+## 6.4 IMPLEMENTS
 
 Structure: *Empty*
 
@@ -60,23 +60,23 @@ In the following, 'type' refers to a value of type `<Type>` or `<Composite(<Type
 
 The IMPLEMENTS instruction checks if a type or its *root type* extends or implements another type.
 
-### Minimum size
+### 6.4.1 Minimum size
 `0 bytes`
 
-### Maximum size
+### 6.4.2 Maximum size
 `0 bytes`
 
-### Validation
+### 6.4.3 Validation
 *none*
 
-### Parameters
+### 6.4.4 Parameters
 * Effective Value Parameter `$0`: The following types are allowed: `Datex.Type`, `Datex.Composite<Datex.Type>`
 * Effective Value Parameter `$1`: The following types are allowed: `Datex.Type>`, `Datex.Composite<Datex.Type>`
 
-### Return value
+### 6.4.5 Return value
 The IMPLEMENTS instruction returns a value of type `Datex.Boolean`.
 
-### Procedure
+### 6.4.6 Procedure
 
 ```typescript
 function (data:void, $0: Datex.Type|Datex.Composite<Datex.Type>, $1: Datex.Type|Datex.Composite<Datex.Type>):
@@ -97,7 +97,7 @@ function (data:void, $0: Datex.Type|Datex.Composite<Datex.Type>, $1: Datex.Type|
 
 ```
 
-### Datex Script mapping
+### 6.4.7 Datex Script mapping
 
 The `implements` keyword is mapped to the IMPLEMENTS instruction.
 The keyword must be preceeded by one effective value and succeeded by one effective value:
@@ -106,29 +106,29 @@ a implements b
 ```
 a corresponds to `$0`. b corresponds to `$1`. 
 
-## 56 JUMP
+## 6.5 JUMP
 
 Structure: [Instruction.Jump](./300_data_structures.md#instructionjump)
 
 The JUMP instruction moves the instruction index to a given index.
 
 
-### Minimum size
+### 6.5.1 Minimum size
 `4 bytes`
 
-### Maximum size
+### 6.5.2 Maximum size
 `4 bytes`
 
-### Validation
+### 6.5.3 Validation
 *none*
 
-### Parameters
+### 6.5.4 Parameters
 *None*
 
-### Return value
+### 6.5.5 Return value
 *void*
 
-### Procedure
+### 6.5.6 Procedure
 
 ```typescript
 function (data: Instruction.Jump):
@@ -137,7 +137,7 @@ function (data: Instruction.Jump):
 
 ```
 
-### Datex Script mapping
+### 6.5.7 Datex Script mapping
 
 #### Labeled jumps:
 
@@ -146,7 +146,7 @@ The `jump` command can be followed by an ASCII character sequence (label). The g
 
 ```datex
 jump xx # scope->byteIndex = a
-# ...
+# 6 ...
 lbl xx  # scope->byteIndex = b
 ```
 This corresponds to a JUMP instruction with the data
@@ -158,28 +158,28 @@ Instruction.Jump {
 
 
 
-## 57 JUMP_TRUE
+## 6.1 JUMP_TRUE
 
 Structure: [Instruction.Jump](./300_data_structures.md#instructionjump)
 
 The JUMP_TRUE instruction moves the instruction index to a given index, if a truthy value is passed as a parameter.
 
-### Minimum size
+### 6.1.1 Minimum size
 `4 bytes`
 
-### Maximum size
+### 6.1.2 Maximum size
 `4 bytes`
 
-### Validation
+### 6.1.3 Validation
 *none*
 
-### Parameters
+### 6.1.4 Parameters
 * Effective Value Parameter `$0`: The following types are allowed: `Datex.Any`
 
-### Return value
+### 6.1.5 Return value
 *void*
 
-### Procedure
+### 6.1.6 Procedure
 
 ```typescript
 function (data: Instruction.Jump, $0: Datex.Any):
@@ -190,7 +190,7 @@ function (data: Instruction.Jump, $0: Datex.Any):
 
 ```
 
-### Datex Script mapping
+### 6.1.7 Datex Script mapping
 
 #### Labeled jumps:
 
@@ -198,7 +198,7 @@ The `jumpTrue` command can be followed by an ASCII character sequence (label). T
 
 ```datex
 jumpTrue xx condition # global->INDEX = a
-# ...
+# 6 ...
 lbl xx  # global->INDEX = b
 ```
 This corresponds to a JUMP_TRUE instruction with the data
@@ -225,28 +225,28 @@ Instruction.Jump {
 
 
 
-## 58 JUMP_FALSE
+## 6.1 JUMP_FALSE
 
 Structure: [Instruction.Jump](./300_data_structures.md#instructionjump)
 
 The JUMP_FALSE instruction moves the instruction index to a given index, if a truthy value is passed as a parameter.
 
-### Minimum size
+### 6.1.1 Minimum size
 `4 bytes`
 
-### Maximum size
+### 6.1.2 Maximum size
 `4 bytes`
 
-### Validation
+### 6.1.3 Validation
 *none*
 
-### Parameters
+### 6.1.4 Parameters
 * Effective Value Parameter `$0`: The following types are allowed: `Datex.Any`
 
-### Return value
+### 6.1.5 Return value
 *void*
 
-### Procedure
+### 6.1.6 Procedure
 
 ```typescript
 function (data: Instruction.Jump, $0: Datex.Any):
@@ -257,7 +257,7 @@ function (data: Instruction.Jump, $0: Datex.Any):
 
 ```
 
-### Datex Script mapping
+### 6.1.7 Datex Script mapping
 
 #### Labeled jumps:
 
@@ -265,7 +265,7 @@ The `jumpFalse` command can be followed by an ASCII character sequence (label). 
 
 ```datex
 jumpFalse xx condition # global->INDEX = a
-# ...
+# 6 ...
 lbl xx  # global->INDEX = b
 ```
 This corresponds to a JUMP_FALSE instruction with the data
@@ -290,18 +290,18 @@ Instruction.Jump {
 }
 ```
 
-## xx INSTRUCTION
+## 6.1 xx INSTRUCTION
 
 Structure: [Instruction.xx](./300_data_structures.md#xx)
 
 Description
 
-### Minimum size
+### 6.1.1 Minimum size
 `x bytes`
-### Maximum size
+### 6.1.2 Maximum size
 `x bytes`
-### Validation
-### Parameters
-### Return value
-### Procedure
-### Datex Script mapping
+### 6.1.3 Validation
+### 6.1.4 Parameters
+### 6.1.5 Return value
+### 6.1.6 Procedure
+### 6.1.7 Datex Script mapping

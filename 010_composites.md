@@ -1,4 +1,4 @@
-# Logical Composites
+# 10 Logical Composites
 
 Logical Composites are the fundamental building blocks for high-level DATEX functionality.
 They enable complex types, inheritance, meta properties, filter logic and permission handling.
@@ -34,7 +34,7 @@ val int = MyInteger (10);
 print int.toHex()
 ```
 
-## Logical Composite Matching with Assertions
+## 10.1 Logical Composite Matching with Assertions
 
 Logical composites can also contain assertions that are evaluated for a single atomic value when a composite is matched against a value.
 
@@ -66,7 +66,7 @@ Types:
 ```
 
 
-## Evaluation
+## 10.2 Evaluation
 
 Composites can be collapsed with the current item values.
 In some cases, composite items without a reference (non-reactive values) can also be immediately collapsed on construction.
@@ -75,7 +75,7 @@ Per default, values are compared by value and not by reference.
 
 All items of a connective are compared (and potentially collapsed) in pairs from right to left.
 
-### Conjunctions (AND)
+### 10.2.1 Conjunctions (AND)
 
 Conjunctions evaluate to `false` if both items are primitive values with the same type, but with a different value.
 If both items have the exact same value, they are collapsed into a single item.
@@ -94,7 +94,7 @@ true & true # true
 integer/8 & integer # integer/8 (most specific type)
 ```
 
-### Disjunctions (OR)
+### 10.2.2 Disjunctions (OR)
 If both items have the exact same value, they are collapsed into a single item.
 Non-primitive items are collapsed according to the specific rules of the types.
 
@@ -107,7 +107,7 @@ true | false # true for values, true | false for types
 true | true # true 
 ```
 
-## Value Matching
+## 10.3 Value Matching
 
 // TODO: OR instead of AND for type inheritance
 

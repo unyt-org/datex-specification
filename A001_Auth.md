@@ -1,8 +1,8 @@
-# Endpoint Authentication & Authorization
+# A1 Endpoint Authentication & Authorization
 
-## Authorization Processes
+## A1.1 Authorization Processes
 
-### Endpoint Creation
+### A1.1.1 Endpoint Creation
 TODO: introduction
 
 #### Trust Levels
@@ -58,13 +58,13 @@ The process of creating trusted endpoints can be derived from [Creating anonymou
 2. The block includes an additional signature and identifier of a trusted endpoint
 3. no change
 
-### Joining the Supranet
+### A1.1.2 Joining the Supranet
 An existing endpoint can be recreated with the stored private keys and endpoint identifier.
 A HELLO-message is distributed to the Supranet (see [Registering an endpoint](./082_endpoints.md#registering-an-endpoint)).
 
-## Applications
+## A1.2 Applications
 
-### Identity Data Storage
+### A1.2.1 Identity Data Storage
 TODO: add datex type explanation
 
 An endpoint can hold (more or less persistent) data fields as seen below. 
@@ -97,7 +97,7 @@ Data can additionally be stored in the HELIX blockchain for data availability pu
 - phone?: `text`
 - paymentMethods?: `Payment[]`
 
-### Creating sub endpoints
+### A1.2.2 Creating sub endpoints
 An endpoint can create sub endpoints that are publicy linked to itself.
 They are still regarded as trusted endpoints, but they only have trust level 3.
 
@@ -106,7 +106,7 @@ They are still regarded as trusted endpoints, but they only have trust level 3.
 * The local endpoint creates an endpoint property that points to the subendpoint (DATEX type: Endpoint):
 	`@example::#public.mySubEndpoint` or short form `@example.mySubEndpoint`
 
-### Authentication
+### A1.2.3 Authentication
 Trust is established through authentication authorities trusted by the network. The default authority is **unyt.org**.
 
 #### Authentication via eID
@@ -115,10 +115,10 @@ A trusted personal endpoint can be created using sign application from electroni
 Personal data can be retrieved from machine readeable documents (EU passport / eID) and validated and signed by authority.
 
 
-## Service: unyt Auth
+## A1.3 Service: unyt Auth
 All of the functions described above are provided by the **unyt Auth** service.
 
-### Endpoint identifiers
+### A1.3.1 Endpoint identifiers
 As a trusted endpoint authority, unyt can assign custom endpoint identifiers.
 
 **Personal identifiers**
@@ -143,10 +143,10 @@ To avoid naming colissions, unyt makes public announcements about recent name re
 
 TODO
 
-### Interfaces
+### A1.3.2 Interfaces
 All of the above functionality is provided through the interfaces descibed below... UI is optionally provided within our service.
 
-### Key Storage
+### A1.3.3 Key Storage
 unyt provides a service to store users encrypted private keys that are not accesible by unyt.
 
 The keys (2x private) for the main endpoint can be decrypted via the master password. 

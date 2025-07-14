@@ -1,6 +1,6 @@
-# Enums
+# 15 Enums
 
-## InstructionCode
+## 15.1 InstructionCode
 ```rust
 enum InstructionCode {
 	// flow instructions 0x00 - 0x0f
@@ -260,14 +260,14 @@ enum InstructionCode {
 
 IMPLEMENTS
 
-## BlockType
+## 15.2 BlockType
 ```rust
 enum Protocol.BlockType {
 	
 }
 ```
 
-## DeviceType
+## 15.3 DeviceType
 ```rust
 enum Protocol.DeviceType {
 

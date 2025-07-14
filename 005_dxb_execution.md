@@ -1,6 +1,6 @@
-# DATEX Execution
+# 5 DATEX Execution
 
-## Runtime Environments
+## 5.1 Runtime Environments
 
 A DATEX Runtime Environment has to take care of sequential execution of incoming instructions, handling of encrpytion, permissions, variables and pointers. Furthermore, it must have a DXB generator to automatically generate response and synchronization messages.
 
@@ -9,7 +9,7 @@ A full DATEX Compiler is not required for a Runtime.
 A Runtime Environment can also provide an interface to the host system (e.g. to manipulate a UI, access a database, or communicate with peripherals)
 
 
-## Sandboxed Execution
+## 5.2 Sandboxed Execution
 
 Since arbitrary DATEX binary code can be executed from other directly or indirectly connected endpoints ("remote endpoints"), the Runtime has to provide a sandboxed environment in which the access to pointers and static scopes it restricted depending on the permissions of the remote endpoint.
 
@@ -17,11 +17,11 @@ Per default, a remote endpoint should not be allowed to execute instructions on 
 
 <br>
 
-## Internal Slots
+## 5.3 Internal Slots
 
 Each scope has a number of memory locations to store values that are relevant for the scope execution process.
 Some internal slots are directly accessible in the scope as internal variables (e.g. `#result`, `#this`). Internal variables can be readonly. 
-### List of internal slots:
+### 5.3.1 List of internal slots:
 
 <!--todo: which slots are for scopes/sub scopes-->
 * `[[ACTIVE_VALUE]]`
@@ -39,7 +39,7 @@ Some internal slots are directly accessible in the scope as internal variables (
 
 <br>
 
-## General procedure for instruction processing
+## 5.4 General procedure for instruction processing
 
 1. <b>READ THE INSTRUCTION</b>
    * Store the Instruction Code in `[[INSTRUCTION_CODE]]`
@@ -63,7 +63,7 @@ Some internal slots are directly accessible in the scope as internal variables (
 <br>
 
 
-## Statements
+## 5.5 Statements
 
 The `CLOSE_AND_STORE` Instruction is used to separate groups of Instructions ("Statements").
 
@@ -73,13 +73,13 @@ The `[[ACTIVE_VALUE]]` is stored in `[[SCOPE_RESULT]]`.
 
 <br>
 
-## Global Runtime data
+## 5.6 Global Runtime data
 * global: [`Runtime.Global`](./300_data_structures.md#runtimeglobal)
 * The `scope` keyword acts as context of the current scope ([`Runtime.Scope`](./300_data_structures.md#runtimeglobal)).
 
-## General Runtime procedures
+## 5.7 General Runtime procedures
 
-### runtimeExecution
+### 5.7.1 runtimeExecution
 ```typescript
 function runtimeExecution(scope: Runtime.Scope, global: Runtime.Global):
 
@@ -120,7 +120,7 @@ function runtimeExecution(scope: Runtime.Scope, global: Runtime.Global):
 
 
 ```
-### newSubScope
+### 5.7.2 newSubScope
 ```typescript
 function newSubScope(scope: Runtime.Scope)
    // TODO add new subscope to heap
@@ -130,9 +130,9 @@ function newSubScope(scope: Runtime.Scope)
 ```
 
 
-## Instruction-specific procedures
+## 5.8 Instruction-specific procedures
 
-### COUNT
+### 5.8.1 COUNT
 1. If `[[ACTIVE_VALUE]]` is primitive, set `[[PROC_RESULT]]` to `1`
 
 ...

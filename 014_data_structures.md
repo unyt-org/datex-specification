@@ -1,9 +1,9 @@
-# Data Structures
+# 14 Data Structures
 
 
-## Runtime
+## 14.1 Runtime
 
-## Runtime.InstructionDefinition
+## 14.2 Runtime.InstructionDefinition
 ```rust
 Runtime.InstructionDefinition {
 	minimumSize: Uint8,
@@ -13,7 +13,7 @@ Runtime.InstructionDefinition {
 }
 ```
 
-## Runtime.DXBRoutingHeaderData
+## 14.3 Runtime.DXBRoutingHeaderData
 ```rust
 Runtime.DXBRoutingHeaderData {
 	version: Uint8
@@ -30,7 +30,7 @@ Runtime.DXBRoutingHeaderData {
 }
 ```
 
-### Runtime.DXBBlock
+### 14.3.1 Runtime.DXBBlock
 ```rust
 Runtime.DXBBlock {
 	activeBoundA: Uint16, // subblock to be executed next
@@ -42,7 +42,7 @@ Runtime.DXBBlock {
 	headerData: DXBBlockHeaderData
 }
 
-### Runtime.DXBBlockHeaderData
+### 14.3.2 Runtime.DXBBlockHeaderData
 ```rust
 Runtime.DXBBlockHeaderData {
 	routingData: DXBRoutingHeaderData
@@ -62,7 +62,7 @@ Runtime.DXBBlockHeaderData {
 }
 ```
 
-### Runtime.DXBUnresolvedSubBlock
+### 14.3.3 Runtime.DXBUnresolvedSubBlock
 ```rust
 Runtime.DXBUnresolvedSubBlock {
 	headerData: Runtime.DXBBlockHeaderData,
@@ -72,7 +72,7 @@ Runtime.DXBUnresolvedSubBlock {
 }
 ```
 
-### Runtime.Global: 
+### 14.3.4 Runtime.Global: 
 ```rust
 Runtime.Global {
 	instructionDefinitions: Map<InstructionCode, Runtime.InstructionDefinition>
@@ -83,7 +83,7 @@ Runtime.Global {
 }
 ```
 
-### Runtime.Scope: 
+### 14.3.5 Runtime.Scope: 
 ```rust
 Runtime.Scope {
 	headerData: DXBBlockHeaderData, // first block's header data
@@ -100,7 +100,7 @@ Runtime.Scope {
 }
 ```
 
-### Runtime.Subscope: 
+### 14.3.6 Runtime.Subscope: 
 ```rust
 Runtime.Subscope {
 	activeValue: any
@@ -114,9 +114,9 @@ Runtime.Subscope {
 }
 ```
 
-## Datex
+## 14.4 Datex
 
-### Datex.Endpoint
+### 14.4.1 Datex.Endpoint
 ```rust
 Datex.Endpoint {
 	type: Uint8,
@@ -129,7 +129,7 @@ Datex.Endpoint {
 }
 ```
 
-### Datex.Value
+### 14.4.2 Datex.Value
 ```rust
 Datex.Value {
 	type: Datex.Type
@@ -137,7 +137,7 @@ Datex.Value {
 }
 ```
 
-### Datex.Text
+### 14.4.3 Datex.Text
 ```rust
 Datex.Text {
 	length: Uint32
@@ -145,9 +145,9 @@ Datex.Text {
 }
 ```
 
-## Protocol
+## 14.5 Protocol
 
-### Protocol.Endpoint
+### 14.5.1 Protocol.Endpoint
 ```rust
 Protocol.Endpoint {
 	TYPE: Uint8
@@ -156,7 +156,7 @@ Protocol.Endpoint {
 }
 ```
 
-### Protocol.PointerId
+### 14.5.2 Protocol.PointerId
 ```rust
 Protocol.PointerId {
 	TYPE: Uint8
@@ -167,7 +167,7 @@ Protocol.PointerId {
 }
 ```
 
-### Protocol.ReceiverEndpoint
+### 14.5.3 Protocol.ReceiverEndpoint
 ```rust
 Protocol.ReceiverEndpoint {
 	ENDPOINT: Protocol.Endpoint
@@ -175,7 +175,7 @@ Protocol.ReceiverEndpoint {
 }
 ```
 
-### Protocol.ReceiverEndpoints
+### 14.5.4 Protocol.ReceiverEndpoints
 ```rust
 Protocol.ReceiverEndpoints {
 	COUNT: Uint16 # if MAX, flood, no RECEIVERS
@@ -183,7 +183,7 @@ Protocol.ReceiverEndpoints {
 }
 ```
 
-### Protocol.Receivers
+### 14.5.5 Protocol.Receivers
 ```rust
 Protocol.Receivers {
 	FLAGS: Uint8
@@ -195,7 +195,7 @@ Protocol.Receivers {
 }
 ```
 
-### Protocol.RoutingHeader
+### 14.5.6 Protocol.RoutingHeader
 ```rust
 Protocol.RoutingHeader {
 	MAGIC_NUMBER: Uint16 {0x01, 0x64},
@@ -219,7 +219,7 @@ Protocol.RoutingHeader {
 }
 ```
 
-### Protocol.BlockHeader
+### 14.5.7 Protocol.BlockHeader
 ```rust
 Protocol.BlockHeader {
 	
@@ -240,7 +240,7 @@ Protocol.BlockHeader {
 }
 ```
 
-### Protocol.DXB
+### 14.5.8 Protocol.DXB
 ```rust
 Protocol.DXB {
 	ROUTING_HEADER: Protocol.RoutingHeader,
@@ -257,14 +257,14 @@ Protocol.DXB {
 }
 ```
 
-### Protocol.Body
+### 14.5.9 Protocol.Body
 ```rust
 Protocol.Body {
 	INSTRUCTIONS: Protocol.DXBInstruction[]
 }
 ```
 
-### Protocol.DXBInstruction
+### 14.5.10 Protocol.DXBInstruction
 ```rust
 Protocol.DXBInstruction 
 {
@@ -283,9 +283,9 @@ Protocol.DXBInstruction
 
 ```
 
-## Instruction
+## 14.6 Instruction
 
-### Instruction.Endpoint
+### 14.6.1 Instruction.Endpoint
 ```rust
 Instruction.Endpoint {
 	TYPE: Uint8
@@ -294,7 +294,7 @@ Instruction.Endpoint {
 }
 ```
 
-### Instruction.Jump
+### 14.6.2 Instruction.Jump
 ```rust
 Instruction.Jump {
 	INDEX: Uint32
@@ -303,7 +303,7 @@ Instruction.Jump {
 
 <!-- TODO: general explainer on how to parse structs with dynamic length fields -->
 
-### Instruction.Text
+### 14.6.3 Instruction.Text
 ```rust
 Instruction.Text {
 	LENGTH: Uint32

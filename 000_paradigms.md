@@ -1,4 +1,4 @@
-# Paradigms
+# 0 Paradigms
 > **Every design aspect of DATEX should respect the following design paradigms and constraints:**
 
 1. Full JSON compatibility
