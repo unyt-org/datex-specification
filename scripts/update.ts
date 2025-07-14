@@ -20,19 +20,19 @@ function updateHeadings(filePath: string) {
     let h3Count = 0;
 
 	const updatedLines = lines.map(line => {
-		if (line.startsWith('# ')) {
+		if (line.match(/^# /)) {
 			h2Count = 0;
-            h3Count = 0;
-			return line.replace(/^# (.*)/, `# ${chapterNumber} $1`);
+			h3Count = 0;
+			return line.replace(/^#\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `# ${chapterNumber} $2`);
 		}
-		if (line.startsWith('## ')) {
+		if (line.match(/^## /)) {
 			h2Count++;
-            h3Count = 0;
-			return line.replace(/^## (.*)/, `## ${chapterNumber}.${h2Count} $1`);
+			h3Count = 0;
+			return line.replace(/^##\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `## ${chapterNumber}.${h2Count} $2`);
 		}
-		if (line.startsWith('### ')) {
-            h3Count++;
-			return line.replace(/^### (.*)/, `### ${chapterNumber}.${h2Count}.${h3Count} $1`);
+		if (line.match(/^### /)) {
+			h3Count++;
+			return line.replace(/^###\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `### ${chapterNumber}.${h2Count}.${h3Count} $2`);
 		}
         return line;
 	});
