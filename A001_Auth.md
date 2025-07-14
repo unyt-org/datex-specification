@@ -37,7 +37,7 @@ This can be useful for private DATEX networks.)
 **Process flow**:
 1. A new endpoint is created with a *random* generated endpoint identifier (anonymous endpoint) or a custom endpoint identifier (must be validated by [trusted authority](https://auth.unyt.org/redeem)). 
 2. A sign and encryption key pair are created
-([Cryptographic Keys](./082_endpoints.md#cryptographic-keys)).
+([Cryptographic Keys](./011_endpoints.md#cryptographic-keys)).
 3. Both public keys and the endpoint identifier are distributed to the Supranet (HELLO message)
 4. A endpoint public key entry is optionally added to the HELIX blockchain
 5. Persistence:
@@ -60,7 +60,7 @@ The process of creating trusted endpoints can be derived from [Creating anonymou
 
 ### A1.1.2 Joining the Supranet
 An existing endpoint can be recreated with the stored private keys and endpoint identifier.
-A HELLO-message is distributed to the Supranet (see [Registering an endpoint](./082_endpoints.md#registering-an-endpoint)).
+A HELLO-message is distributed to the Supranet (see [Registering an endpoint](./011_endpoints.md#registering-an-endpoint)).
 
 ## A1.2 Applications
 
@@ -102,7 +102,7 @@ An endpoint can create sub endpoints that are publicy linked to itself.
 They are still regarded as trusted endpoints, but they only have trust level 3.
 
 **Process flow**:
-* A new trusted anonymous endpoint is created (see [Creating endpoint](./A1_Auth.md#creating-trusted-endpoint)) and the block is signed by the local endpoint
+* A new trusted anonymous endpoint is created (see [Creating endpoint](./A001_Auth.md#creating-trusted-endpoint)) and the block is signed by the local endpoint
 * The local endpoint creates an endpoint property that points to the subendpoint (DATEX type: Endpoint):
 	`@example::#public.mySubEndpoint` or short form `@example.mySubEndpoint`
 

@@ -37,4 +37,4 @@ This specification describes
 4. Datex can be used as an interface to develop reactive full-stack applications
 5. Datex enables permission handling for resources on a network level
 
-All these applications serve as the backbone for the [unyt.org supranet](./020_terms.md#supranet).
+All these applications serve as the backbone for the [unyt.org supranet](./002_terms.md#supranet).

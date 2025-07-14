@@ -74,7 +74,7 @@ jump 1
 
 ## 12.1 Text with single quotes (template strings)
 
-Characters between two single quotes are converted to a TEXT instruction, similar to [double quoted text](./060_runtime_instructions.md#datex-script-mapping).
+Characters between two single quotes are converted to a TEXT instruction, similar to [double quoted text](./006_runtime_instructions.md#datex-script-mapping).
 
 Values can be injected into the string by enclosing them with parentheses. Parentheses can be escaped with a backslashes (`\`).
 
