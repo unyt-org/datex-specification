@@ -5,6 +5,10 @@ import { execSync } from 'child_process';
 
 const [,, fileToMove, newPosition] = process.argv;
 
+function updateLinks(oldFilename: string, newFilename: string) {
+	//todo
+}
+
 if (!fileToMove || !newPosition) {
 	console.error('Usage: pnpm ts-node ./scripts/move-chapter.ts <chapter-file> <new-position>');
 	process.exit(1);
