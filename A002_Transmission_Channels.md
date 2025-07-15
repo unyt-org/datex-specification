@@ -1,12 +1,14 @@
 # A2 General Requirements for an underlying transmission channel
- * Data integrity (Complete, accurate and consistent)
- * Uni- or bidirectional
+
+- Data integrity (Complete, accurate and consistent)
+- Uni- or bidirectional
 
 # A2 Specific Protocols
 
 ## A2.1 UDP
-UNIQUE BLOCK ID (2 BYTES) | NUMBER OF UDP PACKETS (2 BYTES) | CURRENT UDP PACKET INDEX (2 BYTES)
 
+UNIQUE BLOCK ID (2 BYTES) | NUMBER OF UDP PACKETS (2 BYTES) | CURRENT UDP PACKET
+INDEX (2 BYTES)
 
 ## A2.2 WebRTC
 

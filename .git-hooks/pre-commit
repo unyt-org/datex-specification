@@ -1,4 +1,4 @@
 #!/bin/sh
-deno fmt ./scripts/*.ts
+deno fmt *.md
 deno run -A ./scripts/update.ts
-git add *.md ./scripts/*.ts
+git add *.md

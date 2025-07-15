@@ -1,9 +1,9 @@
 # 15 Data Structures
 
-
 ## 15.1 Runtime
 
 ## 15.2 Runtime.InstructionDefinition
+
 ```rust
 Runtime.InstructionDefinition {
 	minimumSize: Uint8,
@@ -14,6 +14,7 @@ Runtime.InstructionDefinition {
 ```
 
 ## 15.3 Runtime.DXBRoutingHeaderData
+
 ```rust
 Runtime.DXBRoutingHeaderData {
 	version: Uint8
@@ -31,7 +32,8 @@ Runtime.DXBRoutingHeaderData {
 ```
 
 ### 15.3.1 Runtime.DXBBlock
-```rust
+
+````rust
 Runtime.DXBBlock {
 	activeBoundA: Uint16, // subblock to be executed next
 	activeBoundB: Uint16, // latest received subblock
@@ -60,9 +62,10 @@ Runtime.DXBBlockHeaderData {
 	endOfScope: boolean
 	optional representedBy: DATEX.Endpoint
 }
-```
+````
 
 ### 15.3.3 Runtime.DXBUnresolvedSubBlock
+
 ```rust
 Runtime.DXBUnresolvedSubBlock {
 	headerData: Runtime.DXBBlockHeaderData,
@@ -72,7 +75,8 @@ Runtime.DXBUnresolvedSubBlock {
 }
 ```
 
-### 15.3.4 Runtime.Global: 
+### 15.3.4 Runtime.Global:
+
 ```rust
 Runtime.Global {
 	instructionDefinitions: Map<InstructionCode, Runtime.InstructionDefinition>
@@ -83,7 +87,8 @@ Runtime.Global {
 }
 ```
 
-### 15.3.5 Runtime.Scope: 
+### 15.3.5 Runtime.Scope:
+
 ```rust
 Runtime.Scope {
 	headerData: DXBBlockHeaderData, // first block's header data
@@ -100,7 +105,8 @@ Runtime.Scope {
 }
 ```
 
-### 15.3.6 Runtime.Subscope: 
+### 15.3.6 Runtime.Subscope:
+
 ```rust
 Runtime.Subscope {
 	activeValue: any
@@ -117,6 +123,7 @@ Runtime.Subscope {
 ## 15.4 DATEX
 
 ### 15.4.1 DATEX.Endpoint
+
 ```rust
 DATEX.Endpoint {
 	type: Uint8,
@@ -130,6 +137,7 @@ DATEX.Endpoint {
 ```
 
 ### 15.4.2 DATEX.Value
+
 ```rust
 DATEX.Value {
 	type: DATEX.Type
@@ -138,6 +146,7 @@ DATEX.Value {
 ```
 
 ### 15.4.3 DATEX.Text
+
 ```rust
 DATEX.Text {
 	length: Uint32
@@ -148,6 +157,7 @@ DATEX.Text {
 ## 15.5 Protocol
 
 ### 15.5.1 Protocol.Endpoint
+
 ```rust
 Protocol.Endpoint {
 	TYPE: Uint8
@@ -157,6 +167,7 @@ Protocol.Endpoint {
 ```
 
 ### 15.5.2 Protocol.PointerId
+
 ```rust
 Protocol.PointerId {
 	TYPE: Uint8
@@ -168,6 +179,7 @@ Protocol.PointerId {
 ```
 
 ### 15.5.3 Protocol.ReceiverEndpoint
+
 ```rust
 Protocol.ReceiverEndpoint {
 	ENDPOINT: Protocol.Endpoint
@@ -176,6 +188,7 @@ Protocol.ReceiverEndpoint {
 ```
 
 ### 15.5.4 Protocol.ReceiverEndpoints
+
 ```rust
 Protocol.ReceiverEndpoints {
 	COUNT: Uint16 # if MAX, flood, no RECEIVERS
@@ -184,6 +197,7 @@ Protocol.ReceiverEndpoints {
 ```
 
 ### 15.5.5 Protocol.Receivers
+
 ```rust
 Protocol.Receivers {
 	FLAGS: Uint8
@@ -196,6 +210,7 @@ Protocol.Receivers {
 ```
 
 ### 15.5.6 Protocol.RoutingHeader
+
 ```rust
 Protocol.RoutingHeader {
 	MAGIC_NUMBER: Uint16 {0x01, 0x64},
@@ -220,6 +235,7 @@ Protocol.RoutingHeader {
 ```
 
 ### 15.5.7 Protocol.BlockHeader
+
 ```rust
 Protocol.BlockHeader {
 	
@@ -241,6 +257,7 @@ Protocol.BlockHeader {
 ```
 
 ### 15.5.8 Protocol.DXB
+
 ```rust
 Protocol.DXB {
 	ROUTING_HEADER: Protocol.RoutingHeader,
@@ -258,6 +275,7 @@ Protocol.DXB {
 ```
 
 ### 15.5.9 Protocol.Body
+
 ```rust
 Protocol.Body {
 	INSTRUCTIONS: Protocol.DXBInstruction[]
@@ -265,6 +283,7 @@ Protocol.Body {
 ```
 
 ### 15.5.10 Protocol.DXBInstruction
+
 ```rust
 Protocol.DXBInstruction 
 {
@@ -280,12 +299,12 @@ Protocol.DXBInstruction
 	INSTRUCTION_CODE: InstructionCode.ENDPOINT
 	DATA: Instruction.Endpoint
 }
-
 ```
 
 ## 15.6 Instruction
 
 ### 15.6.1 Instruction.Endpoint
+
 ```rust
 Instruction.Endpoint {
 	TYPE: Uint8
@@ -295,6 +314,7 @@ Instruction.Endpoint {
 ```
 
 ### 15.6.2 Instruction.Jump
+
 ```rust
 Instruction.Jump {
 	INDEX: Uint32
@@ -304,13 +324,10 @@ Instruction.Jump {
 <!-- TODO: general explainer on how to parse structs with dynamic length fields -->
 
 ### 15.6.3 Instruction.Text
+
 ```rust
 Instruction.Text {
 	LENGTH: Uint32
 	CONTENT: Uint8[LENGTH]
 }
 ```
-
-
-
-

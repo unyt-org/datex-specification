@@ -1,12 +1,15 @@
 # 11 Logical Composites
 
-Logical Composites are the fundamental building blocks for high-level DATEX functionality.
-They enable complex types, inheritance, meta properties, filter logic and permission handling.
+Logical Composites are the fundamental building blocks for high-level DATEX
+functionality. They enable complex types, inheritance, meta properties, filter
+logic and permission handling.
 
-Logical Composites can be negations (NOT), conjunctions (AND) or disjunctions (OR).
-A Logical Composite contains an ordered list of one or more values (that can also be other Logical Composites).
+Logical Composites can be negations (NOT), conjunctions (AND) or disjunctions
+(OR). A Logical Composite contains an ordered list of one or more values (that
+can also be other Logical Composites).
 
-Logical Composites are always evaluated from right to left (most recent to least recent item).
+Logical Composites are always evaluated from right to left (most recent to least
+recent item).
 
 ```datex
 ref a = false;
@@ -18,8 +21,8 @@ a = true;
 print y; # true;
 ```
 
-
 Types:
+
 ```datex
 type integer = (/* native implementation */);
 
@@ -36,9 +39,11 @@ print int.toHex()
 
 ## 11.1 Logical Composite Matching with Assertions
 
-Logical composites can also contain assertions that are evaluated for a single atomic value when a composite is matched against a value.
+Logical composites can also contain assertions that are evaluated for a single
+atomic value when a composite is matched against a value.
 
-A match is valid (`true`) if a conjunction of the atomic value and the logical composite results in a value other than `false`.
+A match is valid (`true`) if a conjunction of the atomic value and the logical
+composite results in a value other than `false`.
 
 ```datex
 ref a = false;
@@ -52,7 +57,7 @@ Endpoints:
 
 ```datex
 @example & (x | allowed | admin)
-@example matches (x | allowed | admin) 
+@example matches (x | allowed | admin)
 ```
 
 Types:
@@ -65,24 +70,27 @@ Types:
 (1 & 'one') matches integer; # true
 ```
 
-
 ## 11.2 Evaluation
 
-Composites can be collapsed with the current item values.
-In some cases, composite items without a reference (non-reactive values) can also be immediately collapsed on construction.
+Composites can be collapsed with the current item values. In some cases,
+composite items without a reference (non-reactive values) can also be
+immediately collapsed on construction.
 
 Per default, values are compared by value and not by reference.
 
-All items of a connective are compared (and potentially collapsed) in pairs from right to left.
+All items of a connective are compared (and potentially collapsed) in pairs from
+right to left.
 
 ### 11.2.1 Conjunctions (AND)
 
-Conjunctions evaluate to `false` if both items are primitive values with the same type, but with a different value.
-If both items have the exact same value, they are collapsed into a single item.
+Conjunctions evaluate to `false` if both items are primitive values with the
+same type, but with a different value. If both items have the exact same value,
+they are collapsed into a single item.
 
 Non-primitive items are collapsed according to the specific rules of the types.
 
 Examples:
+
 ```datex
 false & false # false
 true & false # false
@@ -95,25 +103,27 @@ integer/8 & integer # integer/8 (most specific type)
 ```
 
 ### 11.2.2 Disjunctions (OR)
+
 If both items have the exact same value, they are collapsed into a single item.
 Non-primitive items are collapsed according to the specific rules of the types.
 
-If a non-false item is encountered, the non-false item is kept and all other items are removed.
+If a non-false item is encountered, the non-false item is kept and all other
+items are removed.
 
 Examples:
+
 ```datex
 false | false # false
 true | false # true for values, true | false for types
-true | true # true 
+true | true # true
 ```
 
 ## 11.3 Value Matching
 
 // TODO: OR instead of AND for type inheritance
 
-A DATEX value A can be matched against another value B. The result of the match operation C
-is always a boolean.
-
+A DATEX value A can be matched against another value B. The result of the match
+operation C is always a boolean.
 
 ```typescript
 function logicalMatch(
@@ -132,7 +142,6 @@ function logicalMatch(
 		return  A->BASE = B 
 
 	return false
-
 ```
 
 ```typescript

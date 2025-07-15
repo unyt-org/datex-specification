@@ -1,6 +1,7 @@
 # 13 Mapping from DATEX Script to DXB (High-level abstractions)
 
-All properties of the `#std` record are directly accessible in all scopes (`#std` prefix not necessary: `#std.text -> text`).
+All properties of the `#std` record are directly accessible in all scopes
+(`#std` prefix not necessary: `#std.text -> text`).
 
 ## 13.1 If branching
 
@@ -71,18 +72,21 @@ A
 jump 1
 ```
 
-
 ## 13.1 Text with single quotes (template strings)
 
-Characters between two single quotes are converted to a TEXT instruction, similar to [double quoted text](./007_runtime_instructions.md#datex-script-mapping).
+Characters between two single quotes are converted to a TEXT instruction,
+similar to
+[double quoted text](./007_runtime_instructions.md#datex-script-mapping).
 
-Values can be injected into the string by enclosing them with parentheses. Parentheses can be escaped with a backslashes (`\`).
+Values can be injected into the string by enclosing them with parentheses.
+Parentheses can be escaped with a backslashes (`\`).
 
 Examples:
 
 ```datex
 'a value: (x) more text'
 ```
+
 This is equivalent to the following DATEX script
 
 ```datex

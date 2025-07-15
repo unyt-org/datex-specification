@@ -9,7 +9,7 @@
 | [`String`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | [`text & js:String`]() | full | yes<sup>*</sup> | yes | | |
 | [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) | [`decimal & js:Number`]() | full | yes<sup>*</sup> | yes | | |
 | [`Boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | [`boolean & js:Boolean`]() | full | yes<sup>*</sup> | yes | | |
-| [`symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) | [`text & js:symbol/named`]() | full | yes | no | | For registered and well-known symbols, immutable in JavaScript | 
+| [`symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) | [`text & js:symbol/named`]() | full | yes | no | | For registered and well-known symbols, immutable in JavaScript |
 |              | [`text & js:symbol/anonymous`]() | full | yes | no | | For default usage of symbols without names |
 | [`null`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null) | [`void`]() | full | yes | yes<sup>*</sup> | | |
 | [`undefined`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined) | [`void & js:undefined`]() | full | yes | yes<sup>*</sup> | | |

@@ -115,8 +115,7 @@ function extractDXBRoutingHeaderData(dxb: Protocol.DXB)
 
 ```typescript
 function decryptSignature(signature: Uint8[], sender: DATEX.Endpoint, global: Runtime.Global):
-	// TODO 
-
+	// TODO
 ```
 
 ```typescript
@@ -190,7 +189,6 @@ function parseUnresolvedDXBSubBlock(
 ```
 
 ```
-
 ```
 
 ```typescript
@@ -210,9 +208,9 @@ function getMissingSubBlockIds(
 ```
 
 ```typescript
-function decryptRSA(encryptedData: Uint8[], global: Runtime.Global)
-	privateDecryptionKey <- global.endpoint.encryptionPrivateKey
-	return RSADecrypt(encryptedData, privateDecryptionKey)
+function decryptRSA(encryptedData: Uint8[], global: Runtime.Global);
+privateDecryptionKey < -global.endpoint.encryptionPrivateKey;
+return RSADecrypt(encryptedData, privateDecryptionKey);
 ```
 
 ```typescript
@@ -285,7 +283,6 @@ function collectSubBlocks(block: Runtime.DXBBlock, scope: Runtime.Scope, global:
 	block.activeBoundA <- lastAvailableIndex
 	scope.executable <- scope.executable + executable
 ```
-
 
 ```typescript
 function executeDXB(
