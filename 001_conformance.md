@@ -1,6 +1,6 @@
-# 2 Conformance
+# 1 Conformance
 
-## 2.1 Conformance with the DATEX Binary Format
+## 1.1 Conformance with the DATEX Binary Format
 
 A conforming implementation of the DATEX Binary Format (DXB) must provide and
 support all the instruction code and typed value representations described in
@@ -20,7 +20,7 @@ which are not described in this specification.
 A conforming implementation of DXB must provide RSA and AES encryption as
 described in this specification.
 
-## 2.2 Conformance with DXB-Lite
+## 1.2 Conformance with DXB-Lite
 
 A conforming implementation of the DATEX Binary Format (DXB) must provide and
 support all the instruction code and typed value representations described in
@@ -35,7 +35,7 @@ standard library.
 A conforming implementation of DXB-Lite may choose not to implement RSA and AES
 encryption.
 
-## 2.3 Conformance with DATEX Script
+## 1.3 Conformance with DATEX Script
 
 A conforming implementation of a DATEX Script compiler must be able to generate
 conforming DXB code.
