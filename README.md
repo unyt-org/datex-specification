@@ -37,4 +37,4 @@ This specification describes
 4. DATEX can be used as an interface to develop reactive full-stack applications
 5. DATEX enables permission handling for resources on a network level
 
-All these applications serve as the backbone for the [unyt.org supranet](./002_terms.md#supranet).
+All these applications serve as the backbone for the [unyt.org supranet](./003_terms.md#supranet).

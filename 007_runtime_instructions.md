@@ -8,7 +8,7 @@
 
 ## 7.3 TEXT
 
-Structure: [Instruction.Text](./014_data_structures.md#instructiontext)
+Structure: [Instruction.Text](./015_data_structures.md#instructiontext)
 
 LENGTH is the size of the utf-8-encoded string in bytes.
 
@@ -108,7 +108,7 @@ a corresponds to `$0`. b corresponds to `$1`.
 
 ## 7.5 JUMP
 
-Structure: [Instruction.Jump](./014_data_structures.md#instructionjump)
+Structure: [Instruction.Jump](./015_data_structures.md#instructionjump)
 
 The JUMP instruction moves the instruction index to a given index.
 
@@ -160,7 +160,7 @@ Instruction.Jump {
 
 ## 7.1 JUMP_TRUE
 
-Structure: [Instruction.Jump](./014_data_structures.md#instructionjump)
+Structure: [Instruction.Jump](./015_data_structures.md#instructionjump)
 
 The JUMP_TRUE instruction moves the instruction index to a given index, if a truthy value is passed as a parameter.
 
@@ -227,7 +227,7 @@ Instruction.Jump {
 
 ## 7.1 JUMP_FALSE
 
-Structure: [Instruction.Jump](./014_data_structures.md#instructionjump)
+Structure: [Instruction.Jump](./015_data_structures.md#instructionjump)
 
 The JUMP_FALSE instruction moves the instruction index to a given index, if a truthy value is passed as a parameter.
 
@@ -292,7 +292,7 @@ Instruction.Jump {
 
 ## 7.1 xx INSTRUCTION
 
-Structure: [Instruction.xx](./014_data_structures.md#xx)
+Structure: [Instruction.xx](./015_data_structures.md#xx)
 
 Description
 

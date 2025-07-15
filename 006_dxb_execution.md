@@ -74,8 +74,8 @@ The `[[ACTIVE_VALUE]]` is stored in `[[SCOPE_RESULT]]`.
 <br>
 
 ## 6.6 Global Runtime data
-* global: [`Runtime.Global`](./014_data_structures.md#runtimeglobal)
-* The `scope` keyword acts as context of the current scope ([`Runtime.Scope`](./014_data_structures.md#runtimeglobal)).
+* global: [`Runtime.Global`](./015_data_structures.md#runtimeglobal)
+* The `scope` keyword acts as context of the current scope ([`Runtime.Scope`](./015_data_structures.md#runtimeglobal)).
 
 ## 6.7 General Runtime procedures
 
