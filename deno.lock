@@ -89,7 +89,6 @@
       "dependencies": [
         "npm:@types/node@^24.0.13",
         "npm:deno@^2.4.1",
-        "npm:pnpm@^10.13.1",
         "npm:typescript@^5.8.3"
       ]
     }
