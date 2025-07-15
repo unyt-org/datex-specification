@@ -1,4 +1,4 @@
-# 1 Paradigms
+# 2 Paradigms
 
 > **Every design aspect of DATEX should respect the following design paradigms
 > and constraints:**
