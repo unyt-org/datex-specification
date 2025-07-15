@@ -38,7 +38,6 @@ async function updateLinks() {
 
 async function updateHeadings() {
   for await (const entry of Deno.readDir(rootDir)) {
-    console.log("Methode betreten: ", entry.name);
     if (!entry.isFile || !entry.name.endsWith(".md")) continue;
 
     const filePath = join(rootDir, entry.name);
@@ -91,4 +90,4 @@ async function updateHeadings() {
 
 await updateHeadings();
 await updateLinks();
-console.log("Headings updated");
+console.log("Headings and Links updated");
