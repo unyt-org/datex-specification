@@ -1,8 +1,8 @@
-# A19 Endpoint Authentication & Authorization
+# A1 Endpoint Authentication & Authorization
 
-## A19.1 Authorization Processes
+## A1.1 Authorization Processes
 
-### A19.1.1 Endpoint Creation
+### A1.1.1 Endpoint Creation
 
 TODO: introduction
 
@@ -69,15 +69,15 @@ designate other trusted endpoints which are trusted by themselves.
    endpoint
 3. no change
 
-### A19.1.2 Joining the Supranet
+### A1.1.2 Joining the Supranet
 
 An existing endpoint can be recreated with the stored private keys and endpoint
 identifier. A HELLO-message is distributed to the Supranet (see
 [Registering an endpoint](./012_endpoints.md#registering-an-endpoint)).
 
-## A19.2 Applications
+## A1.2 Applications
 
-### A19.2.1 Identity Data Storage
+### A1.2.1 Identity Data Storage
 
 TODO: add datex type explanation
 
@@ -116,7 +116,7 @@ purposes.
 - phone?: `text`
 - paymentMethods?: `Payment[]`
 
-### A19.2.2 Creating sub endpoints
+### A1.2.2 Creating sub endpoints
 
 An endpoint can create sub endpoints that are publicy linked to itself. They are
 still regarded as trusted endpoints, but they only have trust level 3.
@@ -124,13 +124,13 @@ still regarded as trusted endpoints, but they only have trust level 3.
 **Process flow**:
 
 - A new trusted anonymous endpoint is created (see
-  [Creating endpoint](./A019_Auth.md#creating-trusted-endpoint)) and the block
+  [Creating endpoint](./A001_Auth.md#creating-trusted-endpoint)) and the block
   is signed by the local endpoint
 - The local endpoint creates an endpoint property that points to the subendpoint
   (DATEX type: Endpoint): `@example::#public.mySubEndpoint` or short form
   `@example.mySubEndpoint`
 
-### A19.2.3 Authentication
+### A1.2.3 Authentication
 
 Trust is established through authentication authorities trusted by the network.
 The default authority is **unyt.org**.
@@ -143,11 +143,11 @@ electronical passports or ids.
 Personal data can be retrieved from machine readeable documents (EU passport /
 eID) and validated and signed by authority.
 
-## A19.3 Service: unyt Auth
+## A1.3 Service: unyt Auth
 
 All of the functions described above are provided by the **unyt Auth** service.
 
-### A19.3.1 Endpoint identifiers
+### A1.3.1 Endpoint identifiers
 
 As a trusted endpoint authority, unyt can assign custom endpoint identifiers.
 
@@ -176,12 +176,12 @@ up to 10 bussiness days to handle complains.
 
 TODO
 
-### A19.3.2 Interfaces
+### A1.3.2 Interfaces
 
 All of the above functionality is provided through the interfaces descibed
 below... UI is optionally provided within our service.
 
-### A19.3.3 Key Storage
+### A1.3.3 Key Storage
 
 unyt provides a service to store users encrypted private keys that are not
 accesible by unyt.
