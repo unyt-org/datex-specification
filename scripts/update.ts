@@ -1,46 +1,53 @@
-import fs from 'fs';
-import path from 'path';
+import { join, basename } from "https://deno.land/std@0.224.0/path/mod.ts";
 
-const rootDir = path.join(__dirname, '..');
 
-function updateHeadings(filePath: string) {
-	const filename = path.basename(filePath);
-	 console.log(`Processing: ${filename}`);
-	const match = filename.match(/^([A-Z]?)(\d{3})_/);
+const rootDir = Deno.cwd();
 
-	if(!match) return;
+async function updateHeadings() {
+	for await (const entry of Deno.readDir(rootDir)) {
+		console.log("Methode betreten: ",entry.name);
+		if (!entry.isFile || !entry.name.endsWith('.md')) continue;
 
-	const [_, prefix, number] = match;
-	const chapterNumber = prefix + parseInt(number, 10);
+		const filePath = join(rootDir, entry.name);
+		const filename = basename(filePath);
 
-	let content = fs.readFileSync(filePath, "utf-8");
-	const lines = content.split('\n');
+		console.log(`Processing: ${filename}`);
 
-	let h2Count = 0;
-    let h3Count = 0;
 
-	const updatedLines = lines.map(line => {
-		if (line.match(/^# /)) {
-			h2Count = 0;
-			h3Count = 0;
-			return line.replace(/^#\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `# ${chapterNumber} $2`);
-		}
-		if (line.match(/^## /)) {
-			h2Count++;
-			h3Count = 0;
-			return line.replace(/^##\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `## ${chapterNumber}.${h2Count} $2`);
-		}
-		if (line.match(/^### /)) {
-			h3Count++;
-			return line.replace(/^###\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `### ${chapterNumber}.${h2Count}.${h3Count} $2`);
-		}
-        return line;
-	});
-	fs.writeFileSync(filePath, updatedLines.join('\n'));
+		const match = filename.match(/^([A-Z]?)(\d{3})_/);
+		if (!match) continue;
+
+		const [, prefix, number] = match;
+		const chapterNumber = prefix + parseInt(number, 10);
+
+		let content = await Deno.readTextFile(filePath);
+		const lines = content.split('\n');
+
+		let h2Count = 0;
+		let h3Count = 0;
+
+		const updatedLines = lines.map(line => {
+			if (line.match(/^# /)) {
+				h2Count = 0;
+				h3Count = 0;
+				return line.replace(/^#\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `# ${chapterNumber} $2`);
+			}
+			if (line.match(/^## /)) {
+				h2Count++;
+				h3Count = 0;
+				return line.replace(/^##\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `## ${chapterNumber}.${h2Count} $2`);
+			}
+			if (line.match(/^### /)) {
+				h3Count++;
+				return line.replace(/^###\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/, `### ${chapterNumber}.${h2Count}.${h3Count} $2`);
+			}
+			return line;
+		});
+
+		await Deno.writeTextFile(filePath, updatedLines.join('\n'));
+	}
+ 	
 }
 
-fs.readdirSync(rootDir)
-		.filter(file => file.endsWith('.md'))
-		.forEach(file => updateHeadings(path.join(rootDir, file)));
-
+await updateHeadings();
 console.log('Headings updated');
