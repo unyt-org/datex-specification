@@ -50,3 +50,23 @@ export async function renumberFiles(
 
   return updatedFiles.sort();
 }
+
+export function createTitleMap(files: string[]): Map<string, {originalTitle: string, prefix: string}> {
+  const titleMap = new Map<string, {originalTitle: string, prefix: string}>();
+  
+  for (const file of files) {
+    const match = file.match(/^([A-Z]?)(\d{3})_([a-z0-9_-]+)\.md$/i);
+    if (!match) continue;
+    
+    const [, prefix, number, title] = match;
+    const newPrefix = `${prefix}${number}`;
+    const lowercaseTitle = title.toLowerCase();
+    
+    titleMap.set(lowercaseTitle, {
+      originalTitle: title.toLowerCase(),
+      prefix: newPrefix,
+    });
+  }
+  
+  return titleMap;
+}

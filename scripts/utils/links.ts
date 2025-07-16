@@ -1,22 +1,9 @@
 import { join } from "https://deno.land/std@0.224.0/path/mod.ts";
+import { createTitleMap, getSortedFiles } from "./chapters.ts";
 
 export async function updateLinks(rootDir: string) {
-  const files = Array.from(Deno.readDirSync(rootDir))
-	.filter((f) => f.isFile && f.name.endsWith(".md"))
-	.map((f) => f.name);
-
-  const titleMap = new Map<string, {originalTitle: string, prefix: string}>();
-  for (const file of files) {
-	const match = file.match(/^([A-Z]?)(\d{3})_([a-z0-9_-]+)\.md$/i);
-	if (!match) continue;
-	const [, prefix, number, title] = match;
-	const newPrefix = `${prefix}${number}`;
-	const lowercaseTitle = title.toLowerCase();
-	titleMap.set(lowercaseTitle, {
-		originalTitle: title.toLowerCase(),
-		prefix: newPrefix,
-	});
-  }
+  const files = getSortedFiles(rootDir);
+  const titleMap = createTitleMap(files);
 
   for (const entry of files) {
 	const filePath = join(rootDir, entry);
