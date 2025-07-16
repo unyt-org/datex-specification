@@ -161,7 +161,7 @@ function (data: Instruction.Jump):
 
 ### 7.5.7 DATEX Script mapping
 
-#### Labeled jumps:
+#### 7.5.7.1 Labeled jumps:
 
 The `jump` command can be followed by an ASCII character sequence (label). The
 global index is set to the position of the corresponding label command.
@@ -219,7 +219,7 @@ function (data: Instruction.Jump, $0: DATEX.Any):
 
 ### 7.1.7 DATEX Script mapping
 
-#### Labeled jumps:
+#### 7.1.7.1 Labeled jumps:
 
 The `jumpTrue` command can be followed by an ASCII character sequence (label).
 The global index is set to the position of the corresponding label command.
@@ -238,7 +238,7 @@ Instruction.Jump {
 }
 ```
 
-#### Explicit index jumps:
+#### 7.0.0.1 Explicit index jumps:
 
 Alternatively, an explicit index (global->INDEX) can be provided to the
 `jumpTrue` command:
@@ -294,7 +294,7 @@ function (data: Instruction.Jump, $0: DATEX.Any):
 
 ### 7.1.7 DATEX Script mapping
 
-#### Labeled jumps:
+#### 7.1.7.1 Labeled jumps:
 
 The `jumpFalse` command can be followed by an ASCII character sequence (label).
 The global index is set to the position of the corresponding label command.
@@ -313,7 +313,7 @@ Instruction.Jump {
 }
 ```
 
-#### Explicit index jumps:
+#### 7.0.0.1 Explicit index jumps:
 
 Alternatively, an explicit index (global->INDEX) can be provided to the
 `jumpFalse` command:

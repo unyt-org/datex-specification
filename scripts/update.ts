@@ -56,11 +56,15 @@ async function updateHeadings() {
 
     let h2Count = 0;
     let h3Count = 0;
+    let h4Count = 0;
+    let h5Count = 0;
 
     const updatedLines = lines.map((line) => {
       if (line.match(/^# /)) {
         h2Count = 0;
         h3Count = 0;
+        h4Count = 0;
+        h5Count = 0;
         return line.replace(
           /^#\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/,
           `# ${chapterNumber} $2`,
@@ -76,9 +80,25 @@ async function updateHeadings() {
       }
       if (line.match(/^### /)) {
         h3Count++;
+        h4Count = 0;
         return line.replace(
           /^###\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/,
           `### ${chapterNumber}.${h2Count}.${h3Count} $2`,
+        );
+      }
+      if (line.match(/^#### /)) {
+        h4Count++;
+        h5Count = 0;
+        return line.replace(
+          /^####\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/,
+          `#### ${chapterNumber}.${h2Count}.${h3Count}.${h4Count} $2`,
+        );
+      }
+      if (line.match(/^##### /)) {
+        h5Count++;
+        return line.replace(
+          /^#####\s+(?:[A-Z]?\d+(\.\d+)*\s+)?(.*)/,
+          `##### ${chapterNumber}.${h2Count}.${h3Count}.${h4Count}.${h5Count} $2`,
         );
       }
       return line;

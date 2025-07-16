@@ -6,7 +6,7 @@
 
 TODO: introduction
 
-#### Trust Levels
+#### A19.1.1.1 Trust Levels
 
 - **Trust Level 3** (Authorities): Endpoints with Trust Level 3 are directly
   selected through a democratic election. Only Organisation endpoints (TL2) can
@@ -54,7 +54,7 @@ DATEX networks.)
      in a .dx file
    - Private keys can be securely stored in an analog format or cold wallet
 
-#### Trusted Endpoint Creation
+#### A19.1.1.2 Trusted Endpoint Creation
 
 TODO: introduction
 
@@ -89,7 +89,7 @@ by a state authority coming from the applier shall be validated.
 Data can additionally be stored in the HELIX blockchain for data availability
 purposes.
 
-#### Personal
+#### A19.2.1.1 Personal
 
 **optionally validated data**:
 
@@ -105,7 +105,7 @@ purposes.
 - fingerprint?: `Buffer`
 - paymentMethods?: `Payment[]`
 
-#### Organization
+#### A19.2.1.2 Organization
 
 - dunsId: `text` (Data Universal Numbering System)
 - name: `text`
@@ -135,7 +135,7 @@ still regarded as trusted endpoints, but they only have trust level 3.
 Trust is established through authentication authorities trusted by the network.
 The default authority is **unyt.org**.
 
-#### Authentication via eID
+#### A19.2.3.1 Authentication via eID
 
 A trusted personal endpoint can be created using sign application from
 electronical passports or ids.
@@ -227,7 +227,7 @@ and request the keys from unyt.
 - request encrypted subendpoint key via endpoint id from unyt
 - decrypt key with master private key
 
-#### Key propagation
+#### A19.3.3.1 Key propagation
 
 Private keys are explicitly not exposed to applications. Only unyt Auth
 (unyt.org) on client side is responsible for keys (see
@@ -242,7 +242,7 @@ Private keys are explicitly not exposed to applications. Only unyt Auth
    iFrame can be used
 5. data is send back to application not via proxy of unyt Auth
 
-#### Endpoint login on unyt.org
+#### A19.3.3.2 Endpoint login on unyt.org
 
 **Process flow**:
 
