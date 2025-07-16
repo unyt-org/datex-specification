@@ -1,6 +1,6 @@
-# 7 DATEX Execution
+# 6 DATEX Execution
 
-## 7.1 Runtime Environments
+## 6.1 Runtime Environments
 
 A DATEX Runtime Environment has to take care of sequential execution of incoming
 instructions, handling of encrpytion, permissions, variables and pointers.
@@ -12,7 +12,7 @@ A full DATEX Compiler is not required for a Runtime.
 A Runtime Environment can also provide an interface to the host system (e.g. to
 manipulate a UI, access a database, or communicate with peripherals)
 
-## 7.2 Sandboxed Execution
+## 6.2 Sandboxed Execution
 
 Since arbitrary DATEX binary code can be executed from other directly or
 indirectly connected endpoints ("remote endpoints"), the Runtime has to provide
@@ -25,14 +25,14 @@ that way.
 
 <br>
 
-## 7.3 Internal Slots
+## 6.3 Internal Slots
 
 Each scope has a number of memory locations to store values that are relevant
 for the scope execution process. Some internal slots are directly accessible in
 the scope as internal variables (e.g. `#result`, `#this`). Internal variables
 can be readonly.
 
-### 7.3.1 List of internal slots:
+### 6.3.1 List of internal slots:
 
 <!--todo: which slots are for scopes/sub scopes-->
 
@@ -51,7 +51,7 @@ can be readonly.
 
 <br>
 
-## 7.4 General procedure for instruction processing
+## 6.4 General procedure for instruction processing
 
 1. <b>READ THE INSTRUCTION</b>
    - Store the Instruction Code in `[[INSTRUCTION_CODE]]`
@@ -79,7 +79,7 @@ can be readonly.
 
 <br>
 
-## 7.5 Statements
+## 6.5 Statements
 
 The `CLOSE_AND_STORE` Instruction is used to separate groups of Instructions
 ("Statements").
@@ -89,15 +89,15 @@ The `[[ACTIVE_VALUE]]` is stored in `[[SCOPE_RESULT]]`. `[[ACTIVE_VALUE]]`,
 
 <br>
 
-## 7.6 Global Runtime data
+## 6.6 Global Runtime data
 
-- global: [`Runtime.Global`](./016_data_structures.md#runtimeglobal)
+- global: [`Runtime.Global`](./015_data_structures.md#runtimeglobal)
 - The `scope` keyword acts as context of the current scope
-  ([`Runtime.Scope`](./016_data_structures.md#runtimeglobal)).
+  ([`Runtime.Scope`](./015_data_structures.md#runtimeglobal)).
 
-## 7.7 General Runtime procedures
+## 6.7 General Runtime procedures
 
-### 7.7.1 runtimeExecution
+### 6.7.1 runtimeExecution
 
 ```typescript
 function runtimeExecution(scope: Runtime.Scope, global: Runtime.Global):
@@ -137,7 +137,7 @@ function runtimeExecution(scope: Runtime.Scope, global: Runtime.Global):
          scope.insertLocation <- void
 ```
 
-### 7.7.2 newSubScope
+### 6.7.2 newSubScope
 
 ```typescript
 function newSubScope(scope: Runtime.Scope)
@@ -147,9 +147,9 @@ function newSubScope(scope: Runtime.Scope)
    }
 ```
 
-## 7.8 Instruction-specific procedures
+## 6.8 Instruction-specific procedures
 
-### 7.8.1 COUNT
+### 6.8.1 COUNT
 
 1. If `[[ACTIVE_VALUE]]` is primitive, set `[[PROC_RESULT]]` to `1`
 

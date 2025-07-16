@@ -1,4 +1,4 @@
-# 11 DATEX Block Handling
+# 10 DATEX Block Handling
 
 ```typescript
 abstract function dxbOut (dxb: Protocol.DXB)
