@@ -24,7 +24,7 @@ const chaptersDir = Deno.cwd();
 const files = getSortedFiles(chaptersDir)
   .filter((f) => !excludeFiles.has(f));
 
-files.splice(index - 1, 0, `TEMP_${title}.md`);
+files.splice(Math.max(0, index - 1), 0, `TEMP_${title}.md`);
 
 const prefixGroups = groupFilesByPrefix(files);
 
