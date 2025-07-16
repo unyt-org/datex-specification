@@ -51,4 +51,4 @@ This specification describes
 5. DATEX enables permission handling for resources on a network level
 
 All these applications serve as the backbone for the
-[unyt.org supranet](./004_terms.md#supranet).
+[unyt.org supranet](./003_terms.md#supranet).
