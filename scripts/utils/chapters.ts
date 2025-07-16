@@ -27,7 +27,9 @@ export async function renumberFiles(
   const updatedFiles: string[] = [];
 
   for (const [prefix, groupFiles] of Object.entries(prefixGroups)) {
-    for (const [idx, file] of groupFiles.entries()) {
+    const sortedFiles = groupFiles.sort();
+
+    for (const [idx, file] of sortedFiles.entries()) {
       const match = file.match(/^([A-Z]?)(\d{3})_(.*)/);
       if (!match) {
         updatedFiles.push(file);
@@ -41,15 +43,14 @@ export async function renumberFiles(
       if (file !== newFilename) {
         await Deno.rename(join(dir, file), join(dir, newFilename));
         console.log(`Renamed ${file} → ${newFilename}`);
-        updatedFiles.push(newFilename);
-      } else {
-        updatedFiles.push(file);
       }
+      updatedFiles.push(newFilename);
     }
   }
 
   return updatedFiles.sort();
 }
+
 
 export function createTitleMap(files: string[]): Map<string, {originalTitle: string, prefix: string}> {
   const titleMap = new Map<string, {originalTitle: string, prefix: string}>();
