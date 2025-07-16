@@ -5,13 +5,17 @@ export async function updateLinks(rootDir: string) {
 	.filter((f) => f.isFile && f.name.endsWith(".md"))
 	.map((f) => f.name);
 
-  const titleMap = new Map<string, string>();
+  const titleMap = new Map<string, {originalTitle: string, prefix: string}>();
   for (const file of files) {
 	const match = file.match(/^([A-Z]?)(\d{3})_([a-z0-9_-]+)\.md$/i);
 	if (!match) continue;
 	const [, prefix, number, title] = match;
 	const newPrefix = `${prefix}${number}`;
-	titleMap.set(title, newPrefix);
+	const lowercaseTitle = title.toLowerCase();
+	titleMap.set(lowercaseTitle, {
+		originalTitle: title.toLowerCase(),
+		prefix: newPrefix,
+	});
   }
 
   for (const entry of files) {
@@ -21,9 +25,10 @@ export async function updateLinks(rootDir: string) {
 	content = content.replace(
 	  /\]\(\.\/([A-Z]?\d{3})_([a-z0-9_-]+)\.md(#[^)]+)?\)/gi,
 	  (match, oldPrefix, title, anchor) => {
-		const newPrefix = titleMap.get(title);
-		if (newPrefix && newPrefix !== oldPrefix) {
-		  return `](./${newPrefix}_${title.toLowerCase()}.md${anchor ?? ""})`;
+		const lowercaseTitle = title.toLowerCase();
+		const entry = titleMap.get(lowercaseTitle);
+		if (entry) {
+		  return `](./${entry.prefix}_${entry.originalTitle}.md${anchor ?? ""})`;
 		}
 		return match;
 	  },

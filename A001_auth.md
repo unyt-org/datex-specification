@@ -124,7 +124,7 @@ still regarded as trusted endpoints, but they only have trust level 3.
 **Process flow**:
 
 - A new trusted anonymous endpoint is created (see
-  [Creating endpoint](./A001_Auth.md#creating-trusted-endpoint)) and the block
+  [Creating endpoint](./A001_auth.md#creating-trusted-endpoint)) and the block
   is signed by the local endpoint
 - The local endpoint creates an endpoint property that points to the subendpoint
   (DATEX type: Endpoint): `@example::#public.mySubEndpoint` or short form
