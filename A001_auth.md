@@ -1,12 +1,12 @@
-# A19 Endpoint Authentication & Authorization
+# A1 Endpoint Authentication & Authorization
 
-## A19.1 Authorization Processes
+## A1.1 Authorization Processes
 
-### A19.1.1 Endpoint Creation
+### A1.1.1 Endpoint Creation
 
 TODO: introduction
 
-#### A19.1.1.1 Trust Levels
+#### A1.1.1.1 Trust Levels
 
 - **Trust Level 3** (Authorities): Endpoints with Trust Level 3 are directly
   selected through a democratic election. Only Organisation endpoints (TL2) can
@@ -54,7 +54,7 @@ DATEX networks.)
      in a .dx file
    - Private keys can be securely stored in an analog format or cold wallet
 
-#### A19.1.1.2 Trusted Endpoint Creation
+#### A1.1.1.2 Trusted Endpoint Creation
 
 TODO: introduction
 
@@ -69,15 +69,15 @@ designate other trusted endpoints which are trusted by themselves.
    endpoint
 3. no change
 
-### A19.1.2 Joining the Supranet
+### A1.1.2 Joining the Supranet
 
 An existing endpoint can be recreated with the stored private keys and endpoint
 identifier. A HELLO-message is distributed to the Supranet (see
 [Registering an endpoint](./012_endpoints.md#registering-an-endpoint)).
 
-## A19.2 Applications
+## A1.2 Applications
 
-### A19.2.1 Identity Data Storage
+### A1.2.1 Identity Data Storage
 
 TODO: add datex type explanation
 
@@ -89,7 +89,7 @@ by a state authority coming from the applier shall be validated.
 Data can additionally be stored in the HELIX blockchain for data availability
 purposes.
 
-#### A19.2.1.1 Personal
+#### A1.2.1.1 Personal
 
 **optionally validated data**:
 
@@ -105,7 +105,7 @@ purposes.
 - fingerprint?: `Buffer`
 - paymentMethods?: `Payment[]`
 
-#### A19.2.1.2 Organization
+#### A1.2.1.2 Organization
 
 - dunsId: `text` (Data Universal Numbering System)
 - name: `text`
@@ -116,7 +116,7 @@ purposes.
 - phone?: `text`
 - paymentMethods?: `Payment[]`
 
-### A19.2.2 Creating sub endpoints
+### A1.2.2 Creating sub endpoints
 
 An endpoint can create sub endpoints that are publicy linked to itself. They are
 still regarded as trusted endpoints, but they only have trust level 3.
@@ -130,12 +130,12 @@ still regarded as trusted endpoints, but they only have trust level 3.
   (DATEX type: Endpoint): `@example::#public.mySubEndpoint` or short form
   `@example.mySubEndpoint`
 
-### A19.2.3 Authentication
+### A1.2.3 Authentication
 
 Trust is established through authentication authorities trusted by the network.
 The default authority is **unyt.org**.
 
-#### A19.2.3.1 Authentication via eID
+#### A1.2.3.1 Authentication via eID
 
 A trusted personal endpoint can be created using sign application from
 electronical passports or ids.
@@ -143,11 +143,11 @@ electronical passports or ids.
 Personal data can be retrieved from machine readeable documents (EU passport /
 eID) and validated and signed by authority.
 
-## A19.3 Service: unyt Auth
+## A1.3 Service: unyt Auth
 
 All of the functions described above are provided by the **unyt Auth** service.
 
-### A19.3.1 Endpoint identifiers
+### A1.3.1 Endpoint identifiers
 
 As a trusted endpoint authority, unyt can assign custom endpoint identifiers.
 
@@ -176,12 +176,12 @@ up to 10 bussiness days to handle complains.
 
 TODO
 
-### A19.3.2 Interfaces
+### A1.3.2 Interfaces
 
 All of the above functionality is provided through the interfaces descibed
 below... UI is optionally provided within our service.
 
-### A19.3.3 Key Storage
+### A1.3.3 Key Storage
 
 unyt provides a service to store users encrypted private keys that are not
 accesible by unyt.
@@ -227,7 +227,7 @@ and request the keys from unyt.
 - request encrypted subendpoint key via endpoint id from unyt
 - decrypt key with master private key
 
-#### A19.3.3.1 Key propagation
+#### A1.3.3.1 Key propagation
 
 Private keys are explicitly not exposed to applications. Only unyt Auth
 (unyt.org) on client side is responsible for keys (see
@@ -242,7 +242,7 @@ Private keys are explicitly not exposed to applications. Only unyt Auth
    iFrame can be used
 5. data is send back to application not via proxy of unyt Auth
 
-#### A19.3.3.2 Endpoint login on unyt.org
+#### A1.3.3.2 Endpoint login on unyt.org
 
 **Process flow**:
 

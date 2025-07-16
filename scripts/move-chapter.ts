@@ -26,18 +26,35 @@ if (targetIdx === -1) {
 const movedFile = files.splice(targetIdx, 1)[0];
 files.splice(newPosition - 1, 0, movedFile);
 
-for (const [idx, file] of files.entries()) {
+const prefixGroups: Record<string, string[]> = {};
+
+for (const file of files) {
   const match = file.match(/^([A-Z]?)(\d{3})_(.*)/);
   if (!match) continue;
-  const [, prefix, , title] = match;
-  const newNumber = String(idx + 1).padStart(3, "0");
-  const newFilename = `${prefix}${newNumber}_${title}`;
+  const prefix = match[1] ?? "";
+  if (!prefixGroups[prefix]) prefixGroups[prefix] = [];
+  prefixGroups[prefix].push(file);
+}
 
-  if (file !== newFilename) {
-    await Deno.rename(join(chaptersDir, file), join(chaptersDir, newFilename));
-    console.log(`Renamed ${file} → ${newFilename}`);
+for (const [prefix, groupFiles] of Object.entries(prefixGroups)) {
+  for (const [idx, file] of groupFiles.entries()) {
+    const match = file.match(/^([A-Z]?)(\d{3})_(.*)/);
+    if (!match) continue;
+    const [, , , title] = match;
+    const newNumber = String(idx + 1).padStart(3, "0");
+    const newFilename = `${prefix}${newNumber}_${title.toLowerCase()}`;
+
+    if (file !== newFilename) {
+      await Deno.rename(join(chaptersDir, file), join(chaptersDir, newFilename));
+      console.log(`Renamed ${file} → ${newFilename}`);
+      const fileIdx = files.indexOf(file);
+      if (fileIdx !== -1) {
+        files[fileIdx] = newFilename;
+      }
+    }
   }
 }
+
 
 console.log("Renumberd chapters");
 
