@@ -1,4 +1,3 @@
-import { join } from "https://deno.land/std@0.224.0/path/mod.ts";
 import { getSortedFiles, groupFilesByPrefix, renumberFiles } from "./utils/chapters.ts";
 
 const [fileToMove, newPositionRaw] = Deno.args;
