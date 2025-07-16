@@ -23,7 +23,7 @@ export async function updateLinks(rootDir: string) {
 	  (match, oldPrefix, title, anchor) => {
 		const newPrefix = titleMap.get(title);
 		if (newPrefix && newPrefix !== oldPrefix) {
-		  return `](./${newPrefix}_${title}.md${anchor ?? ""})`;
+		  return `](./${newPrefix}_${title.toLowerCase()}.md${anchor ?? ""})`;
 		}
 		return match;
 	  },
