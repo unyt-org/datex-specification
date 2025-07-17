@@ -32,7 +32,7 @@ jobs:
         run: |
           ARGS="${{ github.event.inputs.index }} ${{ github.event.inputs.title }}"
           if [ -n "${{ github.event.inputs.heading }}" ]; then
-            ARGS="$ARGS \"${{ github.event.inputs.heading }}\""
+            ARGS="$ARGS ${{ github.event.inputs.heading }}"
           fi
           echo "Running rename with arguments: $ARGS"
           deno run -A ./scripts/rename-chapter.ts $ARGS
@@ -42,5 +42,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Rename chapter to '${{ github.event.inputs.title }}', index ${{ github.event.inputs.index }}${{ github.event.inputs.heading && format(', heading {0}', github.event.inputs.heading) }}"
+          git commit -m "Rename chapter to '${{ github.event.inputs.title }}', index ${{ github.event.inputs.index }}${{ github.event.inputs.heading && format(', heading \"{0}\"', github.event.inputs.heading) }}"
           git push
