@@ -27,7 +27,7 @@ jobs:
            id: last-index
            run: |
             if [ -z "${{ github.event.inputs.index }}" ]; then
-            last_index=$(ls *.md | grep -v 'README.md' | wc -l)
+            last_index=($(ls *.md | grep -v 'README.md' | wc -l) + 1)
             index=$last_index
             else
             index="${{ github.event.inputs.index }}"
