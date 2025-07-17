@@ -1,4 +1,5 @@
 import { getSortedFiles, groupFilesByPrefix, renumberFiles } from "./utils/chapters.ts";
+import { updateLinks } from "./utils/links.ts";
 
 const [fileToMove, newPositionRaw] = Deno.args;
 
@@ -25,6 +26,13 @@ files.splice(newPosition - 1, 0, movedFile);
 
 const prefixGroups = groupFilesByPrefix(files);
 await renumberFiles(prefixGroups, chaptersDir);
+
+const oldPrefixes = new Map<string, string>();
+files.forEach((file, i) => {
+  const match = file.match(/^([A-Z]?\d{3})_/);
+  if (match) oldPrefixes.set(match[1], (i + 1).toString().padStart(3, "0"));
+});
+await updateLinks(chaptersDir, oldPrefixes);
 
 console.log("Renumbered chapters");
 
