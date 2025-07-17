@@ -1,8 +1,8 @@
-# 4 Terms and Definitions
+# 3 Terms and Definitions
 
 [//]: # (TODO: terms as top level enumeration, no sub-chapters)
 
-## 4.1 Primitive Values
+## 3.1 Primitive Values
 
 A value with one of the following types:
 
@@ -19,7 +19,7 @@ A value with one of the following types:
 - `color` **(TDB)**
 - any mime type
 
-### 4.1.1 Mime Value
+### 3.1.1 Mime Value
 
 A value with one of the following types:
 
@@ -31,13 +31,13 @@ A value with one of the following types:
 - `font`
 - `application`
 
-## 4.2 Non-instantiatable type
+## 3.2 Non-instantiatable type
 
 - `Any`
 - `ValueConsumer` **(TDB)**
 - `StreamConsumer` **(TDB)**
 
-## 4.3 Complex Values
+## 3.3 Complex Values
 
 A value with one of the following types:
 
@@ -55,7 +55,7 @@ A value with one of the following types:
 - `Type`
 - all logical types
 
-## 4.4 Logical Value
+## 3.4 Logical Value
 
 A value with one of the following types:
 
@@ -63,24 +63,24 @@ A value with one of the following types:
 - `Conjunction`
 - `Negation`
 
-## 4.5 DXB
+## 3.5 DXB
 
 Refers to the DATEX Binary Format in general, or to a particular DATEX block.
 
-## 4.6 script
+## 3.6 script
 
 A text containing human-readable DATEX Syntax. A script can be compiled to DXB.
 
-## 4.7 block
+## 3.7 block
 
 A self-contained executable DATEX Binary sent from one endpoint to another
 endpoint.
 
-## 4.8 message
+## 3.8 message
 
 A sequence of DATEX instructions distributed over one ore more blocks.
 
-## 4.9 scope
+## 3.9 scope
 
 The set of variables that exist during the exeuction of a message. A scope
 exists until the message is completely executed.
