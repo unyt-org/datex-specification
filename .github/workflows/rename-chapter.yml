@@ -1,0 +1,46 @@
+name: Rename Chapter
+
+on:
+  workflow_dispatch:
+    inputs:
+      index:
+        description: 'Index (e.g. 1, 001)'
+        required: true
+        type: string
+      title:
+        description: 'New Filename'
+        required: true
+        type: string
+      heading:
+        description: 'New Heading (optional, first # of chapter)'
+        required: false
+        type: string
+
+jobs:
+  rename-chapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: latest
+
+      - name: Rename chapter
+        run: |
+          ARGS="${{ github.event.inputs.index }} ${{ github.event.inputs.title }}"
+          if [ -n "${{ github.event.inputs.heading }}" ]; then
+            ARGS="$ARGS \"${{ github.event.inputs.heading }}\""
+          fi
+          echo "Running rename with arguments: $ARGS"
+          deno run -A ./scripts/rename-chapter.ts $ARGS
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Rename chapter to '${{ github.event.inputs.title }}', index ${{ github.event.inputs.index }}${{ github.event.inputs.heading && format(', heading \"{0}\"', github.event.inputs.heading) }}"
+          git push
