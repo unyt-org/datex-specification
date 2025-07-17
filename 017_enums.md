@@ -1,6 +1,6 @@
-# 16 Enums
+# 17 Enums
 
-## 16.1 InstructionCode
+## 17.1 InstructionCode
 
 ```rust
 enum InstructionCode {
@@ -261,7 +261,7 @@ enum InstructionCode {
 
 IMPLEMENTS
 
-## 16.2 BlockType
+## 17.2 BlockType
 
 ```rust
 enum Protocol.BlockType {
@@ -269,7 +269,7 @@ enum Protocol.BlockType {
 }
 ```
 
-## 16.3 DeviceType
+## 17.3 DeviceType
 
 ```rust
 enum Protocol.DeviceType {
