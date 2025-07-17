@@ -1,8 +1,8 @@
-# 6 Binary Instruction Codes
+# 5 Binary Instruction Codes
 
 The following section contains a list of all DXB binary instruction codes.
 
-## 6.1 Remarks
+## 5.1 Remarks
 
 Instruction codes have a size of 1 byte. The codes from 0x60 to 0x9f are
 reserved for later use.
@@ -21,7 +21,7 @@ Number types:
 
 DATEX uses the little endian format for all numbers.
 
-## 6.2 Stand-alone codes
+## 5.2 Stand-alone codes
 
 | Name              | Hex Code | DX equivalent | Description                                                                                                                    |
 | ----------------- | :------: | ------------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -31,7 +31,7 @@ DATEX uses the little endian format for all numbers.
 | `END`             |    00    | `end`         | The scope execution is immediately stopped. The `#scope_result` is returned as normal                                          |
 | `RETURN`          |    a4    | `return`      | Returns the current `#scope_result`, scope continues afterwards                                                                |
 
-## 6.3 Runtime Commands
+## 5.3 Runtime Commands
 
 Runtime commands can be standalone commands or commands with parameters. A
 command is normally expected to be followed by a specfic amount of values
@@ -61,9 +61,9 @@ operators always have a shorthand symbol in DATEX Script (e.g. `!`, `==`).
 | `ORIGIN`         |    be    | standalone        | `any` (pointer)     | `<Endpoint>`      | `origin pointer`       | Get the origin endpoint of a pointer.                                             |
 | `SUBSCRIBERS`    |    bf    | standalone        | `any` (pointer)     | `<Filter>`        | `subscribers pointer`  | Get all current subscribers for a pointer.                                        |
 
-## 6.4 Operators
+## 5.4 Operators
 
-### 6.4.1 Comparators
+### 5.4.1 Comparators
 
 A comparator operator compares the current active value with an effective value
 that follows after the comparator.
@@ -77,7 +77,7 @@ that follows after the comparator.
 | `GREATER_EQUAL` |    ab    | `av >= ev1`   | Active value is set to `true` if current active value is greater or equal to ev1 |
 | `LESS_EQUAL`    |    ac    | `av <= ev1`   | Active value is set to `true` if current active value is less or equal to ev1    |
 
-### 6.4.2 Combinators
+### 5.4.2 Combinators
 
 Combination operators combine two values and can be used as mathematical or
 logical operators, but can also have custom functions for different value types.
@@ -93,13 +93,13 @@ For mathematical operations, Floats and Ints can be combined.
 | `OR`       |    eb    | `false \| b`, `@user1 \| @user2`                                          | Logical OR                                                                                                     |
 | `RANGE`    |    fd    | `a..b`                                                                    | Accepts only `<integer>` values, returns `<Tuple>` with ascending integers starting with `a` and excluding `b` |
 
-### 6.4.3 Other operators
+### 5.4.3 Other operators
 
 | Name     | Hex Code | DX equivalent                      | Description                                                                                                                 |
 | -------- | :------: | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | `STREAM` |    ed    | `x << 'streamed data' 'more data'` | Accepts an arbitrary number of immediately followed `<text>`, `<Buffer>`, and `<Stream>` values. x must be a `<StreamSink>` |
 
-## 6.5 Shortcuts for Standard Library types
+## 5.5 Shortcuts for Standard Library types
 
 The `<Type>` values for all standard library types are represented with a single
 byte:
@@ -125,11 +125,11 @@ byte:
 | `STD_TYPE_FUNCTION`   |    20    | `<Function>`  |
 | `STD_TYPE_STREAM`     |    21    | `<Stream>`    |
 
-## 6.6 Values
+## 5.6 Values
 
 Values instructions parse a value and then insert it into the scope.
 
-### 6.6.1 Standalone values
+### 5.6.1 Standalone values
 
 | Name    | Hex Code | DX equivalent |
 | ------- | :------: | ------------- |
@@ -138,7 +138,7 @@ Values instructions parse a value and then insert it into the scope.
 | `NULL`  |    c6    | `null`        |
 | `VOID`  |    c7    | `void`        |
 
-### 6.6.2 Other primitive values
+### 5.6.2 Other primitive values
 
 | Name           | Hex Code | Structure                                                                | DX example                  | Description                                                                         |
 | -------------- | :------: | ------------------------------------------------------------------------ | --------------------------- | ----------------------------------------------------------------------------------- |
@@ -151,7 +151,7 @@ Values instructions parse a value and then insert it into the scope.
 | `FLOAT_64`     |    c5    | <pre class="language-yaml">VALUE: Float64</pre>                          | `-12.34`, `infinity`, `nan` | Range 2.2e-308 -> 1.7e+308                                                          |
 | `BUFFER`       |    ca    | <pre class="language-yaml">LENGTH: Uint32&#10;VALUE: Uint8[LENGTH]</pre> | `` `fafe334feaefe3` ``      | A raw binary data buffer, maximum size 4.29 GB                                      |
 
-### 6.6.3 Array, Objects, Tuples and Records
+### 5.6.3 Array, Objects, Tuples and Records
 
 | Name           | Hex Code | DX equivalent | Description                  |
 | -------------- | :------: | ------------- | ---------------------------- |
@@ -164,7 +164,7 @@ Values instructions parse a value and then insert it into the scope.
 
 Tuple, Record, and Subscope share the same symbol in DATEX Script.
 
-## 6.7 Pointers and Variables
+## 5.7 Pointers and Variables
 
 DATEX distinguishes between normal Variables, Internal Variables for specific
 purposes, and Pointers/Labels for persistant values.
