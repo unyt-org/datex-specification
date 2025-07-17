@@ -1,8 +1,8 @@
-# 16 Data Structures
+# 15 Data Structures
 
-## 16.1 Runtime
+## 15.1 Runtime
 
-## 16.2 Runtime.InstructionDefinition
+## 15.2 Runtime.InstructionDefinition
 
 ```rust
 Runtime.InstructionDefinition {
@@ -13,7 +13,7 @@ Runtime.InstructionDefinition {
 }
 ```
 
-## 16.3 Runtime.DXBRoutingHeaderData
+## 15.3 Runtime.DXBRoutingHeaderData
 
 ```rust
 Runtime.DXBRoutingHeaderData {
@@ -31,7 +31,7 @@ Runtime.DXBRoutingHeaderData {
 }
 ```
 
-### 16.3.1 Runtime.DXBBlock
+### 15.3.1 Runtime.DXBBlock
 
 ````rust
 Runtime.DXBBlock {
@@ -44,7 +44,7 @@ Runtime.DXBBlock {
 	headerData: DXBBlockHeaderData
 }
 
-### 16.3.2 Runtime.DXBBlockHeaderData
+### 15.3.2 Runtime.DXBBlockHeaderData
 ```rust
 Runtime.DXBBlockHeaderData {
 	routingData: DXBRoutingHeaderData
@@ -64,7 +64,7 @@ Runtime.DXBBlockHeaderData {
 }
 ````
 
-### 16.3.3 Runtime.DXBUnresolvedSubBlock
+### 15.3.3 Runtime.DXBUnresolvedSubBlock
 
 ```rust
 Runtime.DXBUnresolvedSubBlock {
@@ -75,7 +75,7 @@ Runtime.DXBUnresolvedSubBlock {
 }
 ```
 
-### 16.3.4 Runtime.Global:
+### 15.3.4 Runtime.Global:
 
 ```rust
 Runtime.Global {
@@ -87,7 +87,7 @@ Runtime.Global {
 }
 ```
 
-### 16.3.5 Runtime.Scope:
+### 15.3.5 Runtime.Scope:
 
 ```rust
 Runtime.Scope {
@@ -105,7 +105,7 @@ Runtime.Scope {
 }
 ```
 
-### 16.3.6 Runtime.Subscope:
+### 15.3.6 Runtime.Subscope:
 
 ```rust
 Runtime.Subscope {
@@ -120,9 +120,9 @@ Runtime.Subscope {
 }
 ```
 
-## 16.4 DATEX
+## 15.4 DATEX
 
-### 16.4.1 DATEX.Endpoint
+### 15.4.1 DATEX.Endpoint
 
 ```rust
 DATEX.Endpoint {
@@ -136,7 +136,7 @@ DATEX.Endpoint {
 }
 ```
 
-### 16.4.2 DATEX.Value
+### 15.4.2 DATEX.Value
 
 ```rust
 DATEX.Value {
@@ -145,7 +145,7 @@ DATEX.Value {
 }
 ```
 
-### 16.4.3 DATEX.Text
+### 15.4.3 DATEX.Text
 
 ```rust
 DATEX.Text {
@@ -154,9 +154,9 @@ DATEX.Text {
 }
 ```
 
-## 16.5 Protocol
+## 15.5 Protocol
 
-### 16.5.1 Protocol.Endpoint
+### 15.5.1 Protocol.Endpoint
 
 ```rust
 Protocol.Endpoint {
@@ -166,7 +166,7 @@ Protocol.Endpoint {
 }
 ```
 
-### 16.5.2 Protocol.PointerId
+### 15.5.2 Protocol.PointerId
 
 ```rust
 Protocol.PointerId {
@@ -178,7 +178,7 @@ Protocol.PointerId {
 }
 ```
 
-### 16.5.3 Protocol.ReceiverEndpoint
+### 15.5.3 Protocol.ReceiverEndpoint
 
 ```rust
 Protocol.ReceiverEndpoint {
@@ -187,7 +187,7 @@ Protocol.ReceiverEndpoint {
 }
 ```
 
-### 16.5.4 Protocol.ReceiverEndpoints
+### 15.5.4 Protocol.ReceiverEndpoints
 
 ```rust
 Protocol.ReceiverEndpoints {
@@ -196,7 +196,7 @@ Protocol.ReceiverEndpoints {
 }
 ```
 
-### 16.5.5 Protocol.Receivers
+### 15.5.5 Protocol.Receivers
 
 ```rust
 Protocol.Receivers {
@@ -209,7 +209,7 @@ Protocol.Receivers {
 }
 ```
 
-### 16.5.6 Protocol.RoutingHeader
+### 15.5.6 Protocol.RoutingHeader
 
 ```rust
 Protocol.RoutingHeader {
@@ -234,7 +234,7 @@ Protocol.RoutingHeader {
 }
 ```
 
-### 16.5.7 Protocol.BlockHeader
+### 15.5.7 Protocol.BlockHeader
 
 ```rust
 Protocol.BlockHeader {
@@ -256,7 +256,7 @@ Protocol.BlockHeader {
 }
 ```
 
-### 16.5.8 Protocol.DXB
+### 15.5.8 Protocol.DXB
 
 ```rust
 Protocol.DXB {
@@ -274,7 +274,7 @@ Protocol.DXB {
 }
 ```
 
-### 16.5.9 Protocol.Body
+### 15.5.9 Protocol.Body
 
 ```rust
 Protocol.Body {
@@ -282,7 +282,7 @@ Protocol.Body {
 }
 ```
 
-### 16.5.10 Protocol.DXBInstruction
+### 15.5.10 Protocol.DXBInstruction
 
 ```rust
 Protocol.DXBInstruction 
@@ -301,9 +301,9 @@ Protocol.DXBInstruction
 }
 ```
 
-## 16.6 Instruction
+## 15.6 Instruction
 
-### 16.6.1 Instruction.Endpoint
+### 15.6.1 Instruction.Endpoint
 
 ```rust
 Instruction.Endpoint {
@@ -313,7 +313,7 @@ Instruction.Endpoint {
 }
 ```
 
-### 16.6.2 Instruction.Jump
+### 15.6.2 Instruction.Jump
 
 ```rust
 Instruction.Jump {
@@ -323,7 +323,7 @@ Instruction.Jump {
 
 <!-- TODO: general explainer on how to parse structs with dynamic length fields -->
 
-### 16.6.3 Instruction.Text
+### 15.6.3 Instruction.Text
 
 ```rust
 Instruction.Text {
