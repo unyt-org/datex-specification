@@ -1,11 +1,11 @@
-# 4 Introduction to DATEX Script
+# 5 Introduction to DATEX Script
 
 This section contains a non-normative overview of the DATEX Script language.
 This is only an introduction containing the main aspects of the language. For an
 in-depth explanation of DATEX and the DATEX Script language, please refer to the
 [DATEX Documentation](https://docs.unyt.org/manual/datex).
 
-## 4.1 How DATEX works
+## 5.1 How DATEX works
 
 DATEX is a realtime remote execution language based on a **REQUEST-RESPONSE**
 scheme. Every DATEX execution starts with a script that gets compiled to a DATEX
@@ -16,7 +16,7 @@ result.
 
 The only part that will be important for now is writing the REQUEST Script.
 
-## 4.2 The mandatory "Hello World" script
+## 5.2 The mandatory "Hello World" script
 
 To follow the tradition, we will first write a simple "Hello World" script in
 DATEX, which could look like this:
@@ -42,7 +42,7 @@ The output in the console will now tell you the name of the executing endpoint
 and the name of the endpoint that sent the REQUEST. When running DATEX locally,
 those will both be the same.
 
-## 4.3 Just JSON
+## 5.3 Just JSON
 
 Of course, DATEX also supports several other types besides strings, from the
 common primitive types to complex objects. DATEX is completely compatible with
@@ -84,7 +84,7 @@ This _result_ value can be overridden with new values, but the last assigned
 value is sent back in the RESPONSE and returned. This is why you can see the
 object logged in the console as a result.
 
-## 4.4 Let's add some variables
+## 5.4 Let's add some variables
 
 There are multiple ways to store values in DATEX. Normal variables can be used
 to store a value temporarily until the end of the execution of the current
@@ -96,7 +96,7 @@ the type `any` per default.
 There are 3 types of variables: dynamic variables (`var`), reference variables
 (`ref`), and value variables (`val`).
 
-### 4.4.1 Dynamic variables
+### 5.4.1 Dynamic variables
 
 Dynamic variables can be assigned to a value (with no bound pointer) or a
 reference (pointer or pointer property).
@@ -107,7 +107,7 @@ my_var = "new value"; # change the value for 'my_var'
 my_var = $$ [1,2,3];
 ```
 
-### 4.4.2 Reference variables
+### 5.4.2 Reference variables
 
 Reference variables always point to the initial reference that they were first
 assigned to. Non-pointer values are automatically converted to pointer
@@ -119,7 +119,7 @@ my_ref = {a:5,b:23}; # changes the value of the pointer reference, allowed
 my_ref $= {}; # changes the referenes, not allowed (throws an error)
 ```
 
-### 4.4.3 Value variables
+### 5.4.3 Value variables
 
 Value variables never have a pointer reference. If a pointer is assigned to a
 value variable, the pointer value is copied to the variable, losing the
@@ -132,7 +132,7 @@ my_val == ptr # true (same value)
 my_val === ptr # false (not the identical reference)
 ```
 
-## 4.5 Useful commands
+## 5.5 Useful commands
 
 DATEX contains two different types of commands: **Runtime instructions** and
 **Compiler-evaluated commands**. In DATEX Script you cannot distinguish them,
@@ -148,7 +148,7 @@ _effective values_.<info> An _effective value_ is either a value literal (e.g.,
 a variable or `1`, `[1,2,3]`,...), a path chain (`x.y.z.0`), a cast value
 (`<text>12`), or a subscope (anything between to parentheses).</info>
 
-### 4.5.1 Count
+### 5.5.1 Count
 
 To get the numbers of elements in a value (e.g. array or object), the `count`
 command can be used. It is followed by exactly one effective value and returns
@@ -158,7 +158,7 @@ an integer:
 count [1,1,1,1] # 4
 ```
 
-### 4.5.2 Conditional commands
+### 5.5.2 Conditional commands
 
 Conditional blocks are created with `if`/`else if`/`else`.
 
@@ -196,7 +196,7 @@ val x = true;
 if (x) (#public.std.print 'x is true');
 ```
 
-### 4.5.3 Loops
+### 5.5.3 Loops
 
 Let's extend our last example with a simple while-loop:
 
@@ -243,7 +243,7 @@ iterate [-1,2,-3,4,6,0,0,0,-6,-45,0] (
 
 The internal variable `#it` holds the value of the current iteration value.
 
-## 4.6 More types!
+## 5.6 More types!
 
 The `typeof` command can be used to determine the type of a value:
 
@@ -265,7 +265,7 @@ the type of the value.<br>
 This special value can also be used to cast values (more on this later).
 It is written with angle brackets (e.g., `<integer>`) and will be used from now on to indicate types.
 
-### 4.6.1 Standard Library types
+### 5.6.1 Standard Library types
 
 Besides the primitive types and the JSON types (Array and Object), the DATEX standard library contains many additional types, including:
 * `<Set>`: A list of unique values
@@ -277,7 +277,7 @@ Besides the primitive types and the JSON types (Array and Object), the DATEX sta
 * `<Function>`: A compiled DATEX block that can be executed with parameters
 
 
-## 4.7 Type Casting
+## 5.7 Type Casting
 
 Type Casting plays an important role in DATEX because it is not only used for type casting (obviously), but also needed to create complex type values.
 
@@ -309,7 +309,7 @@ Then the `<integer>` is cast back to a `<decimal>`, which results in the value `
 Afterwards, `1.0` is cast to a `<text>`, resulting in `"1.0"`.
 -->
 
-## 4.8 To Function or not to Function
+## 5.8 To Function or not to Function
 
 DATEX does not use "classical" functions. Functions in DATEX are more similar to
 anonymous functions or lambda functions in other programming languages. They
@@ -357,7 +357,7 @@ var myFunc = function (a) (
 myFunc("parameter a"); # call function with parameter 'a'
 ```
 
-## 4.9 Internal variables
+## 5.9 Internal variables
 
 Internal variables are used for special purposes without polluting the current
 variable scope. They are accessed with a `#` followed by the name (e.g.
@@ -378,13 +378,13 @@ There are several reserved internal variables, including:
 You can also create new internal variables yourself, but this not recommended
 for normal use cases.
 
-## 4.10 The important part: Remote DATEX Execution
+## 5.10 The important part: Remote DATEX Execution
 
 At this point, you (hopefully) understand the basics of the DATEX Script
 language. We will now introduce the unique feature of DATEX which is also
 essentially the main purpose of DATEX: Remote execution.
 
-### 4.10.1 DATEX Endpoints
+### 5.10.1 DATEX Endpoints
 
 To be able to execute DATEX on other devices, we first need to understand the
 addressing mechanism of DATEX.
@@ -399,7 +399,7 @@ Endpoints can also publish an _alias_ for their _id_, which is written as
 There are more types of endpoints and more complex addressing schemes, but we
 will come back to this later.
 
-### 4.10.2 Remote Execution
+### 5.10.2 Remote Execution
 
 To execute DATEX on another endpoint, you simply need to write the following:
 
@@ -442,7 +442,7 @@ result = @example :: (
 print result; # 1000
 ```
 
-### 4.10.3 Parallel Remote Execution **TBD**
+### 5.10.3 Parallel Remote Execution **TBD**
 
 A remote execution target can also be a filter that contains multiple endpoints.
 In this case, the code block is executed simulataneously on all endpoints and
@@ -453,7 +453,7 @@ using a triple colon (`:::`) instead of a double colon. In this mode, the
 currently executed scope is forked for each incoming result and the scope
 execution continues in parallel for each endpoint result.
 
-## 4.11 Static Scopes a.k.a. libraries
+## 5.11 Static Scopes a.k.a. libraries
 
 DATEX can very easily be extended as needed. Besides custom types, you can also
 add _Static Scopes_, which are essentially records containing functions and
@@ -479,7 +479,7 @@ the case for the _std_ Static Scope, which contains the following variables:
 - `read`
 - `sleep`
 
-## 4.12 Pointers
+## 5.12 Pointers
 
 In DATEX, pointers are values with a globally unique id by which they can be
 accessed from any endpoint that has the required permissions.
@@ -507,7 +507,7 @@ y, value y; # return y as a reference, and the value of y
 Pointers can only be used for non-primitive values. This excludes values like
 `<text>`, `<integer>`, or `<boolean>`.
 
-## 4.13 Labels
+## 5.13 Labels
 
 To make access to pointers easier, labels can be assigned to a pointer. Labels
 are permanent and are not deleted after the scope is closed.
@@ -521,7 +521,7 @@ x = $$ ['a','b','c']; # create a pointer
 Generally, labels behave like normal variables, with the difference that the
 cannot be reassigned to another value.
 
-## 4.14 Referencing primitive values - pointer property references
+## 5.14 Referencing primitive values - pointer property references
 
 For some use cases, it can be quite helpful to also have a reference to a
 primitive value like a string. Primitive values are immutable in DATEX, which
@@ -538,7 +538,7 @@ x = #x->a; # get the pointer property by reference
 print x; # x is also automatically updated
 ```
 
-## 4.15 Streaming
+## 5.15 Streaming
 
 Besides 'normal' values, DATEX also supports continuous binary data streams.<br>
 Streamable values (`<Stream>` or `<Buffer>` or `<text>`) can be redirected into
@@ -564,7 +564,7 @@ printf << myStream; # redirect myStream to printf
 myStream << "text" `abcdef`; # data gets redirected to printf
 ```
 
-## 4.16 Object extensions, inheritence and other weird stuff
+## 5.16 Object extensions, inheritence and other weird stuff
 
 In DATEX, there is no classical object oriented class hierarchy (like in Java)
 and also no prototype system (like in JavaScript).<br> DATEX has _Extendable
@@ -590,19 +590,19 @@ types can be restricted to a template object, which defines the structure for
 values of this type:
 
 ```datex
-# 4 define the template for <ext:Player>
+# 5 define the template for <ext:Player>
 template <ext:Player> {
     x: <decimal>,
     y: <decimal>
 };
 
-# 4 create a new player
+# 5 create a new player
 player = <ext:Player>();
 
-# 4 get the type
+# 5 get the type
 print ('player type: (type player)');
 
-# 4 does it implement the template for <ext:Player>?
+# 5 does it implement the template for <ext:Player>?
 print ('player implements <ext:Player>: (player implements <ext:Player>)');
 
 player;
@@ -617,22 +617,22 @@ template <ext:Player2> {
     name: <text> # add additional properties
 }
 
-# 4 create a new player
+# 5 create a new player
 player2 = <ext:Player2>();
 
-# 4 get the type
+# 5 get the type
 print ('player2 type: (type player2)');
 
-# 4 does it implement the template for <ext:Player> and <ext:Player2>?
+# 5 does it implement the template for <ext:Player> and <ext:Player2>?
 print ('player2 implements <ext:Player>: (player2 implements <ext:Player>)');
 print ('player2 implements <ext:Player2>: (player2 implements <ext:Player2>)');
 
-# 4 player2 template extends <ext:Player>.template
+# 5 player2 template extends <ext:Player>.template
 print ('<ext:Player>.template extension: (
     (type player2).template extends <ext:Player>.template
 )');
 
-# 4 player2 template does not extend <ext:Player2>.template! (template is the same)
+# 5 player2 template does not extend <ext:Player2>.template! (template is the same)
 print ('<ext:Player2>.template extension: (
     (type player2).template extends <ext:Player2>.template
 )');
@@ -640,9 +640,9 @@ print ('<ext:Player2>.template extension: (
 player2;
 ```
 
-## 4.1 Comparators
+## 5.1 Comparators
 
-### 4.1.1 Value comparators
+### 5.1.1 Value comparators
 
 The value comparators check if two values are equal, but not if they are
 identical:
@@ -657,7 +657,7 @@ identical:
 {a:$$[1,2,3]} == {a:$$[1,2,3]}; # true
 ```
 
-### 4.1.2 Identity comparators
+### 5.1.2 Identity comparators
 
 Identity comparators return `true` if two values are the identical (e.g. have
 the same pointer reference). Primitive values (that are not pointers!) are also
@@ -670,7 +670,7 @@ x = y = $$ <Map>();
 x === y; # true
 ```
 
-## 4.2 Transforms
+## 5.2 Transforms
 
 The `transform` command creates a new primitive pointer from another value
 following a specific rule. This can either be a simple type cast or a transform
