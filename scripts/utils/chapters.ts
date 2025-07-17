@@ -27,9 +27,8 @@ export async function renumberFiles(
   const updatedFiles: string[] = [];
 
   for (const [prefix, groupFiles] of Object.entries(prefixGroups)) {
-    const sortedFiles = groupFiles.sort();
 
-    for (const [idx, file] of sortedFiles.entries()) {
+    for (const [idx, file] of groupFiles.entries()) {
       const match = file.match(/^([A-Z]?)(\d{3})_(.*)/);
       if (!match) {
         updatedFiles.push(file);
