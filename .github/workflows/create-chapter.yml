@@ -26,11 +26,17 @@ jobs:
          - name: Get last index
            id: last-index
            run: |
+            echo "Input index: '${{ github.event.inputs.index }}'"
+            echo "Is empty check: $([ -z '${{ github.event.inputs.index }}' ] && echo 'true' || echo 'false')"
+            
             if [ -z "${{ github.event.inputs.index }}" ]; then
-            last_index=$(( $(ls *.md | grep -v 'README.md' | wc -l) + 1 ))
-            index=$last_index
+              echo "No index provided, calculating next available index..."
+              last_index=$(( $(ls *.md | grep -v 'README.md' | wc -l) + 1 ))
+              index=$last_index
+              echo "Calculated index: $index"
             else
-            index="${{ github.event.inputs.index }}"
+              index=$(echo "${{ github.event.inputs.index }}" | sed 's/^0*//' | awk '{print $1+0}')
+              echo "Using provided index: $index"
             fi
             echo "index=$index" >> "$GITHUB_OUTPUT"
             echo "Final Index: $index"
