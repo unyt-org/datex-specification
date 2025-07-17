@@ -31,7 +31,7 @@ const prefixGroups = groupFilesByPrefix(files);
 for (const [prefix, groupFiles] of Object.entries(prefixGroups)) {
   for (const [idx, file] of groupFiles.entries()) {
     if (file.startsWith("TEMP_")) {
-      const newNumber = String(idx + 1).padStart(3, "0");
+      const newNumber = String(index).padStart(3, "0");
       const finalFilename = `${prefix}${newNumber}_${title}.md`;
       await Deno.writeTextFile(
         join(chaptersDir, finalFilename),
