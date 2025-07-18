@@ -45,7 +45,7 @@ DATEX networks.)
    (anonymous endpoint) or a custom endpoint identifier (must be validated by
    [trusted authority](https://auth.unyt.org/redeem)).
 2. A sign and encryption key pair are created
-   ([Cryptographic Keys](./012_endpoints.md#cryptographic-keys)).
+   ([Cryptographic Keys](./012_composites.md#cryptographic-keys)).
 3. Both public keys and the endpoint identifier are distributed to the Supranet
    (HELLO message)
 4. A endpoint public key entry is optionally added to the HELIX blockchain
@@ -73,7 +73,7 @@ designate other trusted endpoints which are trusted by themselves.
 
 An existing endpoint can be recreated with the stored private keys and endpoint
 identifier. A HELLO-message is distributed to the Supranet (see
-[Registering an endpoint](./012_endpoints.md#registering-an-endpoint)).
+[Registering an endpoint](./012_composites.md#registering-an-endpoint)).
 
 ## A1.2 Applications
 

@@ -31,10 +31,10 @@ exchange and synchronization for distributed applications.
 The DATEX specification is an open standard that is designed to be implemented
 for various platforms, including
 
-- embedded devices
-- web applications
-- mobile application
-- desktop applications
+- Embedded devices
+- Web applications
+- Mobile application
+- Desktop applications
 
 DATEX is a flexible protocol that combines the Application, Session, Transport,
 and Network layer of the OSI Model. The protocol offers encryption, signatures
@@ -67,4 +67,4 @@ This specification describes
 5. DATEX enables permission handling for resources on a network level
 
 All these applications serve as the backbone for the
-[unyt.org supranet](./003_terms.md#supranet).
+[unyt.org supranet](./003_conformance.md#supranet).

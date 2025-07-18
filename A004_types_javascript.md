@@ -1,3 +1,5 @@
+# A4 DATEX-JavaScript Type Mapping
+
 <!-- # Appendix: DATEX Types JavaScript Mapping
 
 | JavaScript type | DATEX type | support | bijective | update propagation | limitations | futher information |

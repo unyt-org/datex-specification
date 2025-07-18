@@ -1,15 +1,15 @@
-# 13 Mapping from DATEX Script to DXB (High-level abstractions)
+# 14 Mapping from DATEX Script to DXB (High-level abstractions)
 
 All properties of the `#std` record are directly accessible in all scopes
 (`#std` prefix not necessary: `#std.text -> text`).
 
-## 13.1 If branching
+## 14.1 If branching
 
 ```datex
 if conditionA (
 	A 
 )
-# 13 global->INDEX = 1
+# 14 global->INDEX = 1
 ```
 
 maps to
@@ -19,21 +19,21 @@ jumpFalse 1 conditionA
 A
 ```
 
-## 13.1 If/Else branching
+## 14.1 If/Else branching
 
 ```datex
 if conditionA (
 	A 
 )
-# 13 global->INDEX = 1
+# 14 global->INDEX = 1
 else if conditionB (
 	B
 )
-# 13 global->INDEX = 2
+# 14 global->INDEX = 2
 else (
 	C 
 )
-# 13 global->INDEX = 3
+# 14 global->INDEX = 3
 ```
 
 maps to
@@ -43,25 +43,25 @@ jumpFalse 1 conditionA
 A
 jump 3
 
-# 13 global->INDEX = 1
+# 14 global->INDEX = 1
 jumpFalse 2 conditionB
 B
 jump 3
 
-# 13 global->INDEX = 2
+# 14 global->INDEX = 2
 C
 
-# 13 global->INDEX = 3
+# 14 global->INDEX = 3
 ```
 
-## 13.1 While loops
+## 14.1 While loops
 
 ```datex
-# 13 global->INDEX = 1
+# 14 global->INDEX = 1
 while conditionA (
 	A 
 )
-# 13 global->INDEX = 2
+# 14 global->INDEX = 2
 ```
 
 maps to
@@ -72,11 +72,11 @@ A
 jump 1
 ```
 
-## 13.1 Text with single quotes (template strings)
+## 14.1 Text with single quotes (template strings)
 
 Characters between two single quotes are converted to a TEXT instruction,
 similar to
-[double quoted text](./007_runtime_instructions.md#datex-script-mapping).
+[double quoted text](./007_dxb_execution.md#datex-script-mapping).
 
 Values can be injected into the string by enclosing them with parentheses.
 Parentheses can be escaped with a backslashes (`\`).
