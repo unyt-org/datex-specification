@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       title:
-        description: 'Filename'
+        description: 'Title'
         required: true
         type: string
       index:
