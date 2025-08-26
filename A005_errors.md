@@ -1,8 +1,8 @@
-# Errors
+# A5 Errors
 
-## ReferenceError
+## A5.1 ReferenceError
 
-### "x" is not defined
+### A5.1.1 "x" is not defined
 
 occurs when there is a non-existent variable referenced somewhere.
 
@@ -10,7 +10,7 @@ occurs when there is a non-existent variable referenced somewhere.
 x + 5;
 ```
 
-### assignment to undeclared variable "x"
+### A5.1.2 assignment to undeclared variable "x"
 
 occurs when the value has been assigned to an undeclared variable. This happens
 within any scope (global, module, function) when variables are accessed before
@@ -20,13 +20,13 @@ the place where they are declared is executed.
 x = 42;
 ```
 
-### cannot use variable "x" in its own initializer
+### A5.1.3 cannot use variable "x" in its own initializer
 
 ```ts
 const x = x + 1;
 ```
 
-### can't access lexical declaration "x" before initialization
+### A5.1.4 can't access lexical declaration "x" before initialization
 
 occurs when a lexical variable was accessed before it was initialized. This
 happens within any scope (global, module, function) when variables are accessed
@@ -50,9 +50,9 @@ function test() (
 )
 ```
 
-## SyntaxError
+## A5.2 SyntaxError
 
-### "x" is a reserved identifier
+### A5.2.1 "x" is a reserved identifier
 
 occurs when reserved keywords are used as identifiers.
 
@@ -60,7 +60,7 @@ occurs when reserved keywords are used as identifiers.
 const type = 42;
 ```
 
-### ambiguous syntax, use parentheses to disambiguate
+### A5.2.2 ambiguous syntax, use parentheses to disambiguate
 
 occurs for example when an nullish coalescing operator is used with a logical OR
 or logical AND in the same expression without parentheses.
@@ -76,7 +76,7 @@ a && b ?? c;
 a + b * c | d; // unclear whether `|` is part of binary or type union
 ```
 
-### continue must be inside loop
+### A5.2.3 continue must be inside loop
 
 occurs when a continue statement is not inside a loop statement.
 
@@ -84,7 +84,7 @@ occurs when a continue statement is not inside a loop statement.
 continue;
 ```
 
-### duplicate formal argument "x"
+### A5.2.4 duplicate formal argument "x"
 
 occurs when a function creates two or more parameter bindings with the same
 name.
@@ -93,7 +93,7 @@ name.
 function add(x, x) ()
 ```
 
-### function statement requires a name
+### A5.2.5 function statement requires a name
 
 occurs when there is a function statement in the code that requires a name.
 
@@ -104,7 +104,7 @@ function () (42)
 **Note**: that we might have to distinguish function expressions from function
 declarations, like `val x = function () ()` might be valid as expression.
 
-### identifier starts immediately after numeric literal
+### A5.2.6 identifier starts immediately after numeric literal
 
 occurs when an identifier started with a digit. Identifiers can only start with
 a letter, underscore (_), or dollar sign ($).
@@ -117,7 +117,7 @@ const foo = 1life;
 1..toString() // TBD
 ```
 
-### illegal character
+### A5.2.7 illegal character
 
 occurs when the lexer reads a character that's not part of a string literal, and
 the character cannot constitute a valid token in the language.
@@ -130,7 +130,7 @@ the character cannot constitute a valid token in the language.
 const foo = "bar"; // ; != ;
 ```
 
-### invalid assignment left-hand side
+### A5.2.8 invalid assignment left-hand side
 
 occurs when there was an unexpected assignment somewhere. It may be triggered
 when a single = sign was used instead of == or ===.
@@ -148,7 +148,7 @@ foo() = 1;
 obj?.foo = 1;
 ```
 
-### missing `:` after property key
+### A5.2.9 missing `:` after property key
 
 occurs when objects or tuples are created using the initializer syntax. A colon
 (:) separates keys and values for the object's properties. Somehow, this colon
@@ -160,7 +160,7 @@ const obj = { (x = "value"): 4 }; // valid
 const obj = { "b"+"ar": "foo" }; // TDB
 ```
 
-### missing `)` after condition
+### A5.2.10 missing `)` after condition
 
 occurs when there is an error with how an if condition is written. It must
 appear in parenthesis after the if keyword.
@@ -173,7 +173,7 @@ if (Math.PI < 3 (
 
 **Note**: We must also disable apply chains for conditions.
 
-### missing `]` after element list
+### A5.2.11 missing `]` after element list
 
 occurs when there is an error with the array initializer syntax somewhere.
 Likely there is a closing square bracket (]) or a comma (,) missing
@@ -189,7 +189,7 @@ const list = [1, 2,
 ] // allowed
 ```
 
-### missing `)` after function body
+### A5.2.12 missing `)` after function body
 
 occurs when there is a syntax mistake when creating a function somewhere. Check
 if any closing curly braces or parenthesis are in the correct order.
@@ -202,7 +202,7 @@ function test() (
 )
 ```
 
-### missing `=` in declaration
+### A5.2.13 missing `=` in declaration
 
 occurs when a declaration was not given a value in the same statement.
 
@@ -210,7 +210,7 @@ occurs when a declaration was not given a value in the same statement.
 const TEXT;
 ```
 
-### missing formal parameter
+### A5.2.14 missing formal parameter
 
 occurs when your function declaration is missing valid parameters.
 
@@ -220,7 +220,7 @@ function square("test") ()
 function square({obj: "test"}) ()
 ```
 
-### missing variable name
+### A5.2.15 missing variable name
 
 It is usually caused by omitting a variable name or a typographic error.
 
@@ -228,7 +228,7 @@ It is usually caused by omitting a variable name or a typographic error.
 const = "foo";
 ```
 
-### unexpected token
+### A5.2.16 unexpected token
 
 occur when the parser does not see a token it recognizes at the given position,
 so it cannot make sense of the structure of the program. This might be a simple
@@ -239,9 +239,9 @@ entry1,entry2,; // expected expression, got ';'
 [a,,] // expected expression, got ','
 ```
 
-## TypeError
+## A5.3 TypeError
 
-### numeric literal exceeds type bounds
+### A5.3.1 numeric literal exceeds type bounds
 
 occurs when a literal with a suffix overflows its annotated type variant.
 
@@ -252,14 +252,14 @@ occurs when a literal with a suffix overflows its annotated type variant.
 3.999999999999999999999999999999999919f32
 ```
 
-### cannot compare values of incompatible types
+### A5.3.2 cannot compare values of incompatible types
 
 ```ts
 "hello" < 42;
 true > "abc";
 ```
 
-### "x" is not a function
+### A5.3.3 "x" is not a function
 
 occurs when there was an attempt to call a value from a function, but the value
 is not actually a function.
@@ -268,7 +268,7 @@ is not actually a function.
 const x = { test: 4 }.test();
 ```
 
-### object/tuple property access on non-object
+### A5.3.4 object/tuple property access on non-object
 
 occurs when dot or bracket access is applied to non-object types.
 
@@ -277,7 +277,7 @@ const x = 42;
 x.foo;
 ```
 
-### cannot use value of type "void"
+### A5.3.5 cannot use value of type "void"
 
 occurs when a void-typed function is used as an expression.
 
@@ -285,7 +285,7 @@ occurs when a void-typed function is used as an expression.
 var x = print("hi") + 42;
 ```
 
-### cannot read properties of void
+### A5.3.6 cannot read properties of void
 
 occurs when there was an unexpected index/property access on a void value.
 
@@ -298,7 +298,7 @@ x.test()
 
 **Note**: See runtime error "cannot dereference null". TBD.
 
-### can't assign to property "x" on "y": not an object
+### A5.3.7 can't assign to property "x" on "y": not an object
 
 occurs when attempting to create a property on value which cannot hold any
 property.
@@ -308,7 +308,7 @@ const foo = "my text";
 foo.bar = 5; // not allowed
 ```
 
-### invalid assignment to const "x"
+### A5.3.8 invalid assignment to const "x"
 
 occurs when it was attempted to alter a constant value as const declarations
 can't be re-assigned or redeclared.
@@ -318,7 +318,7 @@ const x = 42;
 x = 69;
 ```
 
-### incorrect arguments count
+### A5.3.9 incorrect arguments count
 
 occurs when there is an error with how a function is called and incorrect count
 of arguments were provided.
@@ -329,7 +329,7 @@ test(4)
 test(4, "55", 2)
 ```
 
-### argument of type "X" is not assignable to parameter of type "Y"
+### A5.3.10 argument of type "X" is not assignable to parameter of type "Y"
 
 occurs when a function is called with an invalid typed parameter.
 
@@ -340,7 +340,7 @@ test("text", "test2")
 test(42, 69)
 ```
 
-### type "X" is not assignable to type "Y"
+### A5.3.11 type "X" is not assignable to type "Y"
 
 occurs when a assignment with incorrect types is made.
 
@@ -348,29 +348,29 @@ occurs when a assignment with incorrect types is made.
 var x: text | integer = [1, 2];
 ```
 
-### cannot reassign to immutable reference
+### A5.3.12 cannot reassign to immutable reference
 
 ```ts
 var x = &69;
 x = 42;
 ```
 
-### RuntimeError
+### A5.3.13 RuntimeError
 
-### maximum call stack size exceeded
+### A5.3.14 maximum call stack size exceeded
 
 ```ts
 function loop() (loop());
 loop();
 ```
 
-### division by zero
+### A5.3.15 division by zero
 
 ```ts
 var x = 5 / 0;
 ```
 
-### index out of bounds
+### A5.3.16 index out of bounds
 
 _TBD_
 
@@ -382,16 +382,16 @@ _TBD_
 (1, 2, 3)[-2];
 ```
 
-### cannot dereference null
+### A5.3.17 cannot dereference null
 
 ```ts
 var x = null;
 x.test;
 ```
 
-## MatchError
+## A5.4 MatchError
 
-## incorrect type match
+## A5.5 incorrect type match
 
 **TBD**
 
@@ -400,7 +400,7 @@ var x: integer = 42;
 if x matches "a" | 5.5 () // shall we enforce that only integer and sub values of tpe integer can be matches here?
 ```
 
-### non-exhaustive match
+### A5.5.1 non-exhaustive match
 
 ```ts
 var x: 1 | 2 = 2;
@@ -409,7 +409,7 @@ match x (
 )
 ```
 
-### duplicate match arms
+### A5.5.2 duplicate match arms
 
 ```ts
 match x (
@@ -418,7 +418,7 @@ match x (
 )
 ```
 
-### unreachable match arm
+### A5.5.3 unreachable match arm
 
 ```ts
 match x (
@@ -427,9 +427,9 @@ match x (
 )
 ```
 
-## ModuleError
+## A5.6 ModuleError
 
-### cyclic module dependency
+### A5.6.1 cyclic module dependency
 
 ```ts
 // a.dx
@@ -439,21 +439,21 @@ use b from "b.dx";
 use a from "a.dx";
 ```
 
-### module not found
+### A5.6.2 module not found
 
 ```ts
 use x from "nonexistent.dx";
 ```
 
-### export of undeclared item
+### A5.6.3 export of undeclared item
 
 ```ts
 export x; // x is not defined
 ```
 
-## FunctionError
+## A5.7 FunctionError
 
-### return type mismatch
+### A5.7.1 return type mismatch
 
 occurs when the function returns a type not matching the declared return type.
 
@@ -463,7 +463,7 @@ function foo() -> text (
 )
 ```
 
-### missing return statement
+### A5.7.2 missing return statement
 
 occurs if one branch is lacking a return.
 
@@ -478,7 +478,7 @@ function getId() -> integer (
 
 **Note**: We can also use can not assign type void to type integer here.
 
-### unreachable return
+### A5.7.3 unreachable return
 
 ```ts
 return 42;
