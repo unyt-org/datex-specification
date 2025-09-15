@@ -13,7 +13,8 @@ A DATEX Block consists of 4 main sections:
   timestamp, id, flags)
 - A **Body**, which contains executable DATEX instructions
 
-<img src="./dx_block.png">
+<DXBProtocolViewer></DXBProtocolViewer>
+<!-- <img src="./dx_block.png"> -->
 
 ## 9.2 The Routing Header
 
