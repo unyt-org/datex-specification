@@ -20,36 +20,36 @@ A DATEX Block consists of 4 main sections:
 
 <speck-table level="2" file="./assets/structures/dxb.json" section="Routing Header">
 
-| Field                                                                  | Size                           | Type     | Condition (for optional fields)                                                         |
-| :--------------------------------------------------------------------- | :----------------------------- | :------- | :-------------------------------------------------------------------------------------- |
-| <a name="routing-header-magic-number">Magic Number</a>                 | 2 bytes                        | -        | -                                                                                       |
-| <a name="routing-header-version">Version</a>                           | 1 byte                         | uint8    | -                                                                                       |
-| <a name="routing-header-block-size">Block Size</a>                     | 2 bytes                        | uint16   | -                                                                                       |
-| <a name="routing-header-flags">Flags</a>                               | 1 byte                         | bitmask  | -                                                                                       |
-| <a name="routing-header-checksum">Checksum</a>                         | 4 bytes                        | uint32   | -                                                                                       |
-| <a name="routing-header-distance">Distance</a>                         | 1 byte                         | uint8    | -                                                                                       |
-| <a name="routing-header-ttl">TTL</a>                                   | 1 byte                         | uint8    | -                                                                                       |
-| <a name="routing-header-sender">Sender</a>                             | 21 bytes                       | endpoint | -                                                                                       |
-| <a name="routing-header-receivers-pointer-id">Receivers Pointer ID</a> | 26 bytes                       | pointer  | [Receiver Type](#routing-header-receiver-type) equals `"Pointer"`                       |
-| <a name="routing-header-receiver-count">Number of Receivers</a>        | 1 byte                         | uint8    | [Receiver Type](#routing-header-receiver-type) in (`"Receivers"`,`"ReceiversWithKeys"`) |
-| <a name="routing-header-receivers">Receivers</a>                       | 21 bytes x Number of Receivers | endpoint | [Receiver Type](#routing-header-receiver-type) in (`"Receivers"`,`"ReceiversWithKeys"`) |
-| <a name="routing-header-receivers-with-keys">Receivers with Keys</a>   | 21 bytes x Number of Receivers | endpoint | [Receiver Type](#routing-header-receiver-type) equals `"ReceiversWithKeys"`             |
-| <a name="routing-header-signature">Signature</a>                       | 255 bytes                      | string   | [Signature Type](#routing-header-signature-type) equals `"Unencrypted"`                 |
-| <a name="routing-header-encrypted-signature">Encrypted Signature</a>   | 300 bytes                      | string   | [Signature Type](#routing-header-signature-type) equals `"Encrypted"`                   |
+| Field                            | Size                             | Type     | Condition (for optional fields)                                                           |
+| :------------------------------- | :------------------------------- | :------- | :---------------------------------------------------------------------------------------- |
+| Magic Number                     | 2 bytes                          | -        | -                                                                                         |
+| Version                          | 1 byte                           | uint8    | -                                                                                         |
+| Block Size                       | 2 bytes                          | uint16   | -                                                                                         |
+| [Flags](#routing-header-flags)   | 1 byte                           | bitmask  | -                                                                                         |
+| Checksum                         | 4 bytes                          | uint32   | -                                                                                         |
+| Distance                         | 1 byte                           | uint8    | -                                                                                         |
+| TTL                              | 1 byte                           | uint8    | -                                                                                         |
+| [Sender](#routing-header-sender) | 21 bytes                         | endpoint | -                                                                                         |
+| Receivers Pointer ID             | 26 bytes                         | pointer  | [`Receiver Type`](#routing-header-receiver-type) equals `"Pointer"`                       |
+| Number of Receivers              | 1 byte                           | uint8    | [`Receiver Type`](#routing-header-receiver-type) in (`"Receivers"`,`"ReceiversWithKeys"`) |
+| Receivers                        | 21 bytes x `Number of Receivers` | endpoint | [`Receiver Type`](#routing-header-receiver-type) in (`"Receivers"`,`"ReceiversWithKeys"`) |
+| Receivers with Keys              | 21 bytes x `Number of Receivers` | endpoint | [`Receiver Type`](#routing-header-receiver-type) equals `"ReceiversWithKeys"`             |
+| Signature                        | 255 bytes                        | string   | [`Signature Type`](#routing-header-signature-type) equals `"Unencrypted"`                 |
+| Encrypted Signature              | 300 bytes                        | string   | [`Signature Type`](#routing-header-signature-type) equals `"Encrypted"`                   |
 
 <a name="routing-header-flags"></a>
 
 ### 9.2.1 Flags
 
-| Field                                               | Size   | Type    |
-| :-------------------------------------------------- | :----- | :------ |
-| <a name="flags-signature-type">Signature Type</a>   | 2 bits | enum    |
-| <a name="flags-encryption-type">Encryption Type</a> | 1 bit  | enum    |
-| <a name="flags-receiver-type">Receiver Type</a>     | 2 bits | enum    |
-| <a name="flags-is-bounce-back">Is Bounce Back</a>   | 1 bit  | boolean |
-| <a name="flags-has-checksum">Has Checksum</a>       | 1 bit  | boolean |
+| Field                                              | Size   | Type    |
+| :------------------------------------------------- | :----- | :------ |
+| [Signature Type](#routing-header-signature-type)   | 2 bits | enum    |
+| [Encryption Type](#routing-header-encryption-type) | 1 bit  | enum    |
+| [Receiver Type](#routing-header-receiver-type)     | 2 bits | enum    |
+| Is Bounce Back                                     | 1 bit  | boolean |
+| Has Checksum                                       | 1 bit  | boolean |
 
-<a name="flags-signature-type"></a>
+<a name="routing-header-signature-type"></a>
 
 #### 9.2.1.1 Signature Type
 
@@ -62,7 +62,7 @@ A DATEX Block consists of 4 main sections:
 | `0b11`        | `"Encrypted"`   |
 | `0b01`        | `"Invalid"`     |
 
-<a name="flags-encryption-type"></a>
+<a name="routing-header-encryption-type"></a>
 
 #### 9.2.1.2 Encryption Type
 
@@ -73,7 +73,7 @@ A DATEX Block consists of 4 main sections:
 | `0`           | `"None"`      |
 | `1`           | `"Encrypted"` |
 
-<a name="flags-receiver-type"></a>
+<a name="routing-header-receiver-type"></a>
 
 #### 9.2.1.3 Receiver Type
 
@@ -90,11 +90,11 @@ A DATEX Block consists of 4 main sections:
 
 ### 9.2.2 Sender
 
-| Field                                                    | Size     | Type   |
-| :------------------------------------------------------- | :------- | :----- |
-| <a name="sender-endpoint-type">Endpoint Type</a>         | 1 byte   | -      |
-| <a name="sender-endpoint-id">Endpoint ID</a>             | 18 bytes | string |
-| <a name="sender-endpoint-instance">Endpoint Instance</a> | 2 bytes  | int16  |
+| Field             | Size     | Type   |
+| :---------------- | :------- | :----- |
+| Endpoint Type     | 1 byte   | -      |
+| Endpoint ID       | 18 bytes | string |
+| Endpoint Instance | 2 bytes  | int16  |
 
 </speck-table>
 
@@ -102,15 +102,15 @@ A DATEX Block consists of 4 main sections:
 
 <speck-table level="2" file="./assets/structures/dxb.json" section="Block Header">
 
-| Field                                                         | Size     | Type     |
-| :------------------------------------------------------------ | :------- | :------- |
-| <a name="block-header-context-id">Context ID</a>              | 4 bytes  | uint32   |
-| <a name="block-header-section-index">Section Index</a>        | 2 bytes  | uint16   |
-| <a name="block-header-block-number">Block Number</a>          | 2 bytes  | uint16   |
-| <a name="block-header-flags--timestamp">Flags & Timestamp</a> | 8 bytes  | -        |
-| <a name="block-header-lifetime">Lifetime</a>                  | 4 bytes  | uint32   |
-| <a name="block-header-repr">Repr</a>                          | 21 bytes | endpoint |
-| <a name="block-header-iv">IV</a>                              | 16 bytes | -        |
+| Field             | Size     | Type     |
+| :---------------- | :------- | :------- |
+| Context ID        | 4 bytes  | uint32   |
+| Section Index     | 2 bytes  | uint16   |
+| Block Number      | 2 bytes  | uint16   |
+| Flags & Timestamp | 8 bytes  | -        |
+| Lifetime          | 4 bytes  | uint32   |
+| Repr              | 21 bytes | endpoint |
+| IV                | 16 bytes | -        |
 
 </speck-table>
 
@@ -118,18 +118,18 @@ A DATEX Block consists of 4 main sections:
 
 <speck-table level="2" file="./assets/structures/dxb.json" section="Encrypted Header">
 
-| Field                                                    | Size     | Type     | Condition (for optional fields) |
-| :------------------------------------------------------- | :------- | :------- | :------------------------------ |
-| <a name="encrypted-header-flags">Flags</a>               | 1 byte   | bitmask  | -                               |
-| <a name="encrypted-header-on-behalf-of">On Behalf Of</a> | 21 bytes | endpoint | Has On Behalf Of equals `true`  |
+| Field                            | Size     | Type     | Condition (for optional fields)  |
+| :------------------------------- | :------- | :------- | :------------------------------- |
+| [Flags](#encrypted-header-flags) | 1 byte   | bitmask  | -                                |
+| On Behalf Of                     | 21 bytes | endpoint | `Has On Behalf Of` equals `true` |
 
 <a name="encrypted-header-flags"></a>
 
 ### 9.4.1 Flags
 
-| Field                                                 | Size   | Type    |
-| :---------------------------------------------------- | :----- | :------ |
-| <a name="flags-user-agent">User Agent</a>             | 4 bits | -       |
-| <a name="flags-has-on-behalf-of">Has On Behalf Of</a> | 1 bit  | boolean |
+| Field            | Size   | Type    |
+| :--------------- | :----- | :------ |
+| User Agent       | 4 bits | -       |
+| Has On Behalf Of | 1 bit  | boolean |
 
 </speck-table>
