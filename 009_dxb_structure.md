@@ -43,59 +43,59 @@ A DATEX Block consists of 4 main sections:
 
 
 <a name="routing-header-magic-number"></a>
-# 9 Magic Number
+## Magic Number
 
 
 <a name="routing-header-version"></a>
-# 9 Version
+## Version
 
 
 <a name="routing-header-block-size"></a>
-# 9 Block Size
+## Block Size
 
 
 <a name="routing-header-flags"></a>
-# 9 Flags
+## Flags
 
 
 <a name="routing-header-checksum"></a>
-# 9 Checksum
+## Checksum
 
 
 <a name="routing-header-distance"></a>
-# 9 Distance
+## Distance
 
 
 <a name="routing-header-ttl"></a>
-# 9 TTL
+## TTL
 
 
 <a name="routing-header-sender"></a>
-# 9 Sender
+## Sender
 
 
 <a name="routing-header-receivers-pointer-id"></a>
-# 9 Receivers Pointer ID
+## Receivers Pointer ID
 
 
 <a name="routing-header-receiver-count"></a>
-# 9 Number of Receivers
+## Number of Receivers
 
 
 <a name="routing-header-receivers"></a>
-# 9 Receivers
+## Receivers
 
 
 <a name="routing-header-receivers-with-keys"></a>
-# 9 Receivers with Keys
+## Receivers with Keys
 
 
 <a name="routing-header-signature"></a>
-# 9 Signature
+## Signature
 
 
 <a name="routing-header-encrypted-signature"></a>
-# 9 Encrypted Signature
+## Encrypted Signature
 
 
 
