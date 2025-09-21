@@ -37,7 +37,7 @@ A DATEX Block consists of 4 main sections:
 | Signature                        | 255 bytes                        | string   | [`Signature Type`](#routing-header-signature-type) equals `"Unencrypted"`                 |
 | Encrypted Signature              | 300 bytes                        | string   | [`Signature Type`](#routing-header-signature-type) equals `"Encrypted"`                   |
 
-<a name="routing-header-flags"></a>
+<a id="routing-header-flags"></a>
 
 ### 9.2.1 Flags
 
@@ -49,7 +49,7 @@ A DATEX Block consists of 4 main sections:
 | Is Bounce Back                                     | 1 bit  | boolean |
 | Has Checksum                                       | 1 bit  | boolean |
 
-<a name="routing-header-signature-type"></a>
+<a id="routing-header-signature-type"></a>
 
 #### 9.2.1.1 Signature Type
 
@@ -62,7 +62,7 @@ A DATEX Block consists of 4 main sections:
 | `0b11`        | `"Encrypted"`   |
 | `0b01`        | `"Invalid"`     |
 
-<a name="routing-header-encryption-type"></a>
+<a id="routing-header-encryption-type"></a>
 
 #### 9.2.1.2 Encryption Type
 
@@ -73,7 +73,7 @@ A DATEX Block consists of 4 main sections:
 | `0`           | `"None"`      |
 | `1`           | `"Encrypted"` |
 
-<a name="routing-header-receiver-type"></a>
+<a id="routing-header-receiver-type"></a>
 
 #### 9.2.1.3 Receiver Type
 
@@ -86,7 +86,7 @@ A DATEX Block consists of 4 main sections:
 | `0b10`        | `"Receivers"`         |
 | `0b11`        | `"ReceiversWithKeys"` |
 
-<a name="routing-header-sender"></a>
+<a id="routing-header-sender"></a>
 
 ### 9.2.2 Sender
 
@@ -123,7 +123,7 @@ A DATEX Block consists of 4 main sections:
 | [Flags](#encrypted-header-flags) | 1 byte   | bitmask  | -                                |
 | On Behalf Of                     | 21 bytes | endpoint | `Has On Behalf Of` equals `true` |
 
-<a name="encrypted-header-flags"></a>
+<a id="encrypted-header-flags"></a>
 
 ### 9.4.1 Flags
 
