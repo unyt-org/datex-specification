@@ -13,7 +13,7 @@ const rootDir = Deno.cwd();
 await updateMarkdownFiles(new URL("file://" + rootDir + "/"));
 console.log("Speck tables updated");
 
-// Update chapter numbering and linking 
+// Update chapter numbering and linking
 const files = getSortedFiles(rootDir);
 const prefixGroups = groupFilesByPrefix(files);
 await renumberFiles(prefixGroups, rootDir);
