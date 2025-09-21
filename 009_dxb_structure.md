@@ -7,125 +7,135 @@ A DATEX Block consists of 4 main sections:
 - A **Routing Header**, which mainly contains information about the sender and
   receivers of the block, and important information about the block (e.g. block
   size)
-- A **Signature**, if the block is signed. Everything after this section (Header
-  and Body) is signed by the sender and can also optionally be encrypted
-- A **Block Header**, which contains meta data about the current block (type,
+- A **Block Header**, which contains metadata about the current block (type,
   timestamp, id, flags)
+- A **Encrypted Header** that is part of the optionally encrypted section of the
+  block, and contains secret information that is only visible to the receivers
+  of the block
 - A **Body**, which contains executable DATEX instructions
 
 <DXBProtocolViewer speck="./assets/structures/dxb.json"></DXBProtocolViewer>
 
 ## 9.2 The Routing Header
 
-The Routing Header is not encrypted or signed, the content always needs to be
-parseable by all nodes.
+<speck-table level="2" file="./assets/structures/dxb.json" section="Routing Header">
 
-| Name               | Start | End | Size | Content                                               | Description                                                                              |
-| ------------------ | :---: | :-: | :--: | ----------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Magic Number       |   0   |  2  |  2   | 01 64                                                 | Fixed value (0x01 and 'd')                                                               |
-| Version Number     |   2   |  3  |  1   | <pre class="language-yaml">VERSION: Uint8&#10;</pre>  | Version number starting from 0x01                                                        |
-| Block Size         |   3   |  5  |  2   | <pre class="language-yaml">SIZE: Uint16&#10;</pre>    | Total block size in bytes                                                                |
-| TTL                |   5   |  6  |  1   | <pre class="language-yaml">TTL: Uint8&#10;</pre>      | Time-to-live for this block, get decremented with each node redirection                  |
-| Priority           |   6   |  7  |  1   | <pre class="language-yaml">PRIORITY: Uint8&#10;</pre> | Routing priority of this block                                                           |
-| Signed / Encrypted |   7   |  8  |  1   | <pre class="language-yaml">SECURITY: Uint8&#10;</pre> | 0x00: not signed or encrypted, 0x01: signed, 0x02: encrypted, 0x03: signed and encrypted |
+| Field                                                                  | Size                           | Type     | Condition (for optional fields)                                                         |
+| :--------------------------------------------------------------------- | :----------------------------- | :------- | :-------------------------------------------------------------------------------------- |
+| <a name="routing-header-magic-number">Magic Number</a>                 | 2 bytes                        | -        | -                                                                                       |
+| <a name="routing-header-version">Version</a>                           | 1 byte                         | uint8    | -                                                                                       |
+| <a name="routing-header-block-size">Block Size</a>                     | 2 bytes                        | uint16   | -                                                                                       |
+| <a name="routing-header-flags">Flags</a>                               | 1 byte                         | bitmask  | -                                                                                       |
+| <a name="routing-header-checksum">Checksum</a>                         | 4 bytes                        | uint32   | -                                                                                       |
+| <a name="routing-header-distance">Distance</a>                         | 1 byte                         | uint8    | -                                                                                       |
+| <a name="routing-header-ttl">TTL</a>                                   | 1 byte                         | uint8    | -                                                                                       |
+| <a name="routing-header-sender">Sender</a>                             | 21 bytes                       | endpoint | -                                                                                       |
+| <a name="routing-header-receivers-pointer-id">Receivers Pointer ID</a> | 26 bytes                       | pointer  | [Receiver Type](#routing-header-receiver-type) equals `"Pointer"`                       |
+| <a name="routing-header-receiver-count">Number of Receivers</a>        | 1 byte                         | uint8    | [Receiver Type](#routing-header-receiver-type) in (`"Receivers"`,`"ReceiversWithKeys"`) |
+| <a name="routing-header-receivers">Receivers</a>                       | 21 bytes x Number of Receivers | endpoint | [Receiver Type](#routing-header-receiver-type) in (`"Receivers"`,`"ReceiversWithKeys"`) |
+| <a name="routing-header-receivers-with-keys">Receivers with Keys</a>   | 21 bytes x Number of Receivers | endpoint | [Receiver Type](#routing-header-receiver-type) equals `"ReceiversWithKeys"`             |
+| <a name="routing-header-signature">Signature</a>                       | 255 bytes                      | string   | [Signature Type](#routing-header-signature-type) equals `"Unencrypted"`                 |
+| <a name="routing-header-encrypted-signature">Encrypted Signature</a>   | 300 bytes                      | string   | [Signature Type](#routing-header-signature-type) equals `"Encrypted"`                   |
 
-```
-DATEX.Endpoint {
-	TYPE: Uint8
-	ID: Uint8[18]
-	INSTANCE: Uint16
-}
 
-PointerId {
-	TYPE: Uint8
-	IDENTIFIER: Uint8[18]
-	INSTANCE: Uint16
-	TIMESTAMP: Uint32 # unix ts in seconds, starting from 25. Juli 23
-	COUNTER: Uint8
-}
+<a name="routing-header-flags"></a>
+### 9.2.1 Flags
 
-ReceiverEndpoint {
-	ENDPOINT: Endpoint
-	optional KEY: Uint8[512] # only if Receivers.FLAGS.ENDPOINTS_HAVE_KEYS
-}
+| Field                                               | Size   | Type    |
+| :-------------------------------------------------- | :----- | :------ |
+| <a name="flags-signature-type">Signature Type</a>   | 2 bits | enum    |
+| <a name="flags-encryption-type">Encryption Type</a> | 1 bit  | enum    |
+| <a name="flags-receiver-type">Receiver Type</a>     | 2 bits | enum    |
+| <a name="flags-is-bounce-back">Is Bounce Back</a>   | 1 bit  | boolean |
+| <a name="flags-has-checksum">Has Checksum</a>       | 1 bit  | boolean |
 
-ReceiverEndpoints {
-	COUNT: Uint16 # if MAX, flood, no RECEIVERS
-	ENDPOINTS: ReceiverEndpoint[COUNT]
-}
 
-Receivers {
-	FLAGS: Uint8
-		HAS_POINTER_ID:           FLAGS & 0b00000001,
-		HAS_ENDPOINTS:            FLAGS & 0b00000010,
-		ENDPOINTS_HAVE_KEYS:      FLAGS & 0b00000100
-	optional POINTER_ID: PointerId
-	optional ENDPOINTS: ReceiverEndpoints
-}
+<a name="flags-signature-type"></a>
+#### 9.2.1.1 Signature Type
 
-RoutingHeader {
-	MAGIC_NUMBER: Uint16 {0x01, 0x64},
-	VERSION: Uint8,
-	TTL: Uint8,
-	FLAGS: Uint8
-		HAS_UNENCRYPTED_SIGNATURE: FLAGS & 0b00000001,
-		HAS_ENCRYPTION:            FLAGS & 0b00000010,
-		HAS_ENCRYPTED_SIGNATURE:   FLAGS & 0b00000100,
-		IS_LARGE_SIZE:             FLAGS & 0b00001000
-	BLOCK_SIZE: IS_LARGE_SIZE ? Uint32 : Uint16,
+**Enum Mapping:**
 
-	SCOPE_ID: Uint32
-	BLOCK_INDEX: Uint16
-	BLOCK_SUB_INDEX: Uint16
+| Integer Value | Mapped Value    |
+| :------------ | :-------------- |
+| `0b00`        | `"None"`        |
+| `0b10`        | `"Unencrypted"` |
+| `0b11`        | `"Encrypted"`   |
+| `0b01`        | `"Invalid"`     |
 
-	SENDER_TYPE: Uint8,
-	optional SENDER: Uint8[20] # only exists if SENDER_TYPE != 255, otherwise SENDER is @@any
-	optional RECEIVERS: Receivers
-}
 
-BlockHeader {
-	
-	FLAGS: Uint21
-		BLOCK_TYPE:    FLAGS & 0b111100000000000000000,
-		ALLOW_EXECUTE: FLAGS & 0b000010000000000000000,
-		END_OF_BLOCK:  FLAGS & 0b000001000000000000000, # if a subdivided block has only a single signature, it is sent with the last block containing the END_OF_BLOCK flag
-		END_OF_SCOPE:  FLAGS & 0b000000100000000000000,
-		HAS_EXPIRATION_TIMESTAMP:   FLAGS & 0b000000010000000000000,
-		HAS_ON_BEHALF_OF:           FLAGS & 0b000000001000000000000,
-		HAS_REPRESENTED_BY:         FLAGS & 0b000000000100000000000,
-		IS_COMPRESSED:              FLAGS & 0b000000000010000000000,
-		_RESERVED_:    FLAGS & 0b000000000001111111111,
-	CREATION_TIMESTAMP: Uint43, # unix ts in ms, starting from 25. Juli 23
-	optional EXPIRATION_OFFSET: Uint32, # unix ts in seconds, starting from CREATION_TIMESTAMP
-	optional REPRESENTED_BY: Endpoint
-	optional IV: Uint8[16]
-}
+<a name="flags-encryption-type"></a>
+#### 9.2.1.2 Encryption Type
 
-DXB {
-	ROUTING_HEADER: RoutingHeader,
-	optional UNENCRYPTED_SIGNATURE: Uint8[192],
-	optional ENCRYPTED_SIGNATURE: Uint[x] # used instead SIGNATURE to hide identity of signing endpoint (when using ON_BEHALF_OF)
-	# optional start signed part:
-	optional BLOCK_HEADER: BlockHeader
-	# optional start encrypted part:
-	ENCRYPTED_FLAGS: Uint8
-		DEVICE_TYPE: ENCRYPTED_FLAGS & 0b11110000
-	optional ON_BEHALF_OF: Endpoint,
-	BODY: DXBBody
-}
-```
+**Enum Mapping:**
+
+| Integer Value | Mapped Value  |
+| :------------ | :------------ |
+| `0`           | `"None"`      |
+| `1`           | `"Encrypted"` |
+
+
+<a name="flags-receiver-type"></a>
+#### 9.2.1.3 Receiver Type
+
+**Enum Mapping:**
+
+| Integer Value | Mapped Value          |
+| :------------ | :-------------------- |
+| `0b00`        | `"None"`              |
+| `0b01`        | `"Pointer"`           |
+| `0b10`        | `"Receivers"`         |
+| `0b11`        | `"ReceiversWithKeys"` |
+
+
+<a name="routing-header-sender"></a>
+### 9.2.2 Sender
+
+| Field                                                    | Size     | Type   |
+| :------------------------------------------------------- | :------- | :----- |
+| <a name="sender-endpoint-type">Endpoint Type</a>         | 1 byte   | -      |
+| <a name="sender-endpoint-id">Endpoint ID</a>             | 18 bytes | string |
+| <a name="sender-endpoint-instance">Endpoint Instance</a> | 2 bytes  | int16  |
+
+
+
+</speck-table>
 
 ## 9.3 The Block Header
 
-The Block Header is part of the signed and encrypted part. If the block is
-signed, the header cannot be altered, and it can't be read by non-receiving
-parties if the block is encrypted.
+<speck-table level="2" file="./assets/structures/dxb.json" section="Block Header">
 
-| Name              | Start | End | Size | Content                                                   | Description                                                        |
-| ----------------- | :---: | :-: | :--: | --------------------------------------------------------- | ------------------------------------------------------------------ |
-| Scope ID          |   0   |  4  |  4   | <pre class="language-yaml">SID: Uint32&#10;</pre>         | Scope ID, unique for a certain sender for a certain period of time |
-| Scope Block Index |   4   |  6  |  2   | <pre class="language-yaml">BLOCK_INDEX: Uint16&#10;</pre> | Index of the block within the current scope                        |
-| Scope Block Inc   |   6   |  8  |  2   | <pre class="language-yaml">SIZE: Uint16&#10;</pre>        | Incremented for each block of a scope                              |
-| Type              |   8   |  9  |  1   | <pre class="language-yaml">TYPE: Uint8&#10;</pre>         | Block type. See _Block Types_                                      |
-| Flags             |   9   | 10  |  1   | <pre class="language-yaml">FLAGS: Uint8&#10;</pre>        | executable, end of scope, device type                              |
-| Timestamp         |  10   | 18  |  8   | <pre class="language-yaml">TIME: Uint64&#10;</pre>        | Time in ms since 2022-01-22 (to be changed)                        |
+| Field                                                         | Size     | Type     |
+| :------------------------------------------------------------ | :------- | :------- |
+| <a name="block-header-context-id">Context ID</a>              | 4 bytes  | uint32   |
+| <a name="block-header-section-index">Section Index</a>        | 2 bytes  | uint16   |
+| <a name="block-header-block-number">Block Number</a>          | 2 bytes  | uint16   |
+| <a name="block-header-flags--timestamp">Flags & Timestamp</a> | 8 bytes  | -        |
+| <a name="block-header-lifetime">Lifetime</a>                  | 4 bytes  | uint32   |
+| <a name="block-header-repr">Repr</a>                          | 21 bytes | endpoint |
+| <a name="block-header-iv">IV</a>                              | 16 bytes | -        |
+
+
+
+</speck-table>
+
+## 9.4 The Encrypted Header
+
+<speck-table level="2" file="./assets/structures/dxb.json" section="Encrypted Header">
+
+| Field                                                    | Size     | Type     | Condition (for optional fields) |
+| :------------------------------------------------------- | :------- | :------- | :------------------------------ |
+| <a name="encrypted-header-flags">Flags</a>               | 1 byte   | bitmask  | -                               |
+| <a name="encrypted-header-on-behalf-of">On Behalf Of</a> | 21 bytes | endpoint | Has On Behalf Of equals `true`  |
+
+
+<a name="encrypted-header-flags"></a>
+### 9.4.1 Flags
+
+| Field                                                 | Size   | Type    |
+| :---------------------------------------------------- | :----- | :------ |
+| <a name="flags-user-agent">User Agent</a>             | 4 bits | -       |
+| <a name="flags-has-on-behalf-of">Has On Behalf Of</a> | 1 bit  | boolean |
+
+
+
+</speck-table>

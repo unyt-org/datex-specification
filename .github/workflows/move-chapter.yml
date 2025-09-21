@@ -1,34 +1,34 @@
 name: Move Chapter
 
 on:
-   workflow_dispatch:
-      inputs:
-         filename:
-            description: 'Exact filename'
-            required: true
-            type: string
-         index:
-            description: 'Index (position)'
-            required: true
-            type: string
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: "Exact filename"
+        required: true
+        type: string
+      index:
+        description: "Index (position)"
+        required: true
+        type: string
 jobs:
-   move-chapter:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v4
-           with:
-            ref: main
-         - uses: denoland/setup-deno@v1
-           with:
-            deno-version: latest
+  move-chapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: latest
 
-         - name: Move chapter
-           run: |
-            deno run -A ./scripts/move-chapter.ts "${{ github.event.inputs.filename }}" "${{ github.event.inputs.index }}"
-         - name: Commit changes
-           run: |
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add .
-            git commit -m "Move chapter ${{ github.event.inputs.filename }} to index ${{ github.event.inputs.index }}"
-            git push
+      - name: Move chapter
+        run: |
+          deno run -A ./scripts/move-chapter.ts "${{ github.event.inputs.filename }}" "${{ github.event.inputs.index }}"
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Move chapter ${{ github.event.inputs.filename }} to index ${{ github.event.inputs.index }}"
+          git push

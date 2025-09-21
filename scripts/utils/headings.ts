@@ -2,21 +2,21 @@ import { join } from "https://deno.land/std@0.224.0/path/mod.ts";
 import { getSortedFiles } from "./chapters.ts";
 
 export async function updateHeadings(rootDir: string) {
-	const files = getSortedFiles(rootDir);
-	for (const filename of files) {
-		const filePath = join(rootDir, filename);
-		const match = filename.match(/^([A-Z]?)(\d{3})_/);
-		if (!match) continue;
+  const files = getSortedFiles(rootDir);
+  for (const filename of files) {
+    const filePath = join(rootDir, filename);
+    const match = filename.match(/^([A-Z]?)(\d{3})_/);
+    if (!match) continue;
 
-		const [, prefix, number] = match;
-		const chapterNumber = prefix + parseInt(number, 10);
+    const [, prefix, number] = match;
+    const chapterNumber = prefix + parseInt(number, 10);
 
-		const content = await Deno.readTextFile(filePath);
-		const updatedContent = updateContentHeadings(content, chapterNumber);
-		
-		await Deno.writeTextFile(filePath, updatedContent);
-		console.log(`Updated headings: ${filename}`);
-	}
+    const content = await Deno.readTextFile(filePath);
+    const updatedContent = updateContentHeadings(content, chapterNumber);
+
+    await Deno.writeTextFile(filePath, updatedContent);
+    console.log(`Updated headings: ${filename}`);
+  }
 }
 
 function updateContentHeadings(content: string, chapterNumber: string): string {

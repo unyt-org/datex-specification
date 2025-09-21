@@ -1,0 +1,7 @@
+{
+  "name": "DATEX Specification",
+  "tasks": {
+    "update:test": "deno run -A scripts/update.ts --dry-run",
+    "update": "deno run -A scripts/update.ts"
+  }
+}

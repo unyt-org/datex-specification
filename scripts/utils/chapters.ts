@@ -27,7 +27,6 @@ export async function renumberFiles(
   const updatedFiles: string[] = [];
 
   for (const [prefix, groupFiles] of Object.entries(prefixGroups)) {
-
     for (const [idx, file] of groupFiles.entries()) {
       const match = file.match(/^([A-Z]?)(\d{3})_(.*)/);
       if (!match) {
@@ -52,13 +51,13 @@ export async function renumberFiles(
 
 export function createPrefixMap(files: string[]): Map<string, string> {
   const prefixMap = new Map<string, string>();
-  
+
   for (const file of files) {
     const match = file.match(/^([A-Z]?\d{3})_([a-z0-9_-]+)\.md$/i);
     if (!match) continue;
-    const [ , prefix ] = match;
+    const [, prefix] = match;
     prefixMap.set(prefix, file);
   }
-  
+
   return prefixMap;
 }

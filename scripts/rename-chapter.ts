@@ -8,7 +8,9 @@ const excludeFiles = new Set(["README.md"]);
 const [indexRaw, newTitleRaw, optionalHeading] = Deno.args;
 
 if (!indexRaw || !newTitleRaw) {
-  console.error("Usage: deno run -A ./scripts/rename-chapter.ts <index> <new-filename-title> [optional-new-heading]");
+  console.error(
+    "Usage: deno run -A ./scripts/rename-chapter.ts <index> <new-filename-title> [optional-new-heading]",
+  );
   Deno.exit(1);
 }
 
@@ -40,7 +42,7 @@ const newFilename = `${prefix}${number}_${newTitle}.md`;
 
 await Deno.rename(
   join(chaptersDir, oldFile),
-  join(chaptersDir, newFilename)
+  join(chaptersDir, newFilename),
 );
 console.log(`Renamed ${oldFile} → ${newFilename}`);
 

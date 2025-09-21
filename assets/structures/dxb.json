@@ -29,6 +29,7 @@
           "bitMasks": [
             {
               "name": "Signature Type",
+              "id": "signature-type",
               "length": 2,
               "parser": {
                 "type": "enum",
@@ -99,16 +100,39 @@
           "name": "Sender",
           "category": "blue",
           "byteSize": 21,
-          "parser": { "type": "endpoint" }
+          "parser": { "type": "endpoint" },
+          "subFields": [
+            {
+              "name": "Endpoint Type",
+              "category": "blue",
+              "byteSize": 1
+            },
+            {
+              "name": "Endpoint ID",
+              "category": "blue",
+              "byteSize": 18,
+              "parser": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Endpoint Instance",
+              "category": "blue",
+              "byteSize": 2,
+              "parser": {
+                "type": "int"
+              }
+            }
+          ]
         },
         {
           "name": "Receivers Pointer ID",
           "category": "dark_blue",
           "byteSize": 26,
           "if": {
-            "includes": [
+            "equals": [
               "receiver-type",
-              ["Pointer", "ReceiversWithKeys"]
+              "Pointer"
             ]
           },
           "parser": { "type": "pointer" }
@@ -145,7 +169,7 @@
           "byteSize": 21,
           "repeat": "receiver-count",
           "if": {
-            "includes": ["receiver-type", ["ReceiversWithKeys"]]
+            "equals": ["receiver-type", "ReceiversWithKeys"]
           },
           "parser": { "type": "endpoint" }
         },

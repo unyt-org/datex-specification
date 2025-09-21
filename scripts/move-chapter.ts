@@ -1,4 +1,8 @@
-import { getSortedFiles, groupFilesByPrefix, renumberFiles } from "./utils/chapters.ts";
+import {
+  getSortedFiles,
+  groupFilesByPrefix,
+  renumberFiles,
+} from "./utils/chapters.ts";
 import { updateLinks } from "./utils/links.ts";
 
 const [fileToMove, newPositionRaw] = Deno.args;
