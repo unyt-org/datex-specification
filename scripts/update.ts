@@ -5,7 +5,7 @@ import {
 } from "./utils/chapters.ts";
 import { updateHeadings } from "./utils/headings.ts";
 import { updateLinks } from "./utils/links.ts";
-import { updateMarkdownFiles } from "@unyt/speck";
+import { updateMarkdownFiles } from "@unyt/speck/markdown-generator.ts";
 
 const rootDir = Deno.cwd();
 
