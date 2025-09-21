@@ -15,117 +15,88 @@ A DATEX Block consists of 4 main sections:
 
 <DXBProtocolViewer speck="./assets/structures/dxb.json"></DXBProtocolViewer>
 
-## 9.2 The Routing Header
+## 9.2 The Routing Header {#id}
 
-The Routing Header is not encrypted or signed, the content always needs to be
-parseable by all nodes.
+<speck-table file="./assets/structures/dxb.json" section="Routing Header">
 
-| Name               | Start | End | Size | Content                                               | Description                                                                              |
-| ------------------ | :---: | :-: | :--: | ----------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Magic Number       |   0   |  2  |  2   | 01 64                                                 | Fixed value (0x01 and 'd')                                                               |
-| Version Number     |   2   |  3  |  1   | <pre class="language-yaml">VERSION: Uint8&#10;</pre>  | Version number starting from 0x01                                                        |
-| Block Size         |   3   |  5  |  2   | <pre class="language-yaml">SIZE: Uint16&#10;</pre>    | Total block size in bytes                                                                |
-| TTL                |   5   |  6  |  1   | <pre class="language-yaml">TTL: Uint8&#10;</pre>      | Time-to-live for this block, get decremented with each node redirection                  |
-| Priority           |   6   |  7  |  1   | <pre class="language-yaml">PRIORITY: Uint8&#10;</pre> | Routing priority of this block                                                           |
-| Signed / Encrypted |   7   |  8  |  1   | <pre class="language-yaml">SECURITY: Uint8&#10;</pre> | 0x00: not signed or encrypted, 0x01: signed, 0x02: encrypted, 0x03: signed and encrypted |
+| Field                                                           | Size                                                             | Type                          | Condition (for optional fields)                                           |
+| :-------------------------------------------------------------- | :--------------------------------------------------------------- | :---------------------------- | :------------------------------------------------------------------------ |
+| Magic Number                                                    | 2 bytes                                                          | -                             | -                                                                         |
+| Version                                                         | 1 byte                                                           | uint8                         | -                                                                         |
+| Block Size                                                      | 2 bytes                                                          | uint16                        | -                                                                         |
+| Flags                                                           | 1 byte                                                           | bitmask                       | -                                                                         |
+| - Signature Type                                                | 2 bits                                                           | enum (0b00, 0b10, 0b11, 0b01) | -                                                                         |
+| - Encryption Type                                               | 1 bits                                                           | enum (0, 1)                   | -                                                                         |
+| - Receiver Type                                                 | 2 bits                                                           | enum (0b00, 0b01, 0b10, 0b11) | -                                                                         |
+| - Is Bounce Back                                                | 1 bits                                                           | boolean                       | -                                                                         |
+| - Has Checksum                                                  | 1 bits                                                           | boolean                       | -                                                                         |
+| Checksum                                                        | 4 bytes                                                          | uint32                        | -                                                                         |
+| Distance                                                        | 1 byte                                                           | uint8                         | -                                                                         |
+| TTL                                                             | 1 byte                                                           | uint8                         | -                                                                         |
+| Sender                                                          | 21 bytes                                                         | endpoint                      | -                                                                         |
+| Receivers Pointer ID                                            | 26 bytes                                                         | pointer                       | [Receiver Type](#routing-header-receiver-type) equals "Pointer"           |
+| <a name="routing-header-receiver-count">Number of Receivers</a> | 1 byte                                                           | uint8                         | receiver-type in ("Receivers","ReceiversWithKeys")                        |
+| Receivers                                                       | 21 bytes x [Number of Receivers](#routing-header-receiver-count) | endpoint                      | receiver-type in ("Receivers","ReceiversWithKeys")                        |
+| Receivers with Keys                                             | 21 bytes x [Number of Receivers](#routing-header-receiver-count) | endpoint                      | [Receiver Type](#routing-header-receiver-type) equals "ReceiversWithKeys" |
+| Signature                                                       | 255 bytes                                                        | string                        | [Signature Type](#routing-header-signature-type) equals "Unencrypted"     |
+| Encrypted Signature                                             | 300 bytes                                                        | string                        | [Signature Type](#routing-header-signature-type) equals "Encrypted"       |
 
-```
-DATEX.Endpoint {
-	TYPE: Uint8
-	ID: Uint8[18]
-	INSTANCE: Uint16
-}
 
-PointerId {
-	TYPE: Uint8
-	IDENTIFIER: Uint8[18]
-	INSTANCE: Uint16
-	TIMESTAMP: Uint32 # unix ts in seconds, starting from 25. Juli 23
-	COUNTER: Uint8
-}
+<a name="routing-header-magic-number"></a>
+# Magic Number
 
-ReceiverEndpoint {
-	ENDPOINT: Endpoint
-	optional KEY: Uint8[512] # only if Receivers.FLAGS.ENDPOINTS_HAVE_KEYS
-}
 
-ReceiverEndpoints {
-	COUNT: Uint16 # if MAX, flood, no RECEIVERS
-	ENDPOINTS: ReceiverEndpoint[COUNT]
-}
+<a name="routing-header-version"></a>
+# Version
 
-Receivers {
-	FLAGS: Uint8
-		HAS_POINTER_ID:           FLAGS & 0b00000001,
-		HAS_ENDPOINTS:            FLAGS & 0b00000010,
-		ENDPOINTS_HAVE_KEYS:      FLAGS & 0b00000100
-	optional POINTER_ID: PointerId
-	optional ENDPOINTS: ReceiverEndpoints
-}
 
-RoutingHeader {
-	MAGIC_NUMBER: Uint16 {0x01, 0x64},
-	VERSION: Uint8,
-	TTL: Uint8,
-	FLAGS: Uint8
-		HAS_UNENCRYPTED_SIGNATURE: FLAGS & 0b00000001,
-		HAS_ENCRYPTION:            FLAGS & 0b00000010,
-		HAS_ENCRYPTED_SIGNATURE:   FLAGS & 0b00000100,
-		IS_LARGE_SIZE:             FLAGS & 0b00001000
-	BLOCK_SIZE: IS_LARGE_SIZE ? Uint32 : Uint16,
+<a name="routing-header-block-size"></a>
+# Block Size
 
-	SCOPE_ID: Uint32
-	BLOCK_INDEX: Uint16
-	BLOCK_SUB_INDEX: Uint16
 
-	SENDER_TYPE: Uint8,
-	optional SENDER: Uint8[20] # only exists if SENDER_TYPE != 255, otherwise SENDER is @@any
-	optional RECEIVERS: Receivers
-}
+<a name="routing-header-flags"></a>
+# Flags
 
-BlockHeader {
-	
-	FLAGS: Uint21
-		BLOCK_TYPE:    FLAGS & 0b111100000000000000000,
-		ALLOW_EXECUTE: FLAGS & 0b000010000000000000000,
-		END_OF_BLOCK:  FLAGS & 0b000001000000000000000, # if a subdivided block has only a single signature, it is sent with the last block containing the END_OF_BLOCK flag
-		END_OF_SCOPE:  FLAGS & 0b000000100000000000000,
-		HAS_EXPIRATION_TIMESTAMP:   FLAGS & 0b000000010000000000000,
-		HAS_ON_BEHALF_OF:           FLAGS & 0b000000001000000000000,
-		HAS_REPRESENTED_BY:         FLAGS & 0b000000000100000000000,
-		IS_COMPRESSED:              FLAGS & 0b000000000010000000000,
-		_RESERVED_:    FLAGS & 0b000000000001111111111,
-	CREATION_TIMESTAMP: Uint43, # unix ts in ms, starting from 25. Juli 23
-	optional EXPIRATION_OFFSET: Uint32, # unix ts in seconds, starting from CREATION_TIMESTAMP
-	optional REPRESENTED_BY: Endpoint
-	optional IV: Uint8[16]
-}
 
-DXB {
-	ROUTING_HEADER: RoutingHeader,
-	optional UNENCRYPTED_SIGNATURE: Uint8[192],
-	optional ENCRYPTED_SIGNATURE: Uint[x] # used instead SIGNATURE to hide identity of signing endpoint (when using ON_BEHALF_OF)
-	# optional start signed part:
-	optional BLOCK_HEADER: BlockHeader
-	# optional start encrypted part:
-	ENCRYPTED_FLAGS: Uint8
-		DEVICE_TYPE: ENCRYPTED_FLAGS & 0b11110000
-	optional ON_BEHALF_OF: Endpoint,
-	BODY: DXBBody
-}
-```
+<a name="routing-header-checksum"></a>
+# Checksum
 
-## 9.3 The Block Header
 
-The Block Header is part of the signed and encrypted part. If the block is
-signed, the header cannot be altered, and it can't be read by non-receiving
-parties if the block is encrypted.
+<a name="routing-header-distance"></a>
+# Distance
 
-| Name              | Start | End | Size | Content                                                   | Description                                                        |
-| ----------------- | :---: | :-: | :--: | --------------------------------------------------------- | ------------------------------------------------------------------ |
-| Scope ID          |   0   |  4  |  4   | <pre class="language-yaml">SID: Uint32&#10;</pre>         | Scope ID, unique for a certain sender for a certain period of time |
-| Scope Block Index |   4   |  6  |  2   | <pre class="language-yaml">BLOCK_INDEX: Uint16&#10;</pre> | Index of the block within the current scope                        |
-| Scope Block Inc   |   6   |  8  |  2   | <pre class="language-yaml">SIZE: Uint16&#10;</pre>        | Incremented for each block of a scope                              |
-| Type              |   8   |  9  |  1   | <pre class="language-yaml">TYPE: Uint8&#10;</pre>         | Block type. See _Block Types_                                      |
-| Flags             |   9   | 10  |  1   | <pre class="language-yaml">FLAGS: Uint8&#10;</pre>        | executable, end of scope, device type                              |
-| Timestamp         |  10   | 18  |  8   | <pre class="language-yaml">TIME: Uint64&#10;</pre>        | Time in ms since 2022-01-22 (to be changed)                        |
+
+<a name="routing-header-ttl"></a>
+# TTL
+
+
+<a name="routing-header-sender"></a>
+# Sender
+
+
+<a name="routing-header-receivers-pointer-id"></a>
+# Receivers Pointer ID
+
+
+<a name="routing-header-receiver-count"></a>
+# Number of Receivers
+
+
+<a name="routing-header-receivers"></a>
+# Receivers
+
+
+<a name="routing-header-receivers-with-keys"></a>
+# Receivers with Keys
+
+
+<a name="routing-header-signature"></a>
+# Signature
+
+
+<a name="routing-header-encrypted-signature"></a>
+# Encrypted Signature
+
+
+
+</speck-table>
