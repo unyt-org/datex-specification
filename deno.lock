@@ -4,7 +4,7 @@
     "jsr:@std/fs@1": "1.0.19",
     "jsr:@std/internal@^1.0.10": "1.0.10",
     "jsr:@std/path@^1.1.1": "1.1.2",
-    "jsr:@unyt/speck@^0.0.6": "0.0.6",
+    "jsr:@unyt/speck@^0.0.7": "0.0.7",
     "npm:github-slugger@2": "2.0.0",
     "npm:tablemark@^4.1.0": "4.1.0"
   },
@@ -24,8 +24,8 @@
         "jsr:@std/internal"
       ]
     },
-    "@unyt/speck@0.0.6": {
-      "integrity": "c8edc6abab7946c60efa1f17e34705ec1a9ab6d18a321e5e9fcac0520ccfc144",
+    "@unyt/speck@0.0.7": {
+      "integrity": "6b574cdaf318384793344e34c646f398dcfe9953d15dc3926eea00c63b6e0a9c",
       "dependencies": [
         "jsr:@std/fs",
         "npm:github-slugger",
@@ -178,7 +178,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@unyt/speck@^0.0.6"
+      "jsr:@unyt/speck@^0.0.7"
     ]
   }
 }

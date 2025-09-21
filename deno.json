@@ -5,6 +5,6 @@
     "update": "deno run -A scripts/update.ts"
   },
   "imports": {
-    "@unyt/speck": "jsr:@unyt/speck@^0.0.6"
+    "@unyt/speck": "jsr:@unyt/speck@^0.0.7"
   }
 }
