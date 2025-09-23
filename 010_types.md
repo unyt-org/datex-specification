@@ -1,17 +1,19 @@
 # 10 Type System
 
-## Core Types
+## 10.1 Core Types
 
-DATEX defines a range of core types, from simple primitive types such as `integer` and `text`, 
-to more complex composite types such as `Map` and `Set`. 
+DATEX defines a range of core types, from simple primitive types such as
+`integer` and `text`, to more complex composite types such as `Map` and `Set`.
 
-The term "core value" refers to a concrete instance of a core type, while "value" is used in a broader sense to denote an instance of any type.
+The term "core value" refers to a concrete instance of a core type, while
+"value" is used in a broader sense to denote an instance of any type.
 
-There is no difference between primitive and composite types in their usage. Both can be accessed as references and values.
+There is no difference between primitive and composite types in their usage.
+Both can be accessed as references and values.
 
-### List of Core Types
+### 10.1.1 List of Core Types
 
-#### Primitive Types
+#### 10.1.1.1 Primitive Types
 
 | Type    | Variant   | Example (DATEX Syntax) | Description                                                                                                                                                                                                           |
 | ------- | --------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -25,8 +27,6 @@ There is no difference between primitive and composite types in their usage. Bot
 |         | /plain    | \-                     |                                                                                                                                                                                                                       |
 |         | /markdown | \-                     |                                                                                                                                                                                                                       |
 
-
-
 DATEX Script example (TODO move)
 
 ```datex
@@ -39,84 +39,85 @@ const s1 = Set (1,2,3); // creating a new value of type Set<integer> (inferred)
 const s3 = Set<integer|text>(1,2,3); // creating a Set with an explicit type
 ```
 
-Core types are available on every endpoint instance. Custom type definitions can be loaded as pointers from other endpoints.
+Core types are available on every endpoint instance. Custom type definitions can
+be loaded as pointers from other endpoints.
 
-## 10.1 Nominal and Structural Types
+## 10.2 Nominal and Structural Types
 
 The DATEX type system provides both nominal and structural typing.
 
-### 10.1.1 Type Aliases
+### 10.2.1 Type Aliases
 
-## 10.2 Interfaces
+## 10.3 Interfaces
 
 Interfaces are special types that cannot be instantiated. They can contain
 overridable and sealed properties.
 
-## 10.3 The `ValueConsumer` interface
+## 10.4 The `ValueConsumer` interface
 
 The `ValueConsumer<I,O>` interface has a single property called `handleValue`.
 This property has to be assigned to a `Function<I,O>`. The function takes a
 value of type `I` as input and returns a value of type `O`.
 
-## 10.4 The `Function` interface
+## 10.5 The `Function` interface
 
 The `Function<I,O>` interface implements the `ValueConsumer<I,O>` interface.
 
-## 10.5 The `SyncConsumer` interface
+## 10.6 The `SyncConsumer` interface
 
-## 10.6 The `Instantiator` interface
+## 10.7 The `Instantiator` interface
 
 The `Instantiator` interface extends the `ValueConsumer` interface
 
-## 10.7 The `StreamConsumer` interface
+## 10.8 The `StreamConsumer` interface
 
-## 10.8 Any
+## 10.9 Any
 
 Disjunction of all values/types
 
-## 10.9 Primitive Types
+## 10.10 Primitive Types
 
-### 10.9.1 The `boolean` type
+### 10.10.1 The `boolean` type
 
 A `boolean` value can either be `true` or `false`.
 
-### 10.9.2 The `integer` type
+### 10.10.2 The `integer` type
 
-### 10.9.3 The `text` type
+### 10.10.3 The `text` type
 
-### 10.9.4 The `null` type
+### 10.10.4 The `null` type
 
 const value+type
 
-### 10.9.5 The `integer` type
+### 10.10.5 The `integer` type
 
-### 10.9.6 The `decimal` type
+### 10.10.6 The `decimal` type
 
-### 10.9.7 The `quantity` type
+### 10.10.7 The `quantity` type
 
-### 10.9.8 The `buffer` type
+### 10.10.8 The `buffer` type
 
-### 10.9.9 The `time` type
+### 10.10.9 The `time` type
 
-### 10.9.10 The `color` type
+### 10.10.10 The `color` type
 
-### 10.9.11 The `endpoint` type
+### 10.10.11 The `endpoint` type
 
-### 10.9.12 The `symbol` type
+### 10.10.12 The `symbol` type
 
-### 10.9.13 The `image` type
+### 10.10.13 The `image` type
 
-### 10.9.14 The `audio` type
+### 10.10.14 The `audio` type
 
-### 10.9.15 The `video` type
+### 10.10.15 The `video` type
 
-### 10.9.16 The `model` type
+### 10.10.16 The `model` type
 
-### 10.9.17 The `font` type
+### 10.10.17 The `font` type
 
-### 10.9.18 The `application` type
+### 10.10.18 The `application` type
 
-## 10.10 Records
+## 10.11 Records
 
 Records are non-extendable key-value data structures. All properties must be
 specified on creation. New properties cannot be added. Records can contain
@@ -136,13 +137,13 @@ Record<text> // allow only text values for any key
 Record<(a:text, b:integer)> // allow only a property 'a' with type text and a property 'b' with type integer
 ```
 
-## 10.11 Objects
+## 10.12 Objects
 
 Objects are extendable key-value data structures. Only text keys are allowed.
 New properties can be added and existing properties can be deleted after
 creation. Per default, any value can be assigned to a key.
 
-## 10.12 Arrays
+## 10.13 Arrays
 
 Arrays are extendable key-value data structures. Only integer keys are allowed.
 New properties can be added and existing properties can be deleted after
