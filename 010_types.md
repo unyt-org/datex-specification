@@ -13,19 +13,114 @@ Both can be accessed as references and values.
 
 ### 10.1.1 List of Core Types
 
+#### Non-instantiable Types
+
+| Type         | Example (DATEX Syntax) | Description                                                                                                                      |
+| ------------ | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| unit 	       | `unit`                 | The unit type has a single value, also called `unit`. It is used as the return type of a function that does not return anything. |
+| never        | `never`                | The never type has no values. It is used to indicate that a function does not return normally (e.g., it always throws an error). |
+| unknown     | `unknown`               | The unknown type is the supertype of all types. It can hold any value, but values of this type cannot be used directly.          |
+
+
 #### 10.1.1.1 Primitive Types
 
-| Type    | Variant   | Example (DATEX Syntax) | Description                                                                                                                                                                                                           |
-| ------- | --------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| integer | -         | `42`                   | The default integer type can hold arbitrarily large finite positive and negative integer values.                                                                                                                      |
-|         | u8        | `42u8`                 |                                                                                                                                                                                                                       |
-|         | u16       | `42u16`                |                                                                                                                                                                                                                       |
-| decimal | \-        | `42.0`                 | The default decimal type can hold arbitrarily large finite positive and negative decimal values with arbitrary finite decimals. Additionally it can hold the special values \`infinity\`, \`-infinity \` and \`nan\`. |
-|         | f32       | `42.0f32`              |                                                                                                                                                                                                                       |
-|         | f64       | `42.0f64`              |                                                                                                                                                                                                                       |
-| text    | -         | `"Hello DATEX"`        |                                                                                                                                                                                                                       |
-|         | /plain    | -                      |                                                                                                                                                                                                                       |
-|         | /markdown | -                      |                                                                                                                                                                                                                       |
+| Type        | Variant       | Example (DATEX Syntax) | Description                                                                                                                                                                                                           |
+| ----------- | ------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| boolean     |               | `true` / `false`       | A boolean value can either be `true` or `false`.                                                                                                                                                                      |
+| null        |               | `null`                 | A null value.                                                                                                                                                                                                         |
+| integer     |               | `42`                   | The default integer type can hold arbitrarily large finite positive and negative integer values.                                                                                                                      |
+|             | u8            | `42u8`                 | An integer with a range of 0 to 255.                                                                                                                                                                              	   |
+|             | u16           | `42u16`                | An integer with a range of 0 to 65,535.                                                                                                                                                                               |
+|             | u32           | `42u32`                | An integer with a range of 0 to 4,294,967,295.                                                                                                                                                                        |
+|             | u64           | `42u64`                | An integer with a range of 0 to 18,446,744,073,709,551,615.                                                                                                                                                           |
+|             | ubig          | `42ubig`               | An integer with an arbitrary large positive value.                                                                                                                                                                    |
+|             | i8            | `42i8`                 | An integer with a range of -128 to 127.                                                                                                                                                                               |
+|             | i16           | `42i16`                | An integer with a range of -32,768 to 32,767.                                                                                                                                                                         |
+|             | i32           | `42i32`                | An integer with a range of -2,147,483,648 to 2,147,483,647.                                                                                                                                                           |
+|             | i64           | `42i64`                | An integer with a range of -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807.                                                                                                                                   |
+|             | ibig          | `42ibig`               | An integer with an arbitrary large negative or positive value.                                                                                                                                                        |
+| decimal     |               | `42.0`                 | The default decimal type can hold arbitrarily large finite positive and negative decimal values with arbitrary finite decimals. Additionally it can hold the special values \`infinity\`, \`-infinity \` and \`nan\`. |
+|             | f32           | `42.0f32`              | A 32-bit floating point number.                                                                                                                                                                                       |
+|             | f64           | `42.0f64`              | A 64-bit floating point number.                                                                                                                                                                                       |
+|             | big           | `42.0big`              | A decimal number with arbitrary precision.                                                                                                                                                                            |
+| amount      |               | `42m`                  | A quantity value consisting of a decimal number and an SI unit or currency unit                                                                                                                                       |
+| endpoint    |               | `@example`             | A DATEX endpoint identifier.                                                                                                                                                                                          |
+| url 	      |               | `https://unyt.org/`    | A URL.                                                                                                                                                                                                                |
+|             | anonymous     | `@@123456789`          | An anonymous DATEX endpoint identifier.                                                                                                                                                                               |
+|             | person        | `@user`                | A DATEX endpoint identifier representing a person.                                                                                                                                                                    |
+|             | organisation  | `@+unyt`               | A DATEX endpoint identifier representing an organisation.                                                                                                                                                               |
+| text        |               | `"Hello DATEX"`        | A string of text.                                                                                                                                                                                                     |
+|             | plain         | -                      | A string of the text with the mime type `text/plain`.                                                                                                                                                                 |
+|             | markdown      | -                      | A string of the text with the mime type `text/markdown`.                                                                                                                                                              |
+|             | html          | -                      | A string of the text with the mime type `text/html`.                                                                                                                                                                  |
+|             | ...           | -                      | TODO: additional text/* mime types                                                                                                                                                                                    |
+| application |               | -                      | A binary blob with the mime type `application/*`.                                                                                                                                                                     |
+|             | json          | -                      | A binary blob with the mime type `application/json`.                                                                                                                                                                  |
+|             | pdf           | -                      | A binary blob with the mime type `application/pdf`.                                                                                                                                                                   |
+|             | ...           | -                      | TODO: additional application/* mime types                                                                                                                                                                             |
+| audio       |               | -                      | An audio file with the mime type `audio/*`.                                                                                                                                                                           |
+|             | mp3           | -                      | An audio file with the mime type `audio/mpeg`.                                                                                                                                                                        |
+|             | wav           | -                      | An audio file with the mime type `audio/wav`.                                                                                                                                                                         |
+|             | ...           | -                      | TODO: additional audio/* mime types                                                                                                                                                                                   |
+| video       |               | -                      | A video file with the mime type `video/*`.                                                                                                                                                                            |
+|             | mp4           | -                      | A video file with the mime type `video/mp4`.                                                                                                                                                                          |
+|             | webm          | -                      | A video file with the mime type `video/webm`.                                                                                                                                                                         |
+|             | ...           | -                      | TODO: additional video/* mime types                                                                                                                                                                                   |
+| image       |               | -                      | An image file with the mime type `image/*`.                                                                                                                                                                           |
+|             | png           | -                      | An image file with the mime type `image/png`.                                                                                                                                                                         |
+|             | jpeg          | -                      | An image file with the mime type `image/jpeg`.                                                                                                                                                                        |
+|             | svg           | -                      | An image file with the mime type `image/svg+xml`.                                                                                                                                                                     |
+|             | ...           | -                      | TODO: additional image/* mime types                                                                                                                                                                                   |
+| font        |               | -                      | A font file with the mime type `font/*`.                                                                                                                                                                              |
+|             | woff          | -                      | A font file with the mime type `font/woff`.                                                                                                                                                                           |
+|             | woff2         | -                      | A font file with the mime type `font/woff2`.                                                                                                                                                                          |
+|             | ...           | -                      | TODO: additional font/* mime types                                                                                                                                                                                    |
+| model       |               | -                      | A 3D model file with the mime type `model/*`.                                                                                                                                                                         |
+|             | gltf          | -                      | A 3D model file with the mime type `model/gltf+json`.                                                                                                                                                                 |
+|             | glb           | -                      | A 3D model file with the mime type `model/gltf-binary`.                                                                                                                                                               |
+|             | ...           | -                      | TODO: additional model/* mime types                                                                                                                                                                                   |
+
+##### Amounts
+
+An amount consists of a decimal number and a unit. The unit can either be a SI unit
+or a currency unit.
+
+###### SI Base Units
+
+| Unit | Description       | Example DATEX Value | DATEX Type        |
+| ---- | ----------------- | ------------------- | ------------------|
+| m    | meter             | `42m`               | `amount/m`        |
+| kg   | kilogram          | `42kg`              | `amount/kg`       |
+| s    | second            | `42s`               | `amount/s`        |
+| A    | ampere            | `42A`               | `amount/A`	     |
+| K    | kelvin            | `42K`               | `amount/K`	 	 |
+| mol  | mole              | `42mol`             | `amount/mol`      |
+| cd   | candela           | `42cd`              | `amount/cd`       |
+
+###### Currency Units
+| Unit | Description       | Example DATEX Value | DATEX Type        |
+| ---- | ----------------- | ------------------- | ------------------|
+| EUR  | Euro              | `42EUR`           	 | `amount/EUR`	     |
+| USD  | US Dollar         | `42USD`           	 | `amount/USD`	     |
+| GBP  | British Pound     | `42GBP`           	 | `amount/GBP`	     |
+| JPY  | Japanese Yen      | `42JPY`           	 | `amount/JPY`	     |
+| CHF  | Swiss Franc       | `42CHF`           	 | `amount/CHF`	     |
+| ...  | ...               | ...                 | ...               |
+
+
+#### Composite Types
+
+| Type        | Example (DATEX Syntax)                        | Description                                                                                          |
+| ----------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| List        | `(1,2,3)`                                     | A list of arbitrary values.                                                                          |
+| Array       | `[1,2,3]`                                     | An array of arbitrary values with a fixed length.                                                    |
+| Map         | `("key": "value", (1): 2)`                    | A map of arbitrary key-value pairs.                                                                  |
+| Struct      | `{name: "Alice", age: 30}`                    | A struct with fixed named fields containing arbitrary values.                                        |
+| Set         | `Set(1,2,3)`                                  | A set of unique arbitrary values.                                                                    |
+| Function    | `function (x: integer) -> integer ( x * 2 )`. | A pure function that returns the same output value for the same input value, without side effects.   |
+| Procedure   | `procedure (x: integer) -> integer ( x * 2 )` | A procedure that can have side effects and does not guarantee the same output for the same input.    |
+| ...         | ...                                           | ...                                                                                                  |
+
 
 DATEX Script example (TODO move)
 
@@ -70,81 +165,3 @@ The `Function<I,O>` interface implements the `ValueConsumer<I,O>` interface.
 The `Instantiator` interface extends the `ValueConsumer` interface
 
 ## 10.8 The `StreamConsumer` interface
-
-## 10.9 Any
-
-Disjunction of all values/types
-
-## 10.10 Primitive Types
-
-### 10.10.1 The `boolean` type
-
-A `boolean` value can either be `true` or `false`.
-
-### 10.10.2 The `integer` type
-
-### 10.10.3 The `text` type
-
-### 10.10.4 The `null` type
-
-const value+type
-
-### 10.10.5 The `integer` type
-
-### 10.10.6 The `decimal` type
-
-### 10.10.7 The `quantity` type
-
-### 10.10.8 The `buffer` type
-
-### 10.10.9 The `time` type
-
-### 10.10.10 The `color` type
-
-### 10.10.11 The `endpoint` type
-
-### 10.10.12 The `symbol` type
-
-### 10.10.13 The `image` type
-
-### 10.10.14 The `audio` type
-
-### 10.10.15 The `video` type
-
-### 10.10.16 The `model` type
-
-### 10.10.17 The `font` type
-
-### 10.10.18 The `application` type
-
-## 10.11 Records
-
-Records are non-extendable key-value data structures. All properties must be
-specified on creation. New properties cannot be added. Records can contain
-integer and text keys.
-
-Example:
-
-```datex
-val record = (1, 2, 3, a:'text', b:42)
-```
-
-Per default, any value can be assigned to a key. The allowed types for keys of a
-`Record<T>` can be specified with the generic parameter `T`:
-
-```datex
-Record<text> // allow only text values for any key
-Record<(a:text, b:integer)> // allow only a property 'a' with type text and a property 'b' with type integer
-```
-
-## 10.12 Objects
-
-Objects are extendable key-value data structures. Only text keys are allowed.
-New properties can be added and existing properties can be deleted after
-creation. Per default, any value can be assigned to a key.
-
-## 10.13 Arrays
-
-Arrays are extendable key-value data structures. Only integer keys are allowed.
-New properties can be added and existing properties can be deleted after
-creation. Per default, any value can be assigned to a key.
