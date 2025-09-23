@@ -13,22 +13,21 @@ Both can be accessed as references and values.
 
 ### 10.1.1 List of Core Types
 
-#### Non-instantiable Types
+#### 10.1.1.1 Non-instantiable Types
 
 | Type         | Description                                                                                                                        |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| unit 	       |  The unit type has a single value, also called `unit`. It is used as the return type of a function that does not return anything.  |
+| unit 	       | The unit type has a single value, also called `unit`. It is used as the return type of a function that does not return anything.   |
 | never        | The never type has no values. It is used to indicate that a function does not return normally (e.g., it always throws an error).   |
 | unknown      | The unknown type is the supertype of all types. It can hold any value, but values of this type cannot be used directly.            |
 
-
-#### 10.1.1.1 Primitive Types
+#### 10.1.1.2 Primitive Types
 
 | Type        | Variant       | Example (DATEX Syntax) | Description                                                                                                                                                                                                           |
 | ----------- | ------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | boolean     |               | `true` / `false`       | A boolean value can either be `true` or `false`.                                                                                                                                                                      |
 | null        |               | `null`                 | A null value.                                                                                                                                                                                                         |
-| integer     |               | `42`                   | An integer thatcan hold arbitrarily large finite positive and negative integer values.                                                                                                                      |
+| integer     |               | `42`                   | An integer that can hold arbitrarily large finite positive and negative integer values.                                                                                                                      |
 |             | u8            | `42u8`                 | An integer with a range of 0 to 255.                                                                                                                                                                              	   |
 |             | u16           | `42u16`                | An integer with a range of 0 to 65,535.                                                                                                                                                                               |
 |             | u32           | `42u32`                | An integer with a range of 0 to 4,294,967,295.                                                                                                                                                                        |
@@ -79,48 +78,46 @@ Both can be accessed as references and values.
 |             | gltf          | -                      | A 3D model file with the mime type `model/gltf+json`.                                                                                                                                                                 |
 |             | glb           | -                      | A 3D model file with the mime type `model/gltf-binary`.                                                                                                                                                               |
 |             | ...           | -                      | TODO: additional model/* mime types                                                                                                                                                                                   |
+##### 10.1.1.2.1 Amounts
 
-##### Amounts
-
-An amount consists of a decimal number and a unit. The unit can either be a SI unit
-or a currency unit.
+An amount consists of a decimal number and a unit. The unit can either be a SI
+unit or a currency unit.
 
 ###### SI Base Units
 
-| Unit | Description       | Example DATEX Value | DATEX Type        |
-| ---- | ----------------- | ------------------- | ------------------|
-| m    | meter             | `42m`               | `amount/m`        |
-| kg   | kilogram          | `42kg`              | `amount/kg`       |
-| s    | second            | `42s`               | `amount/s`        |
-| A    | ampere            | `42A`               | `amount/A`	     |
-| K    | kelvin            | `42K`               | `amount/K`	 	 |
-| mol  | mole              | `42mol`             | `amount/mol`      |
-| cd   | candela           | `42cd`              | `amount/cd`       |
+| Unit | Description | Example DATEX Value | DATEX Type   |
+| ---- | ----------- | ------------------- | ------------ |
+| m    | meter       | `42m`               | `amount/m`   |
+| kg   | kilogram    | `42kg`              | `amount/kg`  |
+| s    | second      | `42s`               | `amount/s`   |
+| A    | ampere      | `42A`               | `amount/A`   |
+| K    | kelvin      | `42K`               | `amount/K`   |
+| mol  | mole        | `42mol`             | `amount/mol` |
+| cd   | candela     | `42cd`              | `amount/cd`  |
 
 ###### Currency Units
-| Unit | Description       | Example DATEX Value | DATEX Type        |
-| ---- | ----------------- | ------------------- | ------------------|
-| EUR  | Euro              | `42EUR`           	 | `amount/EUR`	     |
-| USD  | US Dollar         | `42USD`           	 | `amount/USD`	     |
-| GBP  | British Pound     | `42GBP`           	 | `amount/GBP`	     |
-| JPY  | Japanese Yen      | `42JPY`           	 | `amount/JPY`	     |
-| CHF  | Swiss Franc       | `42CHF`           	 | `amount/CHF`	     |
-| ...  | ...               | ...                 | ...               |
 
+| Unit | Description   | Example DATEX Value | DATEX Type   |
+| ---- | ------------- | ------------------- | ------------ |
+| EUR  | Euro          | `42EUR`             | `amount/EUR` |
+| USD  | US Dollar     | `42USD`             | `amount/USD` |
+| GBP  | British Pound | `42GBP`             | `amount/GBP` |
+| JPY  | Japanese Yen  | `42JPY`             | `amount/JPY` |
+| CHF  | Swiss Franc   | `42CHF`             | `amount/CHF` |
+| ...  | ...           | ...                 | ...          |
 
-#### Composite Types
+#### 10.1.1.3 Composite Types
 
-| Type        | Example (DATEX Syntax)                        | Description                                                                                          |
-| ----------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| List        | `(1,2,3)`                                     | A list of arbitrary values.                                                                          |
-| Array       | `[1,2,3]`                                     | An array of arbitrary values with a fixed length.                                                    |
-| Map         | `("key": "value", (1): 2)`                    | A map of arbitrary key-value pairs.                                                                  |
-| Struct      | `{name: "Alice", age: 30}`                    | A struct with fixed named fields containing arbitrary values.                                        |
-| Set         | `Set(1,2,3)`                                  | A set of unique arbitrary values.                                                                    |
-| Function    | `function (x: integer) -> integer ( x * 2 )`. | A pure function that returns the same output value for the same input value, without side effects.   |
-| Procedure   | `procedure (x: integer) -> integer ( x * 2 )` | A procedure that can have side effects and does not guarantee the same output for the same input.    |
-| ...         | ...                                           | ...                                                                                                  |
-
+| Type      | Example (DATEX Syntax)                        | Description                                                                                        |
+| --------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| List      | `(1,2,3)`                                     | A list of arbitrary values.                                                                        |
+| Array     | `[1,2,3]`                                     | An array of arbitrary values with a fixed length.                                                  |
+| Map       | `("key": "value", (1): 2)`                    | A map of arbitrary key-value pairs.                                                                |
+| Struct    | `{name: "Alice", age: 30}`                    | A struct with fixed named fields containing arbitrary values.                                      |
+| Set       | `Set(1,2,3)`                                  | A set of unique arbitrary values.                                                                  |
+| Function  | `function (x: integer) -> integer ( x * 2 )`. | A pure function that returns the same output value for the same input value, without side effects. |
+| Procedure | `procedure (x: integer) -> integer ( x * 2 )` | A procedure that can have side effects and does not guarantee the same output for the same input.  |
+| ...       | ...                                           | ...                                                                                                |
 
 DATEX Script example (TODO move)
 
