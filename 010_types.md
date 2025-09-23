@@ -15,11 +15,11 @@ Both can be accessed as references and values.
 
 #### Non-instantiable Types
 
-| Type         | Example (DATEX Syntax) | Description                                                                                                                      |
-| ------------ | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| unit 	       | `unit`                 | The unit type has a single value, also called `unit`. It is used as the return type of a function that does not return anything. |
-| never        | `never`                | The never type has no values. It is used to indicate that a function does not return normally (e.g., it always throws an error). |
-| unknown     | `unknown`               | The unknown type is the supertype of all types. It can hold any value, but values of this type cannot be used directly.          |
+| Type         | Description                                                                                                                        |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| unit 	       |  The unit type has a single value, also called `unit`. It is used as the return type of a function that does not return anything.  |
+| never        | The never type has no values. It is used to indicate that a function does not return normally (e.g., it always throws an error).   |
+| unknown      | The unknown type is the supertype of all types. It can hold any value, but values of this type cannot be used directly.            |
 
 
 #### 10.1.1.1 Primitive Types
