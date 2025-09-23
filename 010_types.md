@@ -1,34 +1,49 @@
-# 10 Data Types and Values
+# 10 Type System
 
-DATEX has a variety of standard data types, including primitives, JSON data
-types, Records, Maps and Sets. Functionally, there is no difference between
-primitive and non-primitive types - both can be accessed by reference or value
-and can be used as a base for custom types.
+## Core Types
 
-DATEX Script example:
+DATEX defines a range of core types, from simple primitive types such as `integer` and `text`, 
+to more complex composite types such as `Map` and `Set`. 
+
+The term "core value" refers to a concrete instance of a core type, while "value" is used in a broader sense to denote an instance of any type.
+
+There is no difference between primitive and composite types in their usage. Both can be accessed as references and values.
+
+### List of Core Types
+
+#### Primitive Types
+
+| Type    | Variant   | Example (DATEX Syntax) | Description                                                                                                                                                                                                           |
+| ------- | --------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| integer | \-        | 42                     | The default integer type can hold arbitrarily large finite positive and negative integer values.                                                                                                                      |
+|         | u8        | 42u8                   |                                                                                                                                                                                                                       |
+|         | u16       | 42u16                  |                                                                                                                                                                                                                       |
+| decimal | \-        | 42.0                   | The default decimal type can hold arbitrarily large finite positive and negative decimal values with arbitrary finite decimals. Additionally it can hold the special values \`infinity\`, \`-infinity \` and \`nan\`. |
+|         | f32       | 42.0f32                |                                                                                                                                                                                                                       |
+|         | f64       | 42.0f64                |                                                                                                                                                                                                                       |
+| text    | \-        | "Hello DATEX"          |                                                                                                                                                                                                                       |
+|         | /plain    | \-                     |                                                                                                                                                                                                                       |
+|         | /markdown | \-                     |                                                                                                                                                                                                                       |
+
+
+
+DATEX Script example (TODO move)
 
 ```datex
-val a = 10; // inferred type for x is 'integer'
-val b: integer/8 = 255; // explicitly specifying type as signed 8-bit integer
-val c: text/markdown = "# Markdown content";
-val d = (1,2,3); // inferred type is (integer, integer, integer)
-val d:Array<integer/8> = [1,2,3]; // Explicitly create an array containing only signed 8-bit integers
-val s1 = Set (1,2,3); // creating a new value of type Set<integer> (inferred)
-val s3 = Set<any>(1,2,3); // creating a Set with an explicit type
-val s2: Set<integer> = xy() // type checking (TODO when infer?)
+const a = 10; // inferred type for x is 'integer'
+const b: integer/i8 = 255; // explicitly specifying type as signed 8-bit integer
+const c: text/markdown = "# Markdown content";
+const d = (1,2,3); // inferred type is List<integer>
+const d: List<integer/i8> = (1,2,3); // Explicitly create a List containing only signed 8-bit integers
+const s1 = Set (1,2,3); // creating a new value of type Set<integer> (inferred)
+const s3 = Set<integer|text>(1,2,3); // creating a Set with an explicit type
 ```
 
-<!--Type definitions are created with the special `Type` data type. -->
-
-The standard data types are available on every endpoint instance. Custom type
-definitions can be loaded as pointers from other endpoints.
+Core types are available on every endpoint instance. Custom type definitions can be loaded as pointers from other endpoints.
 
 ## 10.1 Nominal and Structural Types
 
-The DATEX type system is fundamentally a nominal type system. Values are always
-associated with a nominal type.
-
-Structural type matching is used for primitive values, JSON values and Records.
+The DATEX type system provides both nominal and structural typing.
 
 ### 10.1.1 Type Aliases
 
