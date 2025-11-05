@@ -32,6 +32,7 @@
                     "bitMasks": [
                         {
                             "name": "Signature Type",
+                            "id": "signature-type",
                             "length": 2,
                             "parser": {
                                 "type": "enum",
