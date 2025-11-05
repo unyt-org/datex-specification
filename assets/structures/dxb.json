@@ -76,6 +76,7 @@
                         {
                             "name": "Has Checksum",
                             "length": 1,
+                            "id": "has-checksum",
                             "parser": { "type": "boolean" }
                         }
                     ]
