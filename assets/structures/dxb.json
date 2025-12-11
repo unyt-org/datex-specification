@@ -172,14 +172,14 @@
         {
           "name": "Signature",
           "category": "yellow",
-          "byteSize": 255,
+          "byteSize": 108,
           "if": { "equals": ["signature-type", "Unencrypted"] },
           "parser": { "type": "string" }
         },
         {
           "name": "Encrypted Signature",
           "category": "yellow",
-          "byteSize": 300,
+          "byteSize": 108,
           "if": { "equals": ["signature-type", "Encrypted"] },
           "parser": { "type": "string" }
         }
