@@ -34,8 +34,8 @@ A DATEX Block consists of 4 main sections:
 | Number of Receivers                                        | 1 byte                            | uint8    | [`Receiver Type`](#routing-header-receiver-type) in (`"Receivers"`,`"ReceiversWithKeys"`) |
 | Receivers                                                  | 21 bytes x `Number of Receivers`  | endpoint | [`Receiver Type`](#routing-header-receiver-type) equals `"Receivers"`                     |
 | [Receivers with Keys](#routing-header-receivers-with-keys) | 533 bytes x `Number of Receivers` | -        | [`Receiver Type`](#routing-header-receiver-type) equals `"ReceiversWithKeys"`             |
-| Signature                                                  | 255 bytes                         | string   | [`Signature Type`](#routing-header-signature-type) equals `"Unencrypted"`                 |
-| Encrypted Signature                                        | 300 bytes                         | string   | [`Signature Type`](#routing-header-signature-type) equals `"Encrypted"`                   |
+| Signature                                                  | 108 bytes                         | string   | [`Signature Type`](#routing-header-signature-type) equals `"Unencrypted"`                 |
+| Encrypted Signature                                        | 108 bytes                         | string   | [`Signature Type`](#routing-header-signature-type) equals `"Encrypted"`                   |
 
 <a id="routing-header-flags"></a>
 
