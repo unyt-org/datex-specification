@@ -13,23 +13,19 @@ that holds all endpoint instances (which can also just be a single instance).
 
 ## 13.2 Cryptographic Keys
 
-An endpoint needs to generate two key pairs:
+An endpoint can generate two permanent key pairs:
 
-- Encryption key pair:
-  - RSA-OAEP
-  - modulus length: 4096
-  - public exponent: 65537
-  - hash: SHA-256
-- Signing key pair:
-  - ECDSA
-  - elliptic curve: P-384
+- Signing keys:
+  - Ed25519
+- Key-exchange keys:
+  - X25519
 
-Those key pairs are the same for all instances of the endpoint.
+Those key pairs are the identical for all instances of the endpoint.
 
 ## 13.3 Registering an endpoint
 
 An endpoint instance can announce itself by sending a HELLO broadcast message
-containing the public encryption and signing keys.
+containing the public key-exchange and signing keys.
 
 ...
 
@@ -40,7 +36,7 @@ containing the Endpoint ID and the public keys (See BLOCKCHAIN RECORDS)
 
 Individuals and institutions can verify with a trusted authority to get a custom
 name (alias) linked to a particular endpoint. Each individual or institution can
-get exactly one alias. A endpoint cannot be referenced by multiple aliases. The
+get exactly one alias. An endpoint cannot be referenced by multiple aliases. The
 references are stored in the blockchain and signed by the referenced endpoint
 and the trusted authority.
 
