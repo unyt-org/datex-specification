@@ -4,7 +4,6 @@
 > This is a working draft of the DATEX specification and still subject to
 > change.
 
-
 ## Introduction
 
 This is the official specification for DATEX. You can browse this document on
