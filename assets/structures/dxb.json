@@ -348,7 +348,13 @@
     },
     {
       "name": "Body",
-      "fields": []
+      "fields": [
+    		{
+          "name": "Body",
+    		  "byteSize": "remaining",
+    		  "category": "purple"
+    		}
+	    ]
     }
   ]
 }
