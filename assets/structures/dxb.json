@@ -349,12 +349,12 @@
     {
       "name": "Body",
       "fields": [
-    		{
+        {
           "name": "Body",
-    		  "byteSize": "remaining",
-    		  "category": "purple"
-    		}
-	    ]
+          "byteSize": "remaining",
+          "category": "purple"
+        }
+      ]
     }
   ]
 }
