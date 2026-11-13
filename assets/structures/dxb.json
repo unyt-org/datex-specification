@@ -274,8 +274,18 @@
               "parser": { "type": "boolean" }
             },
             {
+              "name": "Has Skip after Block",
+              "length": 1,
+              "parser": { "type": "boolean" }
+            },
+            {
+              "name": "Is Debug Block",
+              "length": 1,
+              "parser": { "type": "boolean" }
+            },
+            {
               "name": "Reserved",
-              "length": 8,
+              "length": 6,
               "parser": { "type": "uint" },
               "usage": "omit"
             },
