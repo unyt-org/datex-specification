@@ -127,7 +127,9 @@ A DATEX Block consists of 4 main sections:
 | Has IV                                 | 1 bit   | boolean |
 | Is Compressed                          | 1 bit   | boolean |
 | Is Signature in Last Subblock          | 1 bit   | boolean |
-| Reserved                               | 8 bits  | uint    |
+| Has Skip after Block                   | 1 bit   | boolean |
+| Is Debug Block                         | 1 bit   | boolean |
+| Reserved                               | 6 bits  | uint    |
 | Creation Timestamp                     | 43 bits | uint    |
 
 <a id="block-header-block-type"></a>
