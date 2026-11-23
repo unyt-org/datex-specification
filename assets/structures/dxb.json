@@ -171,14 +171,14 @@
         },
         {
           "name": "Signature",
-          "category": "yellow",
+          "category": "green",
           "byteSize": 64,
           "if": { "equals": ["signature-type", "Unencrypted"] },
           "parser": { "type": "string" }
         },
         {
           "name": "Encrypted Signature",
-          "category": "yellow",
+          "category": "green",
           "byteSize": 64,
           "if": { "equals": ["signature-type", "Encrypted"] },
           "parser": { "type": "string" }
