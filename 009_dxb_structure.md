@@ -142,9 +142,11 @@ A DATEX Block consists of 4 main sections:
 | :------------ | :------------ |
 | `0`           | `"Request"`   |
 | `1`           | `"Response"`  |
-| `2`           | `"Hello"`     |
-| `3`           | `"Trace"`     |
-| `4`           | `"TraceBack"` |
+| `2`           | `"WhoAreYou"` |
+| `3`           | `"ItsAMe"`    |
+| `4`           | `"Hello"`     |
+| `5`           | `"Trace"`     |
+| `6`           | `"TraceBack"` |
 
 </speck-table>
 
